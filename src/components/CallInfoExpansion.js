@@ -30,10 +30,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function CallInfoExpansion() {
   const classes = useStyles();
-  console.log('callInfo', callInfo);
 
   const waitTime = moment.duration(callInfo.wait_time, 'seconds').seconds();
-  console.log('wait time ', waitTime);
 
   return (
     <div className={classes.root}>
