@@ -22,12 +22,10 @@
     "collectCoverageFrom": [
       "src/**.{js,jsx}",
       "src/components/**",
-      "src/costants/**",
+      "src/constants/**",
       "!src/index.js",
       "!src/setupTests.js"
-    ],
-    "coverageDirectory": "/coverage/",
-    "testEnvironment": "node"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
