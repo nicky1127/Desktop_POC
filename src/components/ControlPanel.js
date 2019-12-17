@@ -87,6 +87,7 @@ export default function ControlPanel() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 
@@ -131,13 +132,6 @@ export default function ControlPanel() {
       <AppBar className={classes.appBar}>
         <Toolbar>
           <img src="/images/lbg_icon.jpg" style={{width:'100px', 'margin': ' 0px 20px'}}/>
-          {/* <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image="/public/images/lbg_icon.jpg"
-              title="IBG icon"
-            />
-          </Card> */}
           <Typography className={classes.title} variant="h6" noWrap>
             Desktop
           </Typography>

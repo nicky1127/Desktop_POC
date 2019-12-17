@@ -4,34 +4,17 @@ import Paper from '@material-ui/core/Paper';
 import MainHeader from './components/MainHeader';
 import WorkingContainer from './components/WorkingContainer';
 import AvayaToolBar from './components/AvayaToolBar';
-import Grid from '@material-ui/core/Grid';
+import Demo from './components/Demo';
 
-// const App = () => {
-//   return (
-//     <div>
-//       <MainHeader/>
-//       <AtAGlancePanel/>
-//       <WorkingContainer/>
-//     </div>
-//   );
-// };
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
-  // mainHeader: {
-  //   position:'fixed',
-  //   zIndex:5
-  // },
   paper: {
     height: '25vh',
     backgroundColor: '#9e9e9e'
-  },
-  // workingContainer:{
-  //   position: 'relative',
-  //   zIndex:3
-  // }
+  }
 }));
 
 function App() {
@@ -51,11 +34,12 @@ function App() {
     //   </Grid>
     // </div>
     <div>
-        <MainHeader className={classes.mainHeader}/>
-        <Paper className={classes.paper}/>
-        <WorkingContainer className={classes.workingContainer}/>
-        <AvayaToolBar />
-  </div>
+      <MainHeader className={classes.mainHeader} />
+      <Paper className={classes.paper} />
+      <WorkingContainer className={classes.workingContainer} />
+      <AvayaToolBar />
+      {/* <Demo name='James Bond'/> */}
+    </div>
   );
 }
 
