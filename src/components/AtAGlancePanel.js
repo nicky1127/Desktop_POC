@@ -15,16 +15,13 @@ export default function AtAGlancePanel() {
   return (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <CallInfoExpansion />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <CallInfoExpansion />
         </Grid>
-        <Grid item xs={3}>
-          <CallInfoExpansion />
-        </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <CallContextExpansion />
         </Grid>
       </Grid>
