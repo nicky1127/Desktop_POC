@@ -6,7 +6,11 @@ import CallContextExpansion from './CallContextExpansion';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    // height:'18vh',
     flexGrow: 1
+  },
+  logo: {
+    backgroundColor: '#fff'
   }
 }));
 
@@ -15,14 +19,21 @@ export default function AtAGlancePanel() {
   return (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={4}>
-          <CallInfoExpansion />
+        <Grid item xs={2} className={classes.logo}>
+          <img src="/images/bee_icon.jpg" style={{ width: '50%', display: 'block',margin: '15px auto' }} />
         </Grid>
-        <Grid item xs={4}>
-          <CallInfoExpansion />
-        </Grid>
-        <Grid item xs={4}>
-          <CallContextExpansion />
+        <Grid item xs={10}>
+          <Grid container spacing={0}>
+            <Grid item xs={4}>
+              <CallInfoExpansion />
+            </Grid>
+            <Grid item xs={4}>
+              <CallInfoExpansion />
+            </Grid>
+            <Grid item xs={4}>
+              <CallContextExpansion />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>

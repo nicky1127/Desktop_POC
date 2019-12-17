@@ -131,7 +131,6 @@ export default function ControlPanel() {
     <div className={classes.grow}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <img src="/images/lbg_icon.jpg" style={{width:'100px', 'margin': ' 0px 20px'}}/>
           <Typography className={classes.title} variant="h6" noWrap>
             Desktop
           </Typography>

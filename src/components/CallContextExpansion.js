@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'right'
   },
   expansionSummary:{
-      height: '18vh'
+      height: '15vh'
   },
   blueIcon: {
     color: '#1e88e5'
