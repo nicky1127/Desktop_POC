@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import CustomerExpansion from './CustomerExpansion';
 import CallInfoExpansion from './CallInfoExpansion';
 import CallContextExpansion from './CallContextExpansion';
 
@@ -30,7 +31,7 @@ export default function AtAGlancePanel() {
         <Grid item xs={10} className={classes.subGridRoot}>
           <Grid container spacing={0}>
             <Grid item xs={4}>
-              <CallInfoExpansion />
+              <CustomerExpansion />
             </Grid>
             <Grid item xs={4}>
               <CallInfoExpansion />

@@ -2,5 +2,6 @@
     "title":"Mr.",
     "name": "James Bond",
     "date_of_birth": "1973/03/27",
-    "account_type": "currentfrom"
+    "address":"102 Manchester Road, Manchester M22 5ZZ",
+    "account_type": ["Current", "Mortgage", "Cards"]
 }

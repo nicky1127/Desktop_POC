@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     height: '100%'
-    
   },
   drawer: {
     width: drawerWidth,
@@ -112,33 +111,6 @@ export default function MiniDrawer() {
 
   let customerInfo = null;
 
-  if (open) {
-    customerInfo = (
-      <div>
-        <Paper className={classes.customerInfo}>
-          <Typography className={classes.customerInfo} variant="h5" component="h3">
-            Customer Info
-          </Typography>
-          <List dense={true}>
-            <ListItem>
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary={`${customers.title}  ${customers.name}`} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary={`DOB:  ${customers.date_of_birth}`} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary={`Account Type:  ${customers.account_type}`} />
-            </ListItem>
-          </List>
-        </Paper>
-        <Divider />
-      </div>
-    );
-  }
-
   return (
     <div className={classes.container}>
       <div className={classes.root}>
@@ -163,7 +135,6 @@ export default function MiniDrawer() {
             </IconButton>
           </div>
           <Divider />
-          {customerInfo}
           <List>
             <ListItem
               button
