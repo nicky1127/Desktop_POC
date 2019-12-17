@@ -41,9 +41,6 @@ export default function CallInfoExpansion() {
       <ExpansionPanel>
         <ExpansionPanelSummary classes={{root: classes.expansionSummary}} expandIcon={<ExpandMoreIcon />} id="panel1a-header">
           <div>
-            <Typography className={classes.heading} variant="h1">
-              Call Information
-            </Typography>
             <List dense={true}>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
