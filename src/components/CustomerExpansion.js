@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     fontWeight: theme.typography.fontWeightRegular,
     textAlign: 'right'
   },
+  name:{
+    fontWeight:"bold"
+  },
   expansionSummary: {
     height: '15vh'
   }
@@ -37,8 +40,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function CallInfoExpansion() {
   const classes = useStyles();
-
-  const waitTime = moment.duration(callInfo.wait_time, 'seconds').seconds();
 
   return (
     <div className={classes.root}>
@@ -56,7 +57,7 @@ export default function CallInfoExpansion() {
                     <ListItemIcon className={classes.icon}>
                       <PersonIcon />
                     </ListItemIcon>
-                    <ListItemText primary={`${customers.title}  ${customers.name}`} />
+                    <ListItemText className={classes.name} primary={`${customers.title}  ${customers.name}`} />
                   </ListItem>
                 </Grid>
                 <Grid item xs={4}>

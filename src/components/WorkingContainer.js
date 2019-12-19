@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
     zIndex: 3,
-    height: '68vh'
+    height: '70vh'
   },
   root: {
     display: 'flex',
