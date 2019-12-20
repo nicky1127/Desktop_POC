@@ -1,30 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import MainHeader from './components/MainHeader';
-import WorkingContainer from './components/WorkingContainer';
-import AvayaToolBar from './components/AvayaToolBar';
+import { BrowserRouter as Router, Switch,Route} from 'react-router-dom';
+import Main from './pages/Main';
+import Login from './pages/Login';
 
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: '23vh',
-    backgroundColor: '#9e9e9e'
-  }
-}));
 
 function App() {
-  const classes = useStyles();
   return (
-    <div>
-      <MainHeader className={classes.mainHeader} />
-      <Paper className={classes.paper} />
-      <WorkingContainer className={classes.workingContainer} />
-      <AvayaToolBar />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login}/>
+        <Route exact path="/page/main" component={Main}/>
+      </Switch>
+    </Router>
   );
 }
 
