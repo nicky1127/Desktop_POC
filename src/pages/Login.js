@@ -41,7 +41,11 @@ const useStyles = makeStyles(theme => ({
   },
   formField: {
     width: '100%',
-    margin: '30px 0'
+    margin: '20px 0'
+  },
+  forgotPW: {
+      fontSize: '12px',
+      lineHeight:'25px'
   }
 }));
 
@@ -107,10 +111,18 @@ function Main() {
                     )
                   }}
                 />
-                <Button variant="contained" color="primary">
-                  Log in
-                </Button>
-                
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Button variant="contained" color="primary">
+                      Log in
+                    </Button>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Button color="primary">
+                      <Typography className={classes.forgotPW}>Forgot your password?</Typography>
+                    </Button>
+                  </Grid>
+                </Grid>
               </FormControl>
             </Grid>
             <Grid item xs={2} />
