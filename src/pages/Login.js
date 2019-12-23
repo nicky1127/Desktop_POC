@@ -59,14 +59,14 @@ const useStyles = makeStyles(theme => ({
 
 function Main() {
   const classes = useStyles();
-  const { stage, setStage } = useState('loading');
+  const [ stage, setStage ] = useState('loading');
   const [username, setUsername] = useState('');
   const [passwword, setPassword] = useState('');
 
   const checkUser = async () => {
     try {
       setStage('loading');
-      let user;
+      let user = api.authUser();
       if (user) {
         setStage('redirect');
       } else {
