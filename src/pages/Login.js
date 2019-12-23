@@ -60,8 +60,8 @@ const useStyles = makeStyles(theme => ({
 function Main() {
   const classes = useStyles();
   const { stage, setStage } = useState('loading');
-  const { username, setUsername } = useState(null);
-  const { passwword, setPassword } = useState(null);
+  const [username, setUsername] = useState('');
+  const [passwword, setPassword] = useState('');
 
   const checkUser = async () => {
     try {
@@ -75,6 +75,12 @@ function Main() {
     } catch (err) {
       setStage('ready');
     }
+  };
+  const onChangeUsername = evt => {
+    setUsername(evt.target.value);
+  };
+  const onChangePassword = evt => {
+    setPassword(evt.target.value);
   };
   return (
     <div className={classes.root}>
@@ -101,6 +107,7 @@ function Main() {
               <FormControl component="fieldset" className={classes.form}>
                 <TextField
                   className={classes.formField}
+                  value={username}
                   id="username-input"
                   label="Username"
                   autoComplete="current-password"
@@ -113,6 +120,7 @@ function Main() {
                       </InputAdornment>
                     )
                   }}
+                  onChange={onChangeUsername}
                 />
                 <TextField
                   className={classes.formField}
@@ -129,6 +137,7 @@ function Main() {
                       </InputAdornment>
                     )
                   }}
+                  onChange={onChangePassword}
                 />
                 <Grid container>
                   <Grid item xs={4}>
