@@ -17,6 +17,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
 
+import api from '../api/api';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -59,14 +61,21 @@ const useStyles = makeStyles(theme => ({
 
 function Main() {
   const classes = useStyles();
-  const [ stage, setStage ] = useState('loading');
+  const [stage, setStage] = useState('loading');
   const [username, setUsername] = useState('');
-  const [passwword, setPassword] = useState('');
+  const [password, setPassword] = useState('');
 
+  const onChangeUsername = evt => {
+    setUsername(evt.target.value);
+  };
+  const onChangePassword = evt => {
+    setPassword(evt.target.value);
+  };
   const checkUser = async () => {
     try {
       setStage('loading');
-      let user = api.authUser();
+      //   let user = api.authUser();
+      let user;
       if (user) {
         setStage('redirect');
       } else {
@@ -76,11 +85,20 @@ function Main() {
       setStage('ready');
     }
   };
-  const onChangeUsername = evt => {
-    setUsername(evt.target.value);
-  };
-  const onChangePassword = evt => {
-    setPassword(evt.target.value);
+  const onSubmit = async () => {
+    try {
+      if (username !== '' && password !== '') {
+        setStage('loading');
+        await api.authLogin({ username, password });
+        const user = await api.authUser();
+        setStage('redirect');
+      } else {
+        window.alert('please provide username and password');
+      }
+    } catch (err) {
+      window.alert('login failed');
+      setStage('ready');
+    }
   };
   return (
     <div className={classes.root}>
@@ -141,7 +159,7 @@ function Main() {
                 />
                 <Grid container>
                   <Grid item xs={4}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={onSubmit}>
                       Log in
                     </Button>
                   </Grid>

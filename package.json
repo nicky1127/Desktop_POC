@@ -16,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "mock-api": "node mock-api.js",
     "test": "react-scripts test",
     "coverage": "react-scripts test --env=jsdom --coverage --watchAll"
   },
