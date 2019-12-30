@@ -16,6 +16,15 @@ const secret = '112233445566778899';
 
 router.use(jwt({ secret, credentialsRequired: false }));
 
+function authRetrieve(req, res) {
+  //validate token
+  if (!req.user) return res.sendStatus(401);
+  const data = req.user; // decode JWT
+  res.json(data);
+}
+
+router.get('/api/auth/user', authRetrieve);
+
 //Login
 function authCreate(req, res) {
   //create token

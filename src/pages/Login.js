@@ -91,7 +91,8 @@ function Main() {
         setStage('loading');
         const response = await api.authLogin({ username, password });
         console.log('response', response);
-        // const user = await api.authUser();
+        const user = await api.authUser();
+        console.log('user in Submit', user);
         setStage('redirect');
       } else {
         window.alert('please provide username and password');

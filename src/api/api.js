@@ -11,6 +11,23 @@ export class Api {
   constructor() {
     this.cache = cache;
     this.token = this.cache.getItem('token');
+    this.http = this.newHttp();
+  }
+
+  newHttp() {
+    const http = this.http || axios.create(config);
+    if (!this.token) {
+      this.token = this.cache.getItem('token');
+    }
+
+    //add AUTH TOKEN HEADER
+    if (this.token) {
+      //alter defaults after instance has been created
+      http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+    } else {
+      delete http.defaults.headers.common.Authorization;
+    }
+    return http;
   }
 
   async makeCacheId(url, params = {}) {
@@ -20,7 +37,7 @@ export class Api {
 
   async _get(url, params = {}) {
     try {
-      const response = await http.get(url, { params });
+      const response = await this.http.get(url, { params });
       return response.data;
     } catch (err) {
       throw err;
@@ -39,12 +56,12 @@ export class Api {
     }
     return result;
   }
-  
+
   async authLogin({ username, password }) {
     const auth = { username, password };
     let response;
     try {
-      const httpResponse = await http.post(uriAuth, { auth });
+      const httpResponse = await this.http.post(uriAuth, { auth });
       if (httpResponse.data.error) {
         throw new Error(httpResponse.data.error);
       }
