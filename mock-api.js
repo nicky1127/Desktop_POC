@@ -14,7 +14,7 @@ const name = 'mock-api.desktop.local';
 const port = process.env.PORT || 5000;
 const secret = '112233445566778899';
 
-router.use(jwt({secret, credentialsRequired: false}));
+router.use(jwt({ secret, credentialsRequired: false }));
 
 //Login
 function authCreate(req, res) {

@@ -17,7 +17,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
 
-import api from '../api/api';
+import api from '../api/Api';
 
 const useStyles = makeStyles(theme => ({
   root: {
