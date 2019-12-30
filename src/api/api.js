@@ -1,8 +1,9 @@
 import axios from 'axios';
-import cache, { Cache } from '../Cache';
+import cache from '../Cache';
 
 const baseURL = '/api';
 const uriAuth = '/auth';
+const uriAuthUser = '/auth/user';
 const config = { baseURL };
 const http = axios.create(config);
 
@@ -34,6 +35,15 @@ export class Api {
     }
 
     return response;
+  }
+
+  async authUser() {
+    let user = null;
+    if (this.token) {
+      const params = {};
+      user = await this._getCached(uriAuthUser, params);
+    }
+    return user;
   }
 }
 
