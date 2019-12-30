@@ -89,8 +89,9 @@ function Main() {
     try {
       if (username !== '' && password !== '') {
         setStage('loading');
-        await api.authLogin({ username, password });
-        const user = await api.authUser();
+        const response = await api.authLogin({ username, password });
+        console.log('response', response);
+        // const user = await api.authUser();
         setStage('redirect');
       } else {
         window.alert('please provide username and password');
