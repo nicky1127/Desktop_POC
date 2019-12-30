@@ -3,6 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const jwt = require('express-jwt');
+const jwtManager = require('jsonwebtoken');
 
 const app = express();
 
@@ -10,6 +12,9 @@ router.use(bodyParser.json());
 
 const name = 'mock-api.desktop.local';
 const port = process.env.PORT || 5000;
+const secret = '112233445566778899';
+
+router.use(jwt({secret, credentialsRequired: false}));
 
 //Login
 function authCreate(req, res) {
@@ -28,7 +33,7 @@ function authCreate(req, res) {
       firstName,
       lastName
     };
-    token = userData;
+    token = jwtManager.sign(userData, secret);
   } else {
     //no token to be given
     error = 'Invalid Credentails';

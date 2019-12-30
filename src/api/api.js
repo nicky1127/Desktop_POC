@@ -9,7 +9,6 @@ export class Api {
   async authLogin({ username, password }) {
     const auth = { username, password };
     let response;
-    console.log('username in api', username, password);
     try {
       console.log('auth in api', auth);
       const httpResponse = await http.post(uriAuth, { auth });
