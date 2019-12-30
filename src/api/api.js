@@ -12,6 +12,34 @@ export class Api {
     this.cache = cache;
     this.token = this.cache.getItem('token');
   }
+
+  async makeCacheId(url, params = {}) {
+    const data = { url, params };
+    return JSON.stringify(data);
+  }
+
+  async _get(url, params = {}) {
+    try {
+      const response = await http.get(url, { params });
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async _getCached(url, params = {}, expiryMinutes = 60) {
+    const id = await this.makeCacheId(url, params);
+    let result = this.cache.getItem(id);
+
+    if (result) {
+      //ok
+    } else {
+      result = await this._get(url, params);
+      this.cache.setItem(id, result, expiryMinutes);
+    }
+    return result;
+  }
+  
   async authLogin({ username, password }) {
     const auth = { username, password };
     let response;
