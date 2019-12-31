@@ -35,7 +35,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'right'
   },
   name: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    overflow:'hidden',
+    width: '60%',
+    height: '20px'
+  },
+  address: {
+    fontWeight: 'bold',
+    overflow:'hidden',
+    width: '60%',
+    height: '20px'
   },
   expansionContainer: {
     borderBottom: '5px solid #26a69a',
@@ -79,7 +88,7 @@ export default function Expansion(props) {
                     <PersonIcon />
                   </ListItemIcon>
                   <ListItemText
-                    className={classes.name}
+                    classes={{root:classes.name}}
                     primary={`${customers.title}  ${customers.name}`}
                   />
                 </ListItem>
@@ -97,7 +106,7 @@ export default function Expansion(props) {
               <ListItemIcon className={classes.icon}>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary={`${customers.address}`} />
+              <ListItemText classes={{root:classes.address}} primary={`${customers.address}`} />
             </ListItem>
             <ListItem>
               <ListItemText primary={`Account Type:  ${customers.account_type}`} />
