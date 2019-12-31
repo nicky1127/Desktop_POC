@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Expansion(props) {
+export default function CallInfoExpansion(props) {
   const [checked, setChecked] = useState(false);
 
   const onClickBtn = () => {
