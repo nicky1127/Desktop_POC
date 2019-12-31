@@ -88,12 +88,19 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(2),
     minWidth: 120
+  },
+  slide1: {
+    position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
+    display: props => (props.activeStep === 0 ? 'block' : 'none')
+  },
+  slide2: {
+    position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
+    display: props => (props.activeStep === 1 ? 'block' : 'none')
   }
 }));
 
 export default function Expansion(props) {
   const [checked, setChecked] = useState(false);
-  const classes = useStyles({ ...props, checked });
 
   const onClickBtn = () => {
     setChecked(prev => !prev);
@@ -104,8 +111,6 @@ export default function Expansion(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [bank, setBank] = React.useState('');
   const [account, setAccount] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-
   const handleNext = () => {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
@@ -134,14 +139,8 @@ export default function Expansion(props) {
     setAccount(event.target.value);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
   //
+  const classes = useStyles({ ...props, checked, activeStep });
 
   return (
     <div className={classes.root}>
@@ -183,7 +182,7 @@ export default function Expansion(props) {
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
             <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0}>
+              <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
                     <FormControl className={classes.formControl}>
@@ -209,9 +208,6 @@ export default function Expansion(props) {
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
-                        //   open={open}
-                        onClose={handleClose}
-                        onOpen={handleOpen}
                         value={account}
                         onChange={handleChangeAccount}
                       >
@@ -226,7 +222,7 @@ export default function Expansion(props) {
                   </div>
                 </Paper>
               </Fade>
-              <Fade in={activeStep === 1}>
+              <Fade in={activeStep === 1} className={classes.slide2}>
                 <Paper elevation={4}>
                   <div>
                     <FormControl className={classes.formControl}>
@@ -248,22 +244,19 @@ export default function Expansion(props) {
                   </div>
                   <div>
                     <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
+                      <InputLabel id="demo-controlled-open-select-label">Mortgage</InputLabel>
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
-                        //   open={open}
-                        onClose={handleClose}
-                        onOpen={handleOpen}
                         value={account}
                         onChange={handleChangeAccount}
                       >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>Current</MenuItem>
-                        <MenuItem value={20}>Savings</MenuItem>
-                        <MenuItem value={30}>Investment</MenuItem>
+                        <MenuItem value={10}>Ten years</MenuItem>
+                        <MenuItem value={20}>Twenty years</MenuItem>
+                        <MenuItem value={30}>Thirty years</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
