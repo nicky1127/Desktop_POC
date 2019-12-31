@@ -65,9 +65,9 @@ function Main() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-//   useEffect(() => {
-//     setTimeout(checkUser(), 5000);
-//   });
+  useEffect(() => {
+    setTimeout(() => checkUser(), 100);
+  }, []);
 
   const onChangeUsername = evt => {
     setUsername(evt.target.value);
