@@ -58,6 +58,7 @@ const useStyles = makeStyles(theme => ({
     height: '20px'
   },
   expansionContainer: {
+    boxSizing: 'border-box',
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },

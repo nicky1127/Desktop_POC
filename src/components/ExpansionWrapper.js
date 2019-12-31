@@ -34,7 +34,7 @@ export default function AtAGlancePanel() {
               <Expansion height='16vh'/>
             </Grid>
             <Grid item xs={4}>
-              <CallInfoExpansion />
+              <CallInfoExpansion height='16vh'/>
             </Grid>
             <Grid item xs={4}>
               <CallContextExpansion />
