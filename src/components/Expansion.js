@@ -53,13 +53,15 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '49%'
+    left: '49%',
+    transition:'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
   }
 }));
 
 export default function Expansion(props) {
-  const classes = useStyles(props);
   const [checked, setChecked] = useState(false);
+  const classes = useStyles({ ...props, checked });
 
   const onClickBtn = () => {
     setChecked(prev => !prev);
