@@ -23,11 +23,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import constants from '../constants';
-import callInfo from '../mock/api/callInfo.json';
 
 import customers from '../mock/api/customers.json';
 
-const { timeFormat } = constants;
 
 const useStyles = makeStyles(theme => ({
   root: {
