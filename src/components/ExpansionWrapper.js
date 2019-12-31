@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import CustomerExpansion from './CustomerExpansion';
+import Expansion from './Expansion';
 import CallInfoExpansion from './CallInfoExpansion';
 import CallContextExpansion from './CallContextExpansion';
 
@@ -11,11 +11,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AtAGlancePanel() {
+export default function ExpansionWrapper() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <CustomerExpansion />
+      <Expansion />
     </div>
   );
 }
