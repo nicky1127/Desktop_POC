@@ -189,7 +189,7 @@ export default function MiniDrawer() {
             <iframe
               className={classes.iframe}
               src={`${appURL}`}
-              allowfullscreen
+              allowFullScreen
               allow="encrypted-media"
             ></iframe>
           </div>

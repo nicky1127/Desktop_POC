@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -65,6 +65,10 @@ function Main() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setTimeout(checkUser(), 5000);
+  });
+
   const onChangeUsername = evt => {
     setUsername(evt.target.value);
   };
@@ -74,8 +78,8 @@ function Main() {
   const checkUser = async () => {
     try {
       setStage('loading');
-      //   let user = api.authUser();
-      let user;
+      let user = await api.authUser();
+      //   let user;
       if (user) {
         setStage('redirect');
       } else {
@@ -102,7 +106,9 @@ function Main() {
       setStage('ready');
     }
   };
-  return (
+  const renderRedirect = () => <Redirect to="/page/main" />;
+
+  const renderForm = () => (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
@@ -179,6 +185,15 @@ function Main() {
       </Container>
     </div>
   );
+
+  let content = null;
+  if (stage === 'redirect') {
+    content = renderRedirect();
+  } else {
+    content = renderForm();
+  }
+
+  return content;
 }
 
 export default Main;
