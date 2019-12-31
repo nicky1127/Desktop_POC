@@ -17,7 +17,7 @@ function MainHeader() {
   return (
     <div className={classes.root}>
       <ControlPanel />
-      <AtAGlancePanel />
+      {/* <AtAGlancePanel /> */}
       <ExpansionWrapper />
     </div>
   );

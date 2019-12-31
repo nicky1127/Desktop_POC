@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   paper: {
-    height: '23vh',
+    height: '25vh',
     backgroundColor: '#9e9e9e'
   }
 }));

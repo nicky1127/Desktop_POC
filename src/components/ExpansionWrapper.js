@@ -8,17 +8,40 @@ import CallContextExpansion from './CallContextExpansion';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
+  },
+  subGridRoot: {
+    height: '16vh'
+  },
+  logo: {
+    backgroundColor: '#fff'
   }
 }));
 
-export default function ExpansionWrapper() {
+export default function AtAGlancePanel() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Expansion 
-      height='17vh'
-      width='25%'
-      />
+      <Grid container spacing={0}>
+        <Grid item xs={2} className={classes.logo}>
+          <img
+            src="/images/bee_icon.jpg"
+            style={{ width: '50%', display: 'block', margin: '15px auto' }}
+          />
+        </Grid>
+        <Grid item xs={10} className={classes.subGridRoot}>
+          <Grid container spacing={0}>
+            <Grid item xs={4}>
+              <Expansion height='16vh'/>
+            </Grid>
+            <Grid item xs={4}>
+              <CallInfoExpansion />
+            </Grid>
+            <Grid item xs={4}>
+              <CallContextExpansion />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }
