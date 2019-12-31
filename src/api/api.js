@@ -77,6 +77,7 @@ export class Api {
     if (access_token) {
       this.cache.setItem('token', access_token, tokenExpiryInMins);
       this.token = access_token;
+      this.http = this.newHttp();
     }
 
     return response;
