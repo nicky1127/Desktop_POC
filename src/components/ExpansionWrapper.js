@@ -15,7 +15,10 @@ export default function ExpansionWrapper() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Expansion />
+      <Expansion 
+      height='17vh'
+      width='25%'
+      />
     </div>
   );
 }

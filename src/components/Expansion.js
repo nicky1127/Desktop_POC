@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Collapse from '@material-ui/core/Collapse';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import HomeIcon from '@material-ui/icons/Home';
@@ -22,7 +26,7 @@ const { timeFormat } = constants;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // width: '25%'
+    width: props => props.width
   },
   icon: { marginRight: theme.spacing(-2) },
   heading: {
@@ -30,64 +34,85 @@ const useStyles = makeStyles(theme => ({
     fontWeight: theme.typography.fontWeightRegular,
     textAlign: 'right'
   },
-  name:{
-    fontWeight:"bold"
+  name: {
+    fontWeight: 'bold'
+  },
+  expansionContainer: {
+    borderBottom: '5px solid #26a69a',
+    position: 'relative'
   },
   expansionSummary: {
-    height: '15vh'
+    height: props => props.height
+  },
+  expansionDropdown: {
+    height: '30vh'
+  },
+  expandIcon: {
+    padding: '3px',
+    display: 'block',
+    margin: '0 auto',
+    position: 'absolute',
+    bottom: '5px',
+    left: '49%'
   }
 }));
 
-export default function Expansion() {
-  const classes = useStyles();
+export default function Expansion(props) {
+  const classes = useStyles(props);
+  const [checked, setChecked] = useState(false);
+
+  const onClickBtn = () => {
+    setChecked(prev => !prev);
+  };
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          classes={{ root: classes.expansionSummary }}
-          expandIcon={<ExpandMoreIcon />}
-          id="panel1a-header"
-        >
-          <div>
-            <List dense={true}>
-              <Grid container>
-                <Grid item xs={8}>
-                  <ListItem>
-                    <ListItemIcon className={classes.icon}>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText className={classes.name} primary={`${customers.title}  ${customers.name}`} />
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    <ListItemIcon className={classes.icon}>
-                      <CakeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={`${customers.date_of_birth}`} />
-                  </ListItem>
-                </Grid>
+      <Paper classes={{ root: classes.expansionContainer }}>
+        <Box classes={{ root: classes.expansionSummary }}>
+          <List dense={true}>
+            <Grid container>
+              <Grid item xs={8}>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.name}
+                    primary={`${customers.title}  ${customers.name}`}
+                  />
+                </ListItem>
               </Grid>
-              <ListItem>
-                <ListItemIcon className={classes.icon}>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${customers.address}`} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary={`Account Type:  ${customers.account_type}`} />
-              </ListItem>
-            </List>
-          </div>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+              <Grid item xs={4}>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <CakeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={`${customers.date_of_birth}`} />
+                </ListItem>
+              </Grid>
+            </Grid>
+            <ListItem>
+              <ListItemIcon className={classes.icon}>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={`${customers.address}`} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={`Account Type:  ${customers.account_type}`} />
+            </ListItem>
+          </List>
+        </Box>
+        <Collapse in={checked}>
+          <Paper elevation={4} className={classes.expansionDropdown}>
+            <svg className={classes.svg}>
+              <polygon points="0,100 50,00, 100,100" className={classes.polygon} />
+            </svg>
+          </Paper>
+        </Collapse>
+        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+          <ExpandMoreIcon />
+        </IconButton>
+      </Paper>
     </div>
   );
 }
