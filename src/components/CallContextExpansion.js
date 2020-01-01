@@ -24,7 +24,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: props => props.width
+    width: '100%',
+    position: 'absolute'
   },
   icon: { marginRight: theme.spacing(-2) },
   expansionContainer: {

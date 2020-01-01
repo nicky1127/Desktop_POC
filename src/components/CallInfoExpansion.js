@@ -32,7 +32,8 @@ const { timeFormat } = constants;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: props => props.width
+    width: '100%',
+    position: 'absolute'
   },
   icon: { marginRight: theme.spacing(-2) },
   heading: {
