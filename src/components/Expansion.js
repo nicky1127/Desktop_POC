@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Collapse from '@material-ui/core/Collapse';
 import Fade from '@material-ui/core/Fade';
+import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
-import PhonePausedIcon from '@material-ui/icons/PhonePaused';
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
+import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
-//carousel
+// carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -22,12 +22,33 @@ import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
+import constants from '../constants';
+
+import customers from '../mock/api/customers.json';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     position: 'absolute'
   },
   icon: { marginRight: theme.spacing(-2) },
+  heading: {
+    fontSize: theme.typography.pxToRem(30),
+    fontWeight: theme.typography.fontWeightRegular,
+    textAlign: 'right'
+  },
+  name: {
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    width: '60%',
+    height: '20px'
+  },
+  address: {
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    width: '60%',
+    height: '20px'
+  },
   expansionContainer: {
     boxSizing: 'border-box',
     borderBottom: '5px solid #26a69a',
@@ -68,27 +89,17 @@ const useStyles = makeStyles(theme => ({
   slide2: {
     position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 1 ? 'block' : 'none')
-  },
-  icon: { marginRight: theme.spacing(-2) },
-  blueIcon: {
-    color: '#1e88e5'
-  },
-  redIcon: {
-    color: '#d50000'
-  },
-  greenIcon: {
-    color: '#558b2f'
   }
 }));
 
-export default function CallContextExpansion(props) {
+export default function Expansion(props) {
   const [checked, setChecked] = useState(false);
 
   const onClickBtn = () => {
     setChecked(prev => !prev);
   };
 
-  //carousel
+  // carousel
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [bank, setBank] = React.useState('');
@@ -97,9 +108,8 @@ export default function CallContextExpansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
         return 0;
-      } else {
-        return prevActiveStep + 1;
       }
+      return prevActiveStep + 1;
     });
   };
 
@@ -107,9 +117,8 @@ export default function CallContextExpansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 0) {
         return 1;
-      } else {
-        return prevActiveStep - 1;
       }
+      return prevActiveStep - 1;
     });
   };
 
@@ -128,25 +137,36 @@ export default function CallContextExpansion(props) {
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
         <Box classes={{ root: classes.expansionSummary }}>
-          <List dense={true}>
-            <ListItem>
-              <Grid container spacing={0}>
-                <Grid item xs={4}>
-                  <PhoneInTalkIcon className={classes.blueIcon} /> 01:55
-                </Grid>
-                <Grid item xs={4}>
-                  <PhonePausedIcon className={classes.redIcon} /> 02:22
-                </Grid>
-                <Grid item xs={4}>
-                  <PhoneCallbackIcon className={classes.greenIcon} /> 9207
-                </Grid>
+          <List dense>
+            <Grid container>
+              <Grid item xs={8}>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    classes={{ root: classes.name }}
+                    primary={`${customers.title}  ${customers.name}`}
+                  />
+                </ListItem>
               </Grid>
+              <Grid item xs={4}>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <CakeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={`${customers.date_of_birth}`} />
+                </ListItem>
+              </Grid>
+            </Grid>
+            <ListItem>
+              <ListItemIcon className={classes.icon}>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText classes={{ root: classes.address }} primary={`${customers.address}`} />
             </ListItem>
             <ListItem>
-              <ListItemText primary={`Intent: Replace Card`} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary={`Say Anything: I would like to replace my credit card`} />
+              <ListItemText primary={`Account Type:  ${customers.account_type}`} />
             </ListItem>
           </List>
         </Box>
