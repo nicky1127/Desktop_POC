@@ -25,12 +25,12 @@ import customers from '../mock/api/customers.json';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
-  container: {
+  root: {
     position: 'relative',
     zIndex: 3,
-    height: '70vh'
+    height: '68vh'
   },
-  root: {
+  container: {
     display: 'flex',
     height: '100%'
   },
@@ -112,8 +112,8 @@ export default function MiniDrawer() {
   let customerInfo = null;
 
   return (
-    <div className={classes.container}>
-      <div className={classes.root}>
+    <div className={classes.root}>
+      <div className={classes.container}>
         <CssBaseline />
         <Drawer
           variant="permanent"
