@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import api from '../api/Api';
+import apiAuth from '../api/ApiAuth';
 
 export default function Logout() {
   const [ready, setReady] = useState(false);
@@ -12,7 +12,7 @@ export default function Logout() {
   }, []);
 
   const initLogout = async () => {
-    const result = await api.authLogout();
+    const result = await apiAuth.authLogout();
     setReady(true);
     return result;
   };

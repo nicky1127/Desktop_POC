@@ -17,7 +17,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
 
-import api from '../api/Api';
+import apiAuth from '../api/ApiAuth';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,7 +80,7 @@ function Login() {
   const checkUser = async () => {
     try {
       setStage('loading');
-      const user = await api.authUser();
+      const user = await apiAuth.authUser();
       if (user) {
         setStage('redirect');
       } else {
@@ -94,8 +94,8 @@ function Login() {
     try {
       if (username !== '' && password !== '') {
         setStage('loading');
-        const response = await api.authLogin({ username, password });
-        const user = await api.authUser();
+        const response = await apiAuth.authLogin({ username, password });
+        const user = await apiAuth.authUser();
         setStage('redirect');
       } else {
         window.alert('please provide username and password');
