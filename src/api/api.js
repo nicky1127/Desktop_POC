@@ -65,7 +65,7 @@ export class Api {
     return result;
   }
 
-  async authLogin({ username, password }) {
+  authLogin = async ({ username, password }) => {
     const auth = { username, password };
     let response;
     try {
@@ -89,16 +89,24 @@ export class Api {
     }
 
     return response;
-  }
+  };
 
-  async authUser() {
+  authUser = async () => {
     let user = null;
     if (this.token) {
       const params = {};
       user = await this._getCached(uriAuthUser, params);
     }
     return user;
-  }
+  };
+
+  authLogout = async () => {
+    this.cache.clear();
+    this.token = null;
+    this.http = this.newHttp();
+
+    return true;
+  };
 }
 
 const config = { baseURL };

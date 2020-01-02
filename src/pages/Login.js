@@ -59,14 +59,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Main() {
+function Login() {
   const classes = useStyles();
   const [stage, setStage] = useState('loading');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    setTimeout(() => checkUser(), 100);
+    setTimeout(async () => {
+      await checkUser();
+    }, 100);
   }, []);
 
   const onChangeUsername = evt => {
@@ -78,8 +80,7 @@ function Main() {
   const checkUser = async () => {
     try {
       setStage('loading');
-      let user = await api.authUser();
-      //   let user;
+      const user = await api.authUser();
       if (user) {
         setStage('redirect');
       } else {
@@ -194,4 +195,4 @@ function Main() {
   return content;
 }
 
-export default Main;
+export default Login;
