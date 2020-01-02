@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
 import axios from 'axios';
 import cache from '../Cache';
 
@@ -5,7 +7,6 @@ const baseURL = '/api';
 const uriAuth = '/auth';
 const uriAuthUser = '/auth/user';
 const config = { baseURL };
-const http = axios.create(config);
 
 export class Api {
   constructor() {
@@ -20,9 +21,9 @@ export class Api {
       this.token = this.cache.getItem('token');
     }
 
-    //add AUTH TOKEN HEADER
+    // add AUTH TOKEN HEADER
     if (this.token) {
-      //alter defaults after instance has been created
+      // alter defaults after instance has been created
       http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
     } else {
       delete http.defaults.headers.common.Authorization;
@@ -49,7 +50,7 @@ export class Api {
     let result = this.cache.getItem(id);
 
     if (result) {
-      //ok
+      // ok
     } else {
       result = await this._get(url, params);
       this.cache.setItem(id, result, expiryMinutes);
