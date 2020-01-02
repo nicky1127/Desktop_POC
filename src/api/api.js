@@ -1,22 +1,29 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 import axios from 'axios';
-import cache from '../Cache';
+import cache, { Cache } from '../Cache';
 
 const baseURL = '/api';
 const uriAuth = '/auth';
 const uriAuthUser = '/auth/user';
-const config = { baseURL };
 
 export class Api {
-  constructor() {
-    this.cache = cache;
+  constructor(config = null, cacheClient = null) {
+    this.config = config || this._defaultConfig();
+    this.cache = cacheClient || cache;
     this.token = this.cache.getItem('token');
     this.http = this.newHttp();
   }
 
+  _defaultConfig() {
+    return {
+      baseURL
+    };
+  }
+
   newHttp() {
-    const http = this.http || axios.create(config);
+    const http = this.http || axios.create(this.config);
     if (!this.token) {
       this.token = this.cache.getItem('token');
     }
@@ -94,6 +101,8 @@ export class Api {
   }
 }
 
-const api = new Api();
+const config = { baseURL };
+const cacheClient = new Cache();
+const api = new Api(config, cacheClient);
 
 export default api;
