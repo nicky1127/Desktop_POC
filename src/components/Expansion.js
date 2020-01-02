@@ -12,7 +12,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
-//carousel
+// carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -25,7 +25,6 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import constants from '../constants';
 
 import customers from '../mock/api/customers.json';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -100,7 +99,7 @@ export default function Expansion(props) {
     setChecked(prev => !prev);
   };
 
-  //carousel
+  // carousel
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [bank, setBank] = React.useState('');
@@ -109,9 +108,8 @@ export default function Expansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
         return 0;
-      } else {
-        return prevActiveStep + 1;
       }
+      return prevActiveStep + 1;
     });
   };
 
@@ -119,9 +117,8 @@ export default function Expansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 0) {
         return 1;
-      } else {
-        return prevActiveStep - 1;
       }
+      return prevActiveStep - 1;
     });
   };
 
@@ -140,7 +137,7 @@ export default function Expansion(props) {
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
         <Box classes={{ root: classes.expansionSummary }}>
-          <List dense={true}>
+          <List dense>
             <Grid container>
               <Grid item xs={8}>
                 <ListItem>

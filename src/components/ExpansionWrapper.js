@@ -10,8 +10,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
-  grid:{
-      position: 'relative'
+  grid: {
+    position: 'relative'
   },
   subGridRoot: {
     height: '16vh',
@@ -36,13 +36,13 @@ export default function AtAGlancePanel() {
         <Grid item xs={10} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
-              <Expansion height='16vh'/>
+              <Expansion height="16vh" />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallInfoExpansion height='16vh'/>
+              <CallInfoExpansion height="16vh" />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallContextExpansion height='16vh'/>
+              <CallContextExpansion height="16vh" />
             </Grid>
           </Grid>
         </Grid>

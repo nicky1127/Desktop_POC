@@ -5,7 +5,6 @@ import MainHeader from '../components/MainHeader';
 import WorkingContainer from '../components/WorkingContainer';
 import AvayaToolBar from '../components/AvayaToolBar';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
