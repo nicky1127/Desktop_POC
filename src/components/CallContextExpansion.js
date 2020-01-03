@@ -143,10 +143,10 @@ export default function CallContextExpansion(props) {
               </Grid>
             </ListItem>
             <ListItem>
-              <ListItemText primary={`Intent: Replace Card`} />
+              <ListItemText primary={`Intent: ${props.customer.Intent}`} />
             </ListItem>
             <ListItem>
-              <ListItemText primary={`Say Anything: I would like to replace my credit card`} />
+              <ListItemText primary={`Say Anything: ${props.customer.Say_Anything}`} />
             </ListItem>
           </List>
         </Box>

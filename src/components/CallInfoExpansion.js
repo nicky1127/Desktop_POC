@@ -23,9 +23,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-
 import constants from '../constants';
-import callInfo from '../mock/api/callInfo.json';
 
 
 const { timeFormat } = constants;
@@ -97,6 +95,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CallInfoExpansion(props) {
+  console.log(props)
   const [checked, setChecked] = useState(false);
 
   const onClickBtn = () => {
@@ -139,7 +138,7 @@ export default function CallInfoExpansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
-  const waitTime = moment.duration(callInfo.wait_time, 'seconds').seconds();
+  const waitTime = moment.duration(props.customer.wait_time, 'seconds').seconds();
 
 
   return (
@@ -152,7 +151,7 @@ export default function CallInfoExpansion(props) {
                    <PhoneInTalkIcon />
                 </ListItemIcon>
                  <ListItemText
-                  primary={`Call Time:  ${moment(callInfo.call_time).format(timeFormat.call_time)}`}
+                  primary={`Call Time:  ${moment(props.customer.call_time).format(timeFormat.call_time)}`}
                 />
               </ListItem>
               <ListItem>
@@ -165,7 +164,7 @@ export default function CallInfoExpansion(props) {
                  <ListItemIcon className={classes.icon}>
                    <ExitToAppIcon />
                  </ListItemIcon>
-                 <ListItemText primary={`Transfer from:  ${callInfo.transfer_from}`} />
+                 <ListItemText primary={`Transfer from:  ${props.customer.transfer_from}`} />
                </ListItem>
              </List>
         </Box>

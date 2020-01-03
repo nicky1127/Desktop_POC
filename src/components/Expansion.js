@@ -24,7 +24,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import constants from '../constants';
 
-import customers from '../mock/api/customers.json';
+// import customers from '../mock/api/customers.json';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -93,6 +93,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Expansion(props) {
+  console.log(props)
   const [checked, setChecked] = useState(false);
 
   const onClickBtn = () => {
@@ -146,7 +147,7 @@ export default function Expansion(props) {
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`${customers.title}  ${customers.name}`}
+                    primary={`${props.customer.title}  ${props.customer.name}`}
                   />
                 </ListItem>
               </Grid>
@@ -155,7 +156,7 @@ export default function Expansion(props) {
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`${customers.date_of_birth}`} />
+                  <ListItemText primary={`${props.customer.date_of_birth}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -163,10 +164,10 @@ export default function Expansion(props) {
               <ListItemIcon className={classes.icon}>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText classes={{ root: classes.address }} primary={`${customers.address}`} />
+              <ListItemText classes={{ root: classes.address }} primary={`${props.customer.address}`} />
             </ListItem>
             <ListItem>
-              <ListItemText primary={`Account Type:  ${customers.account_type}`} />
+              <ListItemText primary={`Account Type:  ${props.customer.account_type}`} />
             </ListItem>
           </List>
         </Box>

@@ -18,3 +18,6 @@ export class ApiSettingsConfig extends Api {
     return settings;
   }
 }
+
+const apiSettingsConfig = new ApiSettingsConfig();
+export default apiSettingsConfig;
