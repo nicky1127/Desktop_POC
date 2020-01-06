@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import api from './api/Api';
+import apiAuth from './api/ApiAuth';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  if (!api.token) {
-    api.token = localStorage.getItem('toke');
+  if (!apiAuth.token) {
+    apiAuth.token = localStorage.getItem('token');
   }
 
   return (
     <Route
       {...rest}
       render={props => {
-        return api.token ? <Component {...props} /> : <Redirect to="/" />;
+        return apiAuth.token ? <Component {...props} /> : <Redirect to="/" />;
       }}
     />
   );
