@@ -5,15 +5,21 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import ProtectedRoute from './ProtectedRoute';
 
+import { Provider } from 'react-redux';
+import configureStore from './redux/configurestore'
+const store = configureStore()
+
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <ProtectedRoute exact path="/page/main" component={Main} />
-        <Route path="/page/logout" component={Logout} />
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <ProtectedRoute exact path="/page/main" component={Main} />
+          <Route path="/page/logout" component={Logout} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 
