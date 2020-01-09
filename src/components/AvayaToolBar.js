@@ -47,8 +47,16 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     backgroundColor: '#558b2f'
   },
+  onCallBtn: {
+    color: '#fff',
+    backgroundColor: '#0000ff'
+  },
+  notReadyBtn: {
+    color: '#fff',
+    backgroundColor: '#ff0000'
+  },
   list: {
-    color:'#455a64',
+    color: '#455a64',
     backgroundColor: '#b0bec5',
     paddingTop: 0,
     paddingBottom: 0
@@ -63,18 +71,47 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AvayaToolBar() {
+export default function AvayaToolBar(props) {
   const classes = useStyles();
 
-  return (
+  const renderNotReady = () => (
     <div className={classes.grow}>
       <Toolbar className={classes.toolBar}>
         <Typography className={classes.title} variant="h4" noWrap>
-          AVAYA
+          CALL CONTROL
         </Typography>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
-          <IconButton color="inherit">
+          <Divider orientation="vertical" />
+          <Paper>
+            <List classes={{ padding: classes.list }}>
+              <ListItem classes={{ root: classes.listItem }}>
+                <ListItemText className={classes.idNumber}>
+                  Agent ID: {props.user.user_Id}
+                </ListItemText>
+              </ListItem>
+              <ListItem classes={{ root: classes.listItem }}>
+                <ListItemText className={classes.idNumber}>Station ID: 1001</ListItemText>
+              </ListItem>
+            </List>
+          </Paper>
+          <Button variant="contained" className={classes.notReadyBtn} onClick={props.setWaiting}>
+            NOT READY
+          </Button>
+        </div>
+      </Toolbar>
+    </div>
+  );
+
+  const renderOnCall = () => (
+    <div className={classes.grow}>
+      <Toolbar className={classes.toolBar}>
+        <Typography className={classes.title} variant="h4" noWrap>
+          CALL CONTROL
+        </Typography>
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
+          <IconButton color="inherit" onClick={props.talking}>
             <PhoneEnabledIcon className={classes.greenIcon} />
           </IconButton>
           <IconButton color="inherit">
@@ -96,7 +133,9 @@ export default function AvayaToolBar() {
           <Paper>
             <List classes={{ padding: classes.list }}>
               <ListItem classes={{ root: classes.listItem }}>
-                <ListItemText className={classes.idNumber}>Agent ID: 10001</ListItemText>
+                <ListItemText className={classes.idNumber}>
+                  Agent ID: {props.user.user_Id}
+                </ListItemText>
               </ListItem>
               <ListItem classes={{ root: classes.listItem }}>
                 <ListItemText className={classes.idNumber}>Station ID: 1001</ListItemText>
@@ -104,10 +143,50 @@ export default function AvayaToolBar() {
             </List>
           </Paper>
           <Button variant="contained" className={classes.readyBtn}>
-            READY (01:03)
+            ON CALL
           </Button>
         </div>
       </Toolbar>
     </div>
   );
+
+  const renderReady = () => (
+    <div className={classes.grow}>
+      <Toolbar className={classes.toolBar}>
+        <Typography className={classes.title} variant="h4" noWrap>
+          CALL CONTROL
+        </Typography>
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
+          <Divider orientation="vertical" />
+          <Paper>
+            <List classes={{ padding: classes.list }}>
+              <ListItem classes={{ root: classes.listItem }}>
+                <ListItemText className={classes.idNumber}>
+                  Agent ID: {props.user.user_Id}
+                </ListItemText>
+              </ListItem>
+              <ListItem classes={{ root: classes.listItem }}>
+                <ListItemText className={classes.idNumber}>Station ID: 1001</ListItemText>
+              </ListItem>
+            </List>
+          </Paper>
+          <Button variant="contained" className={classes.readyBtn}>
+            READY - WAITING FOR CALL
+          </Button>
+        </div>
+      </Toolbar>
+    </div>
+  );
+
+  let content = null;
+  if (props.ready === false && props.onCall === false) {
+    content = renderNotReady();
+  } else if (props.ready === true && props.onCall === false) {
+    content = renderReady();
+  } else if (props.ready === false && props.onCall === true) {
+    content = renderOnCall();
+  }
+
+  return content;
 }

@@ -18,6 +18,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import TextField from '@material-ui/core/TextField';
 
 import apiAuth from '../api/ApiAuth';
+import apiSettingsConfig from '../api/ApiSettings';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -96,6 +97,7 @@ function Login() {
         setStage('loading');
         const response = await apiAuth.authLogin({ username, password });
         const user = await apiAuth.authUser();
+        const settings = await apiSettingsConfig.settings();
         setStage('redirect');
       } else {
         window.alert('please provide username and password');
@@ -105,7 +107,7 @@ function Login() {
       setStage('ready');
     }
   };
-  const renderRedirect = () => <Redirect to="/page/main" />;
+  const renderRedirect = () => <Redirect to="/page/main"/>;
 
   const renderForm = () => (
     <div className={classes.root}>

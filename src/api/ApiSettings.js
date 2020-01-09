@@ -4,7 +4,8 @@ const uriDesktopSettings = '/desktop/v1';
 const settingsExpiryInMinutes = 60; //minutes
 
 export class ApiSettingsConfig extends Api {
-  async setting(params = {}) {
+  async settings(params = {}) {
+    console.log("Settings have been called")
     let settings;
     try {
       const response = await this._getCached(
@@ -13,7 +14,8 @@ export class ApiSettingsConfig extends Api {
         settingsExpiryInMinutes,
         true
       );
-      settings = response;
+      console.log("Settings have been called")
+      settings = response.data;
     } catch (err) {}
     return settings;
   }
