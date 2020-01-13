@@ -11,10 +11,11 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
-import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import CallEndIcon from '@material-ui/icons/CallEnd';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import SmsIcon from '@material-ui/icons/Sms';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import PhonePausedIcon from '@material-ui/icons/PhonePaused';
+import DirectionsIcon from '@material-ui/icons/Directions';
 
 const useStyles = makeStyles(theme => ({
   toolBar: {
@@ -42,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   },
   redIcon: {
     color: '#d50000'
+  },
+  yellowIcon: {
+    color: '#ffff00'
   },
   readyBtn: {
     color: '#fff',
@@ -111,14 +115,11 @@ export default function AvayaToolBar(props) {
         </Typography>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
-          <IconButton color="inherit" onClick={props.talking}>
-            <PhoneEnabledIcon className={classes.greenIcon} />
-          </IconButton>
           <IconButton color="inherit">
-            <VideocamOffIcon className={classes.redIcon} />
+            <PhonePausedIcon className={classes.yellowIcon} />
           </IconButton>
-          <IconButton color="inherit">
-            <ChatBubbleIcon className={classes.greenIcon} />
+          <IconButton color="inherit" onClick={props.hangUp}>
+            <CallEndIcon className={classes.redIcon} />
           </IconButton>
           <IconButton color="inherit">
             <MailIcon className={classes.greenIcon} />
@@ -127,7 +128,7 @@ export default function AvayaToolBar(props) {
             <SmsIcon className={classes.greenIcon} />
           </IconButton>
           <IconButton color="inherit">
-            <ThumbUpIcon className={classes.greenIcon} />
+            <DirectionsIcon className={classes.yellowIcon} />
           </IconButton>
           <Divider orientation="vertical" />
           <Paper>
@@ -142,7 +143,7 @@ export default function AvayaToolBar(props) {
               </ListItem>
             </List>
           </Paper>
-          <Button variant="contained" className={classes.readyBtn}>
+          <Button variant="contained" className={classes.onCallBtn}>
             ON CALL
           </Button>
         </div>

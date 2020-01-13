@@ -4,10 +4,22 @@ const uriCustomer = '/customer/Info';
 const settingsExpiryInMinutes = 60; //minutes
 
 export class ApiCustomer extends Api {
-  async customerInfo(params = {}) {
+    async customerInfo(params = {}) {
+      let customer;
+      try {
+        const response = await this._getCached(uriCustomer, params, settingsExpiryInMinutes, true);
+        customer = response.data;
+      } catch (err) {}
+      return customer;
+    }
+  
+
+  async getCustomerByAccount(Account_Number, Sort_Code) {
     let customer;
+    const params = {Account_Number, Sort_Code}
+    const uriCustomer = '/customer/Info/Account&Sort';
     try {
-      const response = await this._getCached(uriCustomer, params, settingsExpiryInMinutes, true);
+      const response = await this._get(uriCustomer, params);
       customer = response.data;
     } catch (err) {}
     return customer;

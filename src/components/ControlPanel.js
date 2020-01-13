@@ -191,7 +191,7 @@ export default function ControlPanel() {
             Desktop
           </Typography> */}
           <Typography className={classes.avayaIcon} variant="h2" noWrap>
-            A
+            C
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -221,7 +221,7 @@ export default function ControlPanel() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <Assignment />
               </Badge>
             </IconButton>
