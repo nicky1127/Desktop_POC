@@ -52,6 +52,24 @@ function Main() {
   const [customer, setCustomer] = useState([]);
   const [iVRProfile, setIVRProfile] = useState([]);
   const classes = useStyles();
+  const [statusColor, setStatusColor] = React.useState('red');
+  const [levelColor, setLevelColor] = React.useState('red');
+
+  const vConfirmationColor = () => {
+    if (iVRProfile.verified === true) {
+      setStatusColor('blue');
+    } else {
+      //
+    }
+  };
+
+  const vLevelConfirmationColor = (customer) => {
+    if (customer.verification_level > 40) {
+      setLevelColor('blue');
+    } else if(customer.verification_level > 20){
+      setLevelColor('green');
+    }else{}
+  };
 
   useEffect(() => {
     async function fetchUser() {
@@ -90,6 +108,9 @@ function Main() {
         setOnCall(true);
         setReady(false);
         setWithCustomer(true);
+        vConfirmationColor();
+        vLevelConfirmationColor(response);
+        
       } else {
       }
     } else {
@@ -110,7 +131,7 @@ function Main() {
   const changeStatusToReady = async () => {
     setWithCustomer(false);
     setReady(true);
-    await delay(7000);
+    // await delay(7000);
     getIVRCall();
   };
 
@@ -134,6 +155,9 @@ function Main() {
         onCall={onCall}
         customer={customer}
         withCustomer={withCustomer}
+        iVRProfile={iVRProfile}
+        statusColor={statusColor}
+        levelColor= {levelColor}
       />
       <Paper className={classes.paper} />
       <WorkingContainer className={classes.workingContainer} />

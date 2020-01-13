@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Expansion from './Expansion';
 import CustomerExpansion from './CustomerExpansion';
-import CallInfoExpansion from './CallInfoExpansion';
+import CallerVerifyExpansion from './CallerVerifyExpansion';
 import CallContextExpansion from './CallContextExpansion';
 import apiCustomer from '../api/ApiCustomer';
 import PlaceHolderExpansion from './PlaceHolderPanel';
@@ -46,7 +46,7 @@ export default function AtAGlancePanel(props) {
               <Expansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallInfoExpansion height="16vh" {...props} />
+              <CallerVerifyExpansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
               <CallContextExpansion height="16vh" {...props} />

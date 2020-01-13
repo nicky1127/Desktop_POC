@@ -11,6 +11,10 @@ import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
 import PhonePausedIcon from '@material-ui/icons/PhonePaused';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import moment from 'moment';
+import constants from '../constants';
+import TimerIcon from '@material-ui/icons/Timer';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 //carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -21,6 +25,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+
+const { timeFormat } = constants;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -124,6 +130,8 @@ export default function CallContextExpansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
+  const waitTime = moment.duration(props.customer.wait_time, 'seconds').seconds();
+
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
@@ -156,40 +164,30 @@ export default function CallContextExpansion(props) {
               <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Bank</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={bank}
-                        onChange={handleChangeBank}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Lloyds</MenuItem>
-                        <MenuItem value={20}>Halifax</MenuItem>
-                        <MenuItem value={30}>Scotland</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={account}
-                        onChange={handleChangeAccount}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Current</MenuItem>
-                        <MenuItem value={20}>Savings</MenuItem>
-                        <MenuItem value={30}>Investment</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <List dense={true}>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <PhoneInTalkIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={`Call Time:  ${moment(props.customer.call_time).format(
+                            timeFormat.call_time
+                          )}`}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <TimerIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`Wait Time:  ${waitTime}`} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <ExitToAppIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`Transfer from:  ${props.customer.transfer_from}`} />
+                      </ListItem>
+                    </List>
                   </div>
                 </Paper>
               </Fade>

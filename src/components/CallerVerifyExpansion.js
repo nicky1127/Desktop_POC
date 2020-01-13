@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,10 +7,12 @@ import Collapse from '@material-ui/core/Collapse';
 import Fade from '@material-ui/core/Fade';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
+import SecurityIcon from '@material-ui/icons/Security';
 import TimerIcon from '@material-ui/icons/Timer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import WarningIcon from '@material-ui/icons/Warning';
 
 //carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -23,19 +23,17 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import constants from '../constants';
-
-
-const { timeFormat } = constants;
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     position: 'absolute'
   },
-  icon: { marginRight: theme.spacing(-2) },
+  status_icon: { marginRight: theme.spacing(-2), color: props => props.statusColor },
+  level_icon: { marginRight: theme.spacing(-2), color: props => props.levelColor },
   heading: {
     fontSize: theme.typography.pxToRem(30),
+
     fontWeight: theme.typography.fontWeightRegular,
     textAlign: 'right'
   },
@@ -94,8 +92,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CallInfoExpansion(props) {
+export default function CallerVerifyExpansion(props) {
   const [checked, setChecked] = useState(false);
+  console.log(props);
 
   const onClickBtn = () => {
     setChecked(prev => !prev);
@@ -106,6 +105,7 @@ export default function CallInfoExpansion(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [bank, setBank] = React.useState('');
   const [account, setAccount] = React.useState('');
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
@@ -137,35 +137,39 @@ export default function CallInfoExpansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
-  const waitTime = moment.duration(props.customer.wait_time, 'seconds').seconds();
-
+  const indicatorsStatement = props => {
+    if (props.customer.indicators === null) {
+      return (
+        <div>
+          <ListItem>
+            <ListItemIcon className={classes.level_icon}>
+              <WarningIcon />
+            </ListItemIcon>
+            <ListItemText primary={`${props.customer.full_name} does not have any indicators on the account`} />
+          </ListItem>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
         <Box classes={{ root: classes.expansionSummary }}>
-        <List dense={true}>
-             <ListItem>
-             <ListItemIcon className={classes.icon}>
-                   <PhoneInTalkIcon />
-                </ListItemIcon>
-                 <ListItemText
-                  primary={`Call Time:  ${moment(props.customer.call_time).format(timeFormat.call_time)}`}
-                />
-              </ListItem>
-              <ListItem>
-                 <ListItemIcon className={classes.icon}>
-                   <TimerIcon />
-                 </ListItemIcon>
-                 <ListItemText primary={`Wait Time:  ${waitTime}`} />
-               </ListItem>
-               <ListItem>
-                 <ListItemIcon className={classes.icon}>
-                   <ExitToAppIcon />
-                 </ListItemIcon>
-                 <ListItemText primary={`Transfer from:  ${props.customer.transfer_from}`} />
-               </ListItem>
-             </List>
+          <List dense={true}>
+            <ListItem>
+              <ListItemIcon className={classes.status_icon}>
+                <VerifiedUserIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Is the customer verified:  ${props.iVRProfile.verified}`} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon className={classes.level_icon}>
+                <SecurityIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Verification level: ${props.customer.verification_level}`} />
+            </ListItem>
+          </List>
         </Box>
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
@@ -259,7 +263,7 @@ export default function CallInfoExpansion(props) {
               className={classes.stepper}
               nextButton={
                 <Button size="small" onClick={handleNext}>
-                  Next
+                  Step Up
                   {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                 </Button>
               }

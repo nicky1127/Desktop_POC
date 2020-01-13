@@ -11,6 +11,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import SubtitlesIcon from '@material-ui/icons/Subtitles';
 
 // carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -146,28 +148,29 @@ export default function Expansion(props) {
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`${props.customer.title}  ${props.customer.name}`}
+                    primary={`Full Name: ${props.customer.title}  ${props.customer.name}`}
                   />
                 </ListItem>
-              </Grid>
-              <Grid item xs={4}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`${props.customer.date_of_birth}`} />
+                  <ListItemText primary={`Date of Birth: ${props.customer.date_of_birth}`} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <AccountBalanceIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={`Account number: ${props.customer.account_number}`} />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <SubtitlesIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={`Sort Code: ${props.customer.sort_code}`} />
                 </ListItem>
               </Grid>
             </Grid>
-            <ListItem>
-              <ListItemIcon className={classes.icon}>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText classes={{ root: classes.address }} primary={`${props.customer.address}`} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary={`Account Type:  ${props.customer.account_type}`} />
-            </ListItem>
           </List>
         </Box>
         <Collapse in={checked}>
@@ -176,40 +179,27 @@ export default function Expansion(props) {
               <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Bank</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={bank}
-                        onChange={handleChangeBank}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Lloyds</MenuItem>
-                        <MenuItem value={20}>Halifax</MenuItem>
-                        <MenuItem value={30}>Scotland</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={account}
-                        onChange={handleChangeAccount}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Current</MenuItem>
-                        <MenuItem value={20}>Savings</MenuItem>
-                        <MenuItem value={30}>Investment</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <h2>Customer Address</h2>
+                    <List dense>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`${props.customer.address_line_1}`} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`${props.customer.address_city}`} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`${props.customer.address_postcode}`} />
+                      </ListItem>
+                    </List>
                   </div>
                 </Paper>
               </Fade>
