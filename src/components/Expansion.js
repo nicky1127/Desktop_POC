@@ -260,9 +260,9 @@ export default function Expansion(props) {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>5642224</MenuItem>
-                        <MenuItem value={20}>9830293</MenuItem>
-                        <MenuItem value={30}>7389103</MenuItem>
+                        <MenuItem value={10}>Current</MenuItem>
+                        <MenuItem value={20}>Savings</MenuItem>
+                        <MenuItem value={30}>Debit</MenuItem>
                       </Select>
                     </FormControl>
                     <FormControl className={classes.formControl}>
