@@ -63,12 +63,13 @@ function Main() {
     }
   };
 
-  const vLevelConfirmationColor = (customer) => {
+  const vLevelConfirmationColor = customer => {
     if (customer.verification_level > 40) {
       setLevelColor('blue');
-    } else if(customer.verification_level > 20){
+    } else if (customer.verification_level > 20) {
       setLevelColor('green');
-    }else{}
+    } else {
+    }
   };
 
   useEffect(() => {
@@ -110,20 +111,21 @@ function Main() {
         setWithCustomer(true);
         vConfirmationColor();
         vLevelConfirmationColor(response);
-        
       } else {
       }
     } else {
+      setOpenIdentified(false);
+        setOnCall(true);
+        setReady(false);
+        setWithCustomer(true);
     }
   };
 
   const getIVRCall = async () => {
     const response = await apiIVRCalls.callIVR();
     setIVRProfile(response);
-    if (response.identified === true) {
-      handleOpen();
-    } else {
-    }
+
+    handleOpen();
   };
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -157,7 +159,7 @@ function Main() {
         withCustomer={withCustomer}
         iVRProfile={iVRProfile}
         statusColor={statusColor}
-        levelColor= {levelColor}
+        levelColor={levelColor}
       />
       <Paper className={classes.paper} />
       <WorkingContainer className={classes.workingContainer} />

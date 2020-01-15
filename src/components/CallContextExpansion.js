@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import DialpadIcon from '@material-ui/icons/Dialpad';
 import Collapse from '@material-ui/core/Collapse';
 import Fade from '@material-ui/core/Fade';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
-import PhonePausedIcon from '@material-ui/icons/PhonePaused';
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import ForumIcon from '@material-ui/icons/Forum';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
 import moment from 'moment';
 import constants from '../constants';
-import TimerIcon from '@material-ui/icons/Timer';
+import HistoryIcon from '@material-ui/icons/History';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 //carousel
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     position: 'absolute'
   },
-  icon: { marginRight: theme.spacing(-2) },
+  icon: { marginRight: theme.spacing(-1) },
   expansionContainer: {
     boxSizing: 'border-box',
     borderBottom: '5px solid #26a69a',
@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 1 ? 'block' : 'none')
   },
-  icon: { marginRight: theme.spacing(-2) },
+  icon: { marginRight: theme.spacing(-1) },
   blueIcon: {
     color: '#1e88e5'
   },
@@ -132,28 +132,35 @@ export default function CallContextExpansion(props) {
 
   const waitTime = moment.duration(props.customer.wait_time, 'seconds').seconds();
 
+  const waitTimeColor = waitTime => {
+    if (parseInt(waitTime) >= 10) {
+      return classes.redIcon;
+    } else {
+      return classes.greenIcon;
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
         <Box classes={{ root: classes.expansionSummary }}>
-          <List dense={true}>
+          <List dense>
             <ListItem>
-              <Grid container spacing={0}>
-                <Grid item xs={4}>
-                  <PhoneInTalkIcon className={classes.blueIcon} /> 01:55
-                </Grid>
-                <Grid item xs={4}>
-                  <PhonePausedIcon className={classes.redIcon} /> 02:22
-                </Grid>
-                <Grid item xs={4}>
-                  <PhoneCallbackIcon className={classes.greenIcon} /> 9207
-                </Grid>
-              </Grid>
+              <ListItemIcon className={waitTimeColor(waitTime)}>
+                <WatchLaterIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Time spent waiting: ${waitTime}`} />
             </ListItem>
             <ListItem>
+              <ListItemIcon className={classes.icon}>
+                <PhoneInTalkIcon />
+              </ListItemIcon>
               <ListItemText primary={`Intent: ${props.customer.Intent}`} />
             </ListItem>
             <ListItem>
+              <ListItemIcon className={classes.icon}>
+                <ForumIcon />
+              </ListItemIcon>
               <ListItemText primary={`Say Anything: ${props.customer.Say_Anything}`} />
             </ListItem>
           </List>
@@ -164,6 +171,7 @@ export default function CallContextExpansion(props) {
               <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
+                    <h3>Additional Call Information</h3>
                     <List dense={true}>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
@@ -177,9 +185,9 @@ export default function CallContextExpansion(props) {
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
-                          <TimerIcon />
+                          <DialpadIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`Wait Time:  ${waitTime}`} />
+                        <ListItemText primary={`VDN: ${waitTime}`} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
@@ -194,40 +202,62 @@ export default function CallContextExpansion(props) {
               <Fade in={activeStep === 1} className={classes.slide2}>
                 <Paper elevation={4}>
                   <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Bank</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={bank}
-                        onChange={handleChangeBank}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Lloyds</MenuItem>
-                        <MenuItem value={20}>Halifax</MenuItem>
-                        <MenuItem value={30}>Scotland</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Mortgage</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={account}
-                        onChange={handleChangeAccount}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten years</MenuItem>
-                        <MenuItem value={20}>Twenty years</MenuItem>
-                        <MenuItem value={30}>Thirty years</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <h3>Call History</h3>
+                    <List dense={true}>
+                      <Grid container>
+                        <Grid xs={7}>
+                          <ListItem>
+                            <ListItemIcon className={classes.icon}>
+                              <HistoryIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={`Date: ${props.customer.call_history.record_1.date}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                        <Grid xs={4}>
+                          <ListItem>
+                            <ListItemText
+                              primary={`Intent: ${props.customer.call_history.record_1.intent}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                        <Grid xs={7}>
+                          <ListItem>
+                            <ListItemIcon className={classes.icon}>
+                              <HistoryIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={`Date: ${props.customer.call_history.record_2.date}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                        <Grid xs={4}>
+                          <ListItem>
+                            <ListItemText
+                              primary={`Intent: ${props.customer.call_history.record_2.intent}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                        <Grid xs={7}>
+                          <ListItem>
+                            <ListItemIcon className={classes.icon}>
+                              <HistoryIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={`Date: ${props.customer.call_history.record_3.date}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                        <Grid xs={4}>
+                          <ListItem>
+                            <ListItemText
+                              primary={`Intent: ${props.customer.call_history.record_3.intent}`}
+                            />
+                          </ListItem>
+                        </Grid>
+                      </Grid>
+                    </List>
                   </div>
                 </Paper>
               </Fade>
@@ -252,6 +282,9 @@ export default function CallContextExpansion(props) {
               }
             />
           </Paper>
+          <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+            <ExpandMoreIcon />
+          </IconButton>
         </Collapse>
         <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
           <ExpandMoreIcon />

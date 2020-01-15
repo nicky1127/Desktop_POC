@@ -13,6 +13,9 @@ import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import SubtitlesIcon from '@material-ui/icons/Subtitles';
+import SearchIcon from '@material-ui/icons/Search';
+import PublicIcon from '@material-ui/icons/Public';
+import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
 // carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -33,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     position: 'absolute'
   },
-  icon: { marginRight: theme.spacing(-2) },
+  icon: { marginRight: theme.spacing(-1) },
   heading: {
     fontSize: theme.typography.pxToRem(30),
     fontWeight: theme.typography.fontWeightRegular,
@@ -41,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
   name: {
     fontWeight: 'bold',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     width: '60%',
     height: '20px'
   },
@@ -82,7 +85,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(2),
-    minWidth: 120
+    minWidth: 100
   },
   slide1: {
     position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
@@ -135,39 +138,57 @@ export default function Expansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
+  const IDParam = props => {
+    let value;
+    if (props.iVRProfile.account_number && props.iVRProfile.account_number) {
+      return 'Account Number and Sort Code';
+    } else if (props.iVRProfile.last_name && props.iVRProfile.address_postcode) {
+      return 'Surname and Postcode';
+    } else {
+      return 'unIdentified';
+    }
+
+    return value;
+  };
+
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
         <Box classes={{ root: classes.expansionSummary }}>
           <List dense>
             <Grid container>
-              <Grid item xs={8}>
+              <Grid item xs={6}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <PersonIcon />
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`Full Name: ${props.customer.title}  ${props.customer.name}`}
+                    primary={`${props.customer.title}  ${props.customer.name}`}
                   />
                 </ListItem>
+              </Grid>
+              <Grid item xs={4}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`Date of Birth: ${props.customer.date_of_birth}`} />
+                  <ListItemText primary={`${props.customer.date_of_birth}`} />
                 </ListItem>
+              </Grid>
+              <Grid item xs={12}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <AccountBalanceIcon />
                   </ListItemIcon>
                   <ListItemText primary={`Account number: ${props.customer.account_number}`} />
                 </ListItem>
+
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
-                    <SubtitlesIcon />
+                    <FingerprintIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`Sort Code: ${props.customer.sort_code}`} />
+                  <ListItemText primary={`ID by: ${IDParam(props)}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -179,25 +200,29 @@ export default function Expansion(props) {
               <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
-                    <h2>Customer Address</h2>
+                    <h3>Additional Customer Information</h3>
                     <List dense>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
-                          <HomeIcon />
+                          <SubtitlesIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`${props.customer.address_line_1}`} />
+                        <ListItemText primary={`Sort Code: ${props.customer.sort_code}`} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
                           <HomeIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`${props.customer.address_city}`} />
+                        <ListItemText
+                          primary={`${props.customer.address_line_1},${props.customer.address_city} `}
+                        />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
-                          <HomeIcon />
+                          <PublicIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`${props.customer.address_postcode}`} />
+                        <ListItemText
+                          primary={`${props.customer.address_country},${props.customer.address_postcode} `}
+                        />
                       </ListItem>
                     </List>
                   </div>
@@ -206,8 +231,10 @@ export default function Expansion(props) {
               <Fade in={activeStep === 1} className={classes.slide2}>
                 <Paper elevation={4}>
                   <div>
+                    <h3>Switch Parties</h3>
+
                     <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Bank</InputLabel>
+                      <InputLabel id="demo-controlled-open-select-label">Brand</InputLabel>
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
@@ -222,10 +249,8 @@ export default function Expansion(props) {
                         <MenuItem value={30}>Scotland</MenuItem>
                       </Select>
                     </FormControl>
-                  </div>
-                  <div>
                     <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Mortgage</InputLabel>
+                      <InputLabel id="demo-controlled-open-select-label">Type</InputLabel>
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
@@ -235,9 +260,25 @@ export default function Expansion(props) {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>Ten years</MenuItem>
-                        <MenuItem value={20}>Twenty years</MenuItem>
-                        <MenuItem value={30}>Thirty years</MenuItem>
+                        <MenuItem value={10}>5642224</MenuItem>
+                        <MenuItem value={20}>9830293</MenuItem>
+                        <MenuItem value={30}>7389103</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
+                      <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        value={account}
+                        onChange={handleChangeAccount}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>5642224</MenuItem>
+                        <MenuItem value={20}>9830293</MenuItem>
+                        <MenuItem value={30}>7389103</MenuItem>
                       </Select>
                     </FormControl>
                   </div>

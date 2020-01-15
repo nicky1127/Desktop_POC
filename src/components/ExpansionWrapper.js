@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Expansion from './Expansion';
-import CustomerExpansion from './CustomerExpansion';
 import CallerVerifyExpansion from './CallerVerifyExpansion';
 import CallContextExpansion from './CallContextExpansion';
-import apiCustomer from '../api/ApiCustomer';
-import PlaceHolderExpansion from './PlaceHolderPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +17,9 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   logo: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderBottom: '5px solid #26a69a',
+    height: '16.5vh',
   }
 }));
 
