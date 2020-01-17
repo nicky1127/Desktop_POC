@@ -46,8 +46,8 @@ function Main() {
   const [onCall, setOnCall] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openIdentified, setOpenIdentified] = React.useState(false);
-  const [openSearch, setOpenSearch] = React.useState(false);
   const [withCustomer, setWithCustomer] = useState(false);
+  const [customerIdentified, setCustomerIdentified] = useState(false);
   const [user, setUser] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [iVRProfile, setIVRProfile] = useState([]);
@@ -86,9 +86,6 @@ function Main() {
     setOpenIdentified(true);
   };
 
-  const handleOpenSearchModal = () => {
-    setOpenSearch(true);
-  };
 
   const handleClose = () => {
     setOpenIdentified(false);
@@ -96,7 +93,7 @@ function Main() {
   };
 
   const handleAccept = async () => {
-    if (iVRProfile.account_number !== null && iVRProfile.sort_code !== null) {
+    if (iVRProfile.identified === true) {
       const response = await apiCustomer.getCustomerByAccount(
         iVRProfile.account_number,
         iVRProfile.sort_code
@@ -109,15 +106,17 @@ function Main() {
         setOnCall(true);
         setReady(false);
         setWithCustomer(true);
+        setCustomerIdentified(true);
         vConfirmationColor();
         vLevelConfirmationColor(response);
       } else {
       }
     } else {
+      console.log("The no user path has been taken")
       setOpenIdentified(false);
-        setOnCall(true);
-        setReady(false);
-        setWithCustomer(true);
+      setOnCall(true);
+      setReady(false);
+      setWithCustomer(true);
     }
   };
 
@@ -131,9 +130,11 @@ function Main() {
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
   const changeStatusToReady = async () => {
+    setCustomer([]);
     setWithCustomer(false);
     setReady(true);
-    // await delay(7000);
+    setCustomerIdentified(false)
+    await delay(4000);
     getIVRCall();
   };
 
@@ -160,6 +161,11 @@ function Main() {
         iVRProfile={iVRProfile}
         statusColor={statusColor}
         levelColor={levelColor}
+        customerIdentified={customerIdentified}
+      setCustomerIdentified={setCustomerIdentified}
+        vConfirmationColor={vConfirmationColor}
+        vLevelConfirmationColor={vLevelConfirmationColor}
+        setCustomer={ setCustomer}
       />
       <Paper className={classes.paper} />
       <WorkingContainer className={classes.workingContainer} />

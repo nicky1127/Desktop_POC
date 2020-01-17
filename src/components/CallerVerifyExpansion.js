@@ -18,6 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 //carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -75,7 +76,18 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '47%',
+    // left: '47%',
+    transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
+  },
+
+  expandIcon2: {
+    padding: '3px',
+    display: 'block',
+    margin: '0 auto',
+    position: 'absolute',
+    bottom: '5px',
+    left: '87%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
   },
@@ -196,14 +208,13 @@ export default function CallerVerifyExpansion(props) {
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 0 ){
+      if (prevActiveStep === 0) {
         return 2;
       } else if (prevActiveStep === 1) {
         return 0;
       } else if (prevActiveStep === 2) {
         return 1;
       } else {
-       
       }
     });
   };
@@ -387,14 +398,14 @@ export default function CallerVerifyExpansion(props) {
                       />
                       <Grid container>
                         <Grid item xs={4}>
-                        <ListItem>
-                          <Button
-                            variant="contained"
-                            className={verificationButtonColor2(levelPass)}
-                            onClick={onSubmit}
-                          >
-                            Submit
-                          </Button>
+                          <ListItem>
+                            <Button
+                              variant="contained"
+                              className={verificationButtonColor2(levelPass)}
+                              onClick={onSubmit}
+                            >
+                              Submit
+                            </Button>
                           </ListItem>
                         </Grid>
                       </Grid>
@@ -429,13 +440,13 @@ export default function CallerVerifyExpansion(props) {
                       <Grid container>
                         <Grid item xs={4}>
                           <ListItem>
-                          <Button
-                            variant="contained"
-                            className={verificationButtonColor3(levelPass)}
-                            onClick={onSubmit}
-                          >
-                            Submit
-                          </Button>
+                            <Button
+                              variant="contained"
+                              className={verificationButtonColor3(levelPass)}
+                              onClick={onSubmit}
+                            >
+                              Submit
+                            </Button>
                           </ListItem>
                         </Grid>
                       </Grid>
@@ -457,16 +468,20 @@ export default function CallerVerifyExpansion(props) {
                 </Button>
               }
               backButton={
-              <Button size="small" onClick={handleBack}>
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                Back
-              </Button>
+                <Button size="small" onClick={handleBack}>
+                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                  Back
+                </Button>
               }
             />
           </Paper>
         </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
-          <ExpandMoreIcon />
+        <IconButton className={classes.expandIcon} onClick={onClickBtn}>
+          <SecurityIcon />
+        </IconButton>
+
+        <IconButton className={classes.expandIcon2}>
+          <ErrorOutlineIcon />
         </IconButton>
       </Paper>
     </div>

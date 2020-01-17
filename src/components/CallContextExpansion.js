@@ -205,7 +205,7 @@ export default function CallContextExpansion(props) {
                     <h3>Call History</h3>
                     <List dense={true}>
                       <Grid container>
-                        <Grid xs={7}>
+                        <Grid item xs={7}>
                           <ListItem>
                             <ListItemIcon className={classes.icon}>
                               <HistoryIcon />
@@ -215,14 +215,14 @@ export default function CallContextExpansion(props) {
                             />
                           </ListItem>
                         </Grid>
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <ListItem>
                             <ListItemText
                               primary={`Intent: ${props.customer.call_history.record_1.intent}`}
                             />
                           </ListItem>
                         </Grid>
-                        <Grid xs={7}>
+                        <Grid item xs={7}>
                           <ListItem>
                             <ListItemIcon className={classes.icon}>
                               <HistoryIcon />
@@ -232,14 +232,14 @@ export default function CallContextExpansion(props) {
                             />
                           </ListItem>
                         </Grid>
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <ListItem>
                             <ListItemText
                               primary={`Intent: ${props.customer.call_history.record_2.intent}`}
                             />
                           </ListItem>
                         </Grid>
-                        <Grid xs={7}>
+                        <Grid item xs={7}>
                           <ListItem>
                             <ListItemIcon className={classes.icon}>
                               <HistoryIcon />
@@ -249,7 +249,7 @@ export default function CallContextExpansion(props) {
                             />
                           </ListItem>
                         </Grid>
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <ListItem>
                             <ListItemText
                               primary={`Intent: ${props.customer.call_history.record_3.intent}`}

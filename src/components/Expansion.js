@@ -147,8 +147,6 @@ export default function Expansion(props) {
     } else {
       return 'unIdentified';
     }
-
-    return value;
   };
 
   return (

@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Expansion from './Expansion';
 import CallerVerifyExpansion from './CallerVerifyExpansion';
 import CallContextExpansion from './CallContextExpansion';
+import IDSearchPanel from './UnknownUserPanel';
+import PlaceHolderExpansion from './PlaceHolderPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,14 +21,12 @@ const useStyles = makeStyles(theme => ({
   logo: {
     backgroundColor: '#fff',
     borderBottom: '5px solid #26a69a',
-    height: '16.5vh',
+    height: '16.5vh'
   }
 }));
 
 export default function AtAGlancePanel(props) {
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
-  const [customer, setCustomer] = useState([]);
 
   const renderloading = () => <div>Loading</div>;
 
@@ -49,6 +49,32 @@ export default function AtAGlancePanel(props) {
             </Grid>
             <Grid item xs={4} className={classes.grid}>
               <CallContextExpansion height="16vh" {...props} />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
+  );
+
+  const renderIDCustomer = () => (
+    <div className={classes.root}>
+      <Grid container spacing={0}>
+        <Grid item xs={2} className={classes.logo}>
+          <img
+            src="/images/bee_icon.jpg"
+            style={{ width: '50%', display: 'block', margin: '15px auto' }}
+          />
+        </Grid>
+        <Grid item xs={10} className={classes.subGridRoot}>
+          <Grid container spacing={0} className={classes.subGridRoot}>
+            <Grid item xs={4} className={classes.grid}>
+              <IDSearchPanel height="16vh" {...props} />
+            </Grid>
+            <Grid item xs={4} className={classes.grid}>
+              <PlaceHolderExpansion height="16vh" {...props} />
+            </Grid>
+            <Grid item xs={4} className={classes.grid}>
+              <PlaceHolderExpansion height="16vh" {...props} />
             </Grid>
           </Grid>
         </Grid>
@@ -101,8 +127,10 @@ export default function AtAGlancePanel(props) {
 
   let content = null;
   console.log(props.onCall);
-  if (props.withCustomer === true) {
+  if (props.withCustomer === true && props.customerIdentified === true) {
     content = renderForm();
+  } else if (props.withCustomer === true && props.customerIdentified === false) {
+    content = renderIDCustomer();
   } else {
     content = renderNoCustomer();
   }
