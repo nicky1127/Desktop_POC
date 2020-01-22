@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative'
   },
   subGridRoot: {
-    height: '16vh',
+    height: '15.8vh',
     width: '100%'
   },
   logo: {
@@ -35,7 +35,7 @@ export default function AtAGlancePanel(props) {
       <Grid container spacing={0}>
         <Grid item xs={2} className={classes.logo}>
           <img
-            src="/images/bee_icon.jpg"
+            src="/images/lloyds_logo.png"
             style={{ width: '50%', display: 'block', margin: '15px auto' }}
           />
         </Grid>
@@ -45,10 +45,10 @@ export default function AtAGlancePanel(props) {
               <Expansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallerVerifyExpansion height="16vh" {...props} />
+              <CallContextExpansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallContextExpansion height="16vh" {...props} />
+              <CallerVerifyExpansion height="16vh" {...props} />
             </Grid>
           </Grid>
         </Grid>
@@ -61,7 +61,7 @@ export default function AtAGlancePanel(props) {
       <Grid container spacing={0}>
         <Grid item xs={2} className={classes.logo}>
           <img
-            src="/images/bee_icon.jpg"
+            src="/images/lloyds_logo.png"
             style={{ width: '50%', display: 'block', margin: '15px auto' }}
           />
         </Grid>
@@ -87,39 +87,22 @@ export default function AtAGlancePanel(props) {
       <Grid container spacing={0}>
         <Grid item xs={2} className={classes.logo}>
           <img
-            src="/images/bee_icon.jpg"
+            src="/images/lloyds_logo.png"
             style={{ width: '50%', display: 'block', margin: '15px auto' }}
           />
         </Grid>
-        <Grid item xs={2} className={classes.logo}>
-          <img
-            src="/images/bee_icon.jpg"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
-          />
-        </Grid>
-        <Grid item xs={2} className={classes.logo}>
-          <img
-            src="/images/bee_icon.jpg"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
-          />
-        </Grid>
-        <Grid item xs={2} className={classes.logo}>
-          <img
-            src="/images/bee_icon.jpg"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
-          />
-        </Grid>
-        <Grid item xs={2} className={classes.logo}>
-          <img
-            src="/images/bee_icon.jpg"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
-          />
-        </Grid>
-        <Grid item xs={2} className={classes.logo}>
-          <img
-            src="/images/bee_icon.jpg"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
-          />
+        <Grid item xs={10} className={classes.subGridRoot}>
+          <Grid container spacing={0} className={classes.subGridRoot}>
+            <Grid item xs={4} className={classes.grid}>
+              <PlaceHolderExpansion height="15.8vh" />
+            </Grid>
+            <Grid item xs={4} className={classes.grid}>
+              <PlaceHolderExpansion height="15.8vh" />
+            </Grid>
+            <Grid item xs={4} className={classes.grid}>
+              <PlaceHolderExpansion height="15.8vh" />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>

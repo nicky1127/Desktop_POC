@@ -49,11 +49,10 @@ function getSorting(order, orderBy) {
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'surname', numeric: true, disablePadding: false, label: 'Surname' },
   { id: 'dob', numeric: true, disablePadding: false, label: 'Date of Birth' },
   { id: 'address', numeric: true, disablePadding: false, label: 'Current Address' },
-  { id: 'postcode', numeric: true, disablePadding: false, label: 'PostCode' },
-  { id: 'account', numeric: true, disablePadding: false, label: 'Account Number' },
-  { id: 'sort', numeric: true, disablePadding: false, label: 'Sort Code' }
+  { id: 'postcode', numeric: true, disablePadding: false, label: 'PostCode' }
 ];
 
 function EnhancedTableHead(props) {
@@ -65,8 +64,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-        </TableCell>
+        <TableCell padding="checkbox"></TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
@@ -143,7 +141,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Tooltip title="Filter list">
           <IconButton aria-label="filter list">
             <FilterListIcon />
@@ -155,7 +153,7 @@ const EnhancedTableToolbar = props => {
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -192,8 +190,10 @@ export default function CustomersTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
-  const [selectedAccount, setSelectedAccount] = React.useState([]);
-  const [selectedSort, setSelectedSort] = React.useState([]);
+  const [selectedName, setSelectedName] = React.useState([]);
+  const [selectedAddress, setSelectedAddress] = React.useState([]);
+  const [selectedPostcode, setSelectedPostcode] = React.useState([]);
+  const [selectedDOB, setSelectedDOB] = React.useState([]);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -207,26 +207,29 @@ export default function CustomersTable(props) {
     setOrderBy(property);
   };
 
-
-
-  const handleClick = (event, name, account, sort) => {
-    
+  const handleClick = (event, name, dob, address, postcode) => {
     const selectedIndex = selected.indexOf(name);
-    let newSelectedAccount = null;
-    let newSelectedSort = null;
+    let newSelectedName = null;
+    let newSelectedAddress = null;
+    let newSelectedDOB = null;
+    let newSelectedPostcode = null;
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelectedAccount = account;
-      newSelectedSort = sort;
+      newSelectedName = name;
+      newSelectedAddress = address;
+      newSelectedDOB = dob;
+      newSelectedPostcode = postcode;
       newSelected = newSelected.concat(selected, name);
     } else {
     }
 
-    setSelectedAccount(newSelectedAccount);
-    setSelectedSort(newSelectedSort);
+    setSelectedName(newSelectedName);
+    setSelectedAddress(newSelectedAddress);
+    setSelectedDOB(newSelectedDOB);
+    setSelectedPostcode(newSelectedPostcode);
     setSelected(newSelected);
-    console.log(newSelectedAccount, newSelectedSort);
+    console.log(newSelectedName, newSelectedDOB);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -248,7 +251,7 @@ export default function CustomersTable(props) {
   };
 
   const onSubmit = () => {
-    props.onSubmitSelection(selectedAccount, selectedSort);
+    props.onSubmitSelection(selectedName, selectedDOB, selectedAddress, selectedPostcode);
   };
 
   const isSelected = name => selected.indexOf(name) !== -1;
@@ -285,7 +288,9 @@ export default function CustomersTable(props) {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name, row.account, row.sort)}
+                      onClick={event =>
+                        handleClick(event, row.name, row.dob, row.address, row.postcode)
+                      }
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -301,11 +306,10 @@ export default function CustomersTable(props) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
+                      <TableCell align="right">{row.surname}</TableCell>
                       <TableCell align="right">{row.dob}</TableCell>
                       <TableCell align="right">{row.address}</TableCell>
                       <TableCell align="right">{row.postcode}</TableCell>
-                      <TableCell align="right">{row.account}</TableCell>
-                      <TableCell align="right">{row.sort}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -318,7 +322,7 @@ export default function CustomersTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

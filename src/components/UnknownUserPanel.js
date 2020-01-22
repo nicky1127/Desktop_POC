@@ -15,7 +15,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import TextField from '@material-ui/core/TextField';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import apiCustomer from '../api/ApiCustomer';
-import { customerRows } from '../HelperFiles/CustomerHelpers';
+import { customerRows } from '../helperFiles/CustomerHelpers';
 import CustomerSearchModal from '../components/Modals/CustomerSearch';
 
 // carousel
@@ -136,15 +136,14 @@ export default function IDSearchPanel(props) {
 
   const handleChangeMethod = event => {
     setMethodSelected(event.target.value);
-    console.log(methodSelected)
-    
-      setSurname(null);
-      setPostcode(null);
-      
-      setAccount(null);
-      setSort_code(null);
-      console.log("All cleared")
-    
+    console.log(methodSelected);
+
+    setSurname(null);
+    setPostcode(null);
+
+    setAccount(null);
+    setSort_code(null);
+    console.log('All cleared');
   };
 
   const handleChangeBrand = event => {
@@ -177,8 +176,8 @@ export default function IDSearchPanel(props) {
     setOpenCustomerSearch(true);
   };
 
-  const onSubmitSelection = async (account, sort) => {
-    const response = await apiCustomer.getCustomerByAccount(account, sort);
+  const onSubmitSelection = async (name, dob, address, postcode) => {
+    const response = await apiCustomer.getIdentifiedCustomer(name, dob, address, postcode);
     console.log(response);
     if (response) {
       props.setCustomer(response);

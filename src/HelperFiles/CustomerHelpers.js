@@ -1,6 +1,7 @@
 export function customerRows(result) {
   const rows = result.map(person => ({
-    name: person.full_name,
+    name: person.first_name,
+    surname: person.last_name,
     dob: person.date_of_birth,
     account: person.account_number,
     sort: person.sort_code,

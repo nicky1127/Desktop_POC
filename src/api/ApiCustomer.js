@@ -24,6 +24,17 @@ export class ApiCustomer extends Api {
     return customer;
   }
 
+  async getIdentifiedCustomer(Name, DOB, Address, Postcode) {
+    let customer;
+    const params = { Name, DOB, Address, Postcode};
+    const uriCustomer = '/customer/Info/findIdentified';
+    try {
+      const response = await this._get(uriCustomer, params);
+      customer = response.data;
+    } catch (err) {}
+    return customer;
+  }
+
   async getCustomerBySearch(
     Account_Number = {},
     Sort_Code = {},

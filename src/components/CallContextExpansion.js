@@ -13,8 +13,10 @@ import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
 import moment from 'moment';
 import constants from '../constants';
-import HistoryIcon from '@material-ui/icons/History';
+import DataUsageIcon from '@material-ui/icons/DataUsage';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ComputerIcon from '@material-ui/icons/Computer';
+import PersonIcon from '@material-ui/icons/Person';
 
 //carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -41,6 +43,12 @@ const useStyles = makeStyles(theme => ({
   },
   expansionSummary: {
     height: props => props.height
+  },
+  auditSummary: {
+    margin: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    height: '20vh',
+    overflow: 'auto'
   },
   expansionDropdown: {
     height: '30vh'
@@ -84,6 +92,9 @@ const useStyles = makeStyles(theme => ({
   },
   greenIcon: {
     color: '#558b2f'
+  },
+  invalidButton: {
+    backgroundColor: '#40DA53'
   }
 }));
 
@@ -97,8 +108,6 @@ export default function CallContextExpansion(props) {
   //carousel
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [bank, setBank] = React.useState('');
-  const [account, setAccount] = React.useState('');
   const handleNext = () => {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
@@ -117,14 +126,6 @@ export default function CallContextExpansion(props) {
         return prevActiveStep - 1;
       }
     });
-  };
-
-  const handleChangeBank = event => {
-    setBank(event.target.value);
-  };
-
-  const handleChangeAccount = event => {
-    setAccount(event.target.value);
   };
 
   //
@@ -151,23 +152,36 @@ export default function CallContextExpansion(props) {
               </ListItemIcon>
               <ListItemText primary={`Time spent waiting: ${waitTime}`} />
             </ListItem>
-            <ListItem>
-              <ListItemIcon className={classes.icon}>
-                <PhoneInTalkIcon />
-              </ListItemIcon>
-              <ListItemText primary={`Intent: ${props.customer.Intent}`} />
-            </ListItem>
+
             <ListItem>
               <ListItemIcon className={classes.icon}>
                 <ForumIcon />
               </ListItemIcon>
               <ListItemText primary={`Say Anything: ${props.customer.Say_Anything}`} />
             </ListItem>
+            <Grid container>
+              <Grid xs={9}>
+                <ListItem>
+                  <ListItemIcon className={classes.icon}>
+                    <DataUsageIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={`IVR Intent: Replace Card`} />
+                </ListItem>
+              </Grid>
+              <Grid xs={3}>
+                <ListItem>
+                  <Button size="small" variant="contained" className={classes.invalidButton}>
+                    Wrong
+                    {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                  </Button>
+                </ListItem>
+              </Grid>
+            </Grid>
           </List>
         </Box>
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
+            <Box classes={{ root: classes.auditSummary }}>
               <Fade in={activeStep === 0} className={classes.slide1}>
                 <Paper elevation={4}>
                   <div>
@@ -187,7 +201,7 @@ export default function CallContextExpansion(props) {
                         <ListItemIcon className={classes.icon}>
                           <DialpadIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`VDN: ${waitTime}`} />
+                        <ListItemText primary={`VDN: 2243`} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
@@ -200,63 +214,54 @@ export default function CallContextExpansion(props) {
                 </Paper>
               </Fade>
               <Fade in={activeStep === 1} className={classes.slide2}>
-                <Paper elevation={4}>
+                <Paper elevation={4} >
                   <div>
-                    <h3>Call History</h3>
-                    <List dense={true}>
-                      <Grid container>
-                        <Grid item xs={7}>
-                          <ListItem>
-                            <ListItemIcon className={classes.icon}>
-                              <HistoryIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={`Date: ${props.customer.call_history.record_1.date}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <ListItem>
-                            <ListItemText
-                              primary={`Intent: ${props.customer.call_history.record_1.intent}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={7}>
-                          <ListItem>
-                            <ListItemIcon className={classes.icon}>
-                              <HistoryIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={`Date: ${props.customer.call_history.record_2.date}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <ListItem>
-                            <ListItemText
-                              primary={`Intent: ${props.customer.call_history.record_2.intent}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={7}>
-                          <ListItem>
-                            <ListItemIcon className={classes.icon}>
-                              <HistoryIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={`Date: ${props.customer.call_history.record_3.date}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <ListItem>
-                            <ListItemText
-                              primary={`Intent: ${props.customer.call_history.record_3.intent}`}
-                            />
-                          </ListItem>
-                        </Grid>
-                      </Grid>
+                    <h3>IVR Audit</h3>
+                    <List dense>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <ComputerIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={'Please enter your account number followed by the hash key'}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'90345675 #'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <ComputerIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Thank you. Please hold for an agent'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Okay.Bloody banks'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <ComputerIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'*Transfering to agent'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Okay.Bloody banks'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon className={classes.icon}>
+                          <ComputerIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'*Transfering to agent'} />
+                      </ListItem>
                     </List>
                   </div>
                 </Paper>

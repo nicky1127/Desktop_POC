@@ -1,17 +1,21 @@
 import { Api } from './Api';
 
-const uriVerify = '/customer/verify';
+const uriVerify = '/customer/verify/Questions';
 const settingsExpiryInMinutes = 60; //minutes
 
 export class ApiVerification extends Api {
-  async retrieveVerifyQuestions(params = {}) {
+  async getVerifyQuestion(params = {}) {
     //Function under construction
     let verificationQuestion;
     try {
       const response = await this._getCached(uriVerify, params, settingsExpiryInMinutes, true);
-      erificationQuestion = response.data;
+      const idRandom = Math.floor(Math.random() * 3) + 1; 
+      console.log(idRandom);
+      
+      const call = response.find(item => item.id === idRandom);
+      verificationQuestion = call;
     } catch (err) {}
-    return settings;
+    return verificationQuestion;
   }
 
   async checkVerificationTelephoneCode(TelephoneCode) {
@@ -50,5 +54,5 @@ export class ApiVerification extends Api {
   }
 }
 
-const apiSettingsConfig = new ApiSettingsConfig();
-export default apiSettingsConfig;
+const apiVerification = new ApiVerification();
+export default apiVerification;

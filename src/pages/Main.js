@@ -134,7 +134,7 @@ function Main() {
     setWithCustomer(false);
     setReady(true);
     setCustomerIdentified(false)
-    await delay(4000);
+    // await delay(3000);
     getIVRCall();
   };
 

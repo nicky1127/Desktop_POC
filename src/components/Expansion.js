@@ -155,7 +155,7 @@ export default function Expansion(props) {
         <Box classes={{ root: classes.expansionSummary }}>
           <List dense>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <PersonIcon />
@@ -165,8 +165,6 @@ export default function Expansion(props) {
                     primary={`${props.customer.title}  ${props.customer.name}`}
                   />
                 </ListItem>
-              </Grid>
-              <Grid item xs={4}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
@@ -175,12 +173,12 @@ export default function Expansion(props) {
                 </ListItem>
               </Grid>
               <Grid item xs={12}>
-                <ListItem>
+                {/* <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <AccountBalanceIcon />
                   </ListItemIcon>
                   <ListItemText primary={`Account number: ${props.customer.account_number}`} />
-                </ListItem>
+                </ListItem> */}
 
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
