@@ -4,9 +4,7 @@ import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import CustomersTable from '../../components/tables/CustomersTable';
-import CustomersTable2 from '../../components/tables/CustomerTable2';
-
+import AccountsTable from '../../components/tables/AccountsTable';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -32,28 +30,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CustomerSearchModal(props) {
+export default function AccountsModal(props) {
   const classes = useStyles();
 
+  const handleCloseAccounts = () => {
+    props.setOpenCustomerAccounts(false);
+  };
   return (
     <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.openCustomerSearch}
-        onClose={props.handleClose}
+        open={props.openCustomerAccounts}
+        onClose={handleCloseAccounts}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={props.openCustomerSearch}>
+        <Fade in={props.openCustomerAccounts}>
           <div className={classes.paper_modal}>
-            <CustomersTable {...props} />
-            
-            
+            <AccountsTable {...props} />
           </div>
         </Fade>
       </Modal>

@@ -16,7 +16,7 @@ function MainHeader(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <ControlPanel />
+      {/* <ControlPanel /> */}
       <ExpansionWrapper {...props}/>
     </div>
   );

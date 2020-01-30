@@ -187,58 +187,7 @@ export default function ControlPanel() {
     <div className={classes.grow}>
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
-          {/* <Typography className={classes.title} variant="h6" noWrap>
-            Desktop
-          </Typography> */}
-          <Typography className={classes.avayaIcon} variant="h2" noWrap>
-            C
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Enter phone number"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <IconButton color="inherit">
-            <PhoneEnabled />
-          </IconButton>
-          <IconButton color="inherit">
-            <Refresh />
-          </IconButton>
-          <IconButton color="inherit">
-            <Mail />
-          </IconButton>
-          <IconButton color="inherit">
-            <Inbox />
-          </IconButton>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge badgeContent={1} color="secondary">
-                <Assignment />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton edge="end" onClick={handleProfileMenuOpen} color="inherit">
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton onClick={handleMobileMenuOpen} color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </div>
+         
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

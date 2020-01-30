@@ -24,9 +24,20 @@ export class ApiCustomer extends Api {
     return customer;
   }
 
+  async getCustomerByPartyId(Party_Id) {
+    let customer;
+    const params = { Party_Id};
+    const uriCustomer = '/customer/Info/PartyId';
+    try {
+      const response = await this._get(uriCustomer, params);
+      customer = response.data;
+    } catch (err) {}
+    return customer;
+  }
+
   async getIdentifiedCustomer(Name, DOB, Address, Postcode) {
     let customer;
-    const params = { Name, DOB, Address, Postcode};
+    const params = { Name, DOB, Address, Postcode };
     const uriCustomer = '/customer/Info/findIdentified';
     try {
       const response = await this._get(uriCustomer, params);
@@ -35,12 +46,7 @@ export class ApiCustomer extends Api {
     return customer;
   }
 
-  async getCustomerBySearch(
-    Account_Number = {},
-    Sort_Code = {},
-    Surname = {},
-    Postcode = {}
-  ) {
+  async getCustomerBySearch(Account_Number = {}, Sort_Code = {}, Surname = {}, Postcode = {}) {
     let customers;
     const params = { Account_Number, Sort_Code, Surname, Postcode };
     const uriCustomer = '/customer/Info/find';
@@ -49,6 +55,17 @@ export class ApiCustomer extends Api {
       customers = response;
     } catch (err) {}
     return customers;
+  }
+
+  async getCustomerAccounts(Party_Id = {}) {
+    let accounts;
+    const params = { Party_Id };
+    const uriAccounts = '/customer/Info/accounts';
+    try {
+      const response = await this._get(uriAccounts, params);
+      accounts = response;
+    } catch (err) {}
+    return accounts;
   }
 }
 

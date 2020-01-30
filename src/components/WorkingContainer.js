@@ -19,16 +19,21 @@ import PersonIcon from '@material-ui/icons/Person';
 import ContactlessIcon from '@material-ui/icons/Contactless';
 import AppleIcon from '@material-ui/icons/Apple';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import BuildIcon from '@material-ui/icons/Build';
 
 import customers from '../mock/api/customers.json';
 
 const drawerWidth = 240;
 
+const Background = '';
+
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
     zIndex: 3,
-    height: '68vh'
+    height: '77vh'
   },
   container: {
     display: 'flex',
@@ -90,17 +95,26 @@ const useStyles = makeStyles(theme => ({
   },
   iframe: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    backgroundImage: props => (props.customerIdentified === true ? `url(${Background})` : ''),
+    backgroundSize: "100% 125%",
+    backgroundRepeat: "no-repeat",
+    overflow: 'hidden'
+  },
+  image: {
+    flex: 1,
+    aspectRatio: 1.5,
+    resizeMode: 'contain'
   }
 }));
 
-export default function MiniDrawer() {
-  const classes = useStyles();
+export default function MiniDrawer(props) {
+  const classes = useStyles({ ...props});
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [appURL, setAppURL] = React.useState(
-    'https://embed.music.apple.com/pl/album/nightride/1171507241'
-  );
+  const [appURL, setAppURL] = React.useState('');
+
+
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
@@ -145,7 +159,7 @@ export default function MiniDrawer() {
               <ListItemIcon className={classes.listIcon}>
                 <ContactlessIcon />
               </ListItemIcon>
-              <ListItemText primary={'Spotify'} />
+              <ListItemText primary={'MCA'} />
             </ListItem>
             <ListItem
               button
@@ -154,9 +168,9 @@ export default function MiniDrawer() {
               }
             >
               <ListItemIcon className={classes.listIcon}>
-                <AppleIcon />
+                <LocalLibraryIcon />
               </ListItemIcon>
-              <ListItemText primary={'Apple Music'} />
+              <ListItemText primary={'CAAG'} />
             </ListItem>
             <ListItem
               button
@@ -167,17 +181,17 @@ export default function MiniDrawer() {
               }
             >
               <ListItemIcon className={classes.listIcon}>
-                <EqualizerIcon />
+                <InvertColorsIcon />
               </ListItemIcon>
-              <ListItemText primary={'SoundCloud'} />
+              <ListItemText primary={'Resolve'} />
             </ListItem>
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['CTM', 'COA', 'Forms', 'PEGA', 'Debit Cards'].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemIcon className={classes.listIcon}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? <InboxIcon /> : <BuildIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>

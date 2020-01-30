@@ -15,13 +15,15 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import apiCustomer from '../../api/ApiCustomer';
+import Collapse from '@material-ui/core/Collapse';
+import AccountsModal from '../Modals/Accountsmodal';
+import AccountsTable from '../tables/AccountsTable';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -52,7 +54,8 @@ const headCells = [
   { id: 'surname', numeric: true, disablePadding: false, label: 'Surname' },
   { id: 'dob', numeric: true, disablePadding: false, label: 'Date of Birth' },
   { id: 'address', numeric: true, disablePadding: false, label: 'Current Address' },
-  { id: 'postcode', numeric: true, disablePadding: false, label: 'PostCode' }
+  { id: 'postcode', numeric: true, disablePadding: false, label: 'PostCode' },
+  { id: 'accounts', numeric: true, disablePadding: false, label: 'Accounts' }
 ];
 
 function EnhancedTableHead(props) {
@@ -183,6 +186,20 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 20,
     width: 1
+  },
+  icon: { color: 'white' },
+  hiddenCell: { display: 'none' },
+  correctButton: {
+    marginRight: theme.spacing(2),
+    backgroundColor: '#0A9014',
+    color: 'white',
+    left: '5%'
+  },
+  invalidButton: {
+    marginRight: theme.spacing(2),
+    backgroundColor: '#DE0C3B',
+    color: 'white',
+    left: '10%'
   }
 }));
 
@@ -198,8 +215,29 @@ export default function CustomersTable(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [accountArray, setAccountArray] = React.useState([]);
+  const [openCustomerAccounts, setOpenCustomerAccounts] = React.useState(false);
+  const [party_ID, setPartyId] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [accountsActive, setAccountActive] = React.useState(false);
 
   const rows = props.customerArray;
+
+  const getAccounts = async party => {
+    console.log(party);
+    // if (openCustomerAccounts === false) {
+    if (open === false) {
+      const response = await apiCustomer.getCustomerAccounts(party);
+      setAccountArray(response);
+      setAccountActive(true);
+      // setOpenCustomerAccounts(true);
+      setOpen(true);
+    } else {
+      // setOpenCustomerAccounts(false);
+      setOpen(false);
+      setAccountActive(false);
+    }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -207,12 +245,13 @@ export default function CustomersTable(props) {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name, dob, address, postcode) => {
+  const handleClick = (event, name, dob, address, postcode, party_id) => {
     const selectedIndex = selected.indexOf(name);
     let newSelectedName = null;
     let newSelectedAddress = null;
     let newSelectedDOB = null;
     let newSelectedPostcode = null;
+    let newSelectedPartyId = null;
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -220,6 +259,7 @@ export default function CustomersTable(props) {
       newSelectedAddress = address;
       newSelectedDOB = dob;
       newSelectedPostcode = postcode;
+      newSelectedPartyId = party_id;
       newSelected = newSelected.concat(selected, name);
     } else {
     }
@@ -229,6 +269,7 @@ export default function CustomersTable(props) {
     setSelectedDOB(newSelectedDOB);
     setSelectedPostcode(newSelectedPostcode);
     setSelected(newSelected);
+    setPartyId(newSelectedPartyId);
     console.log(newSelectedName, newSelectedDOB);
   };
 
@@ -289,7 +330,14 @@ export default function CustomersTable(props) {
                     <TableRow
                       hover
                       onClick={event =>
-                        handleClick(event, row.name, row.dob, row.address, row.postcode)
+                        handleClick(
+                          event,
+                          row.name,
+                          row.dob,
+                          row.address,
+                          row.postcode,
+                          row.party_id
+                        )
                       }
                       role="checkbox"
                       aria-checked={isItemSelected}
@@ -310,6 +358,14 @@ export default function CustomersTable(props) {
                       <TableCell align="right">{row.dob}</TableCell>
                       <TableCell align="right">{row.address}</TableCell>
                       <TableCell align="right">{row.postcode}</TableCell>
+                      <TableCell align="right" className={classes.hiddenCell}>
+                        {row.party_id}
+                      </TableCell>
+                      <TableCell align="right" id={labelId}>
+                        <IconButton id={index} onClick={() => getAccounts(row.party_id)}>
+                          <FilterListIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -318,11 +374,18 @@ export default function CustomersTable(props) {
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
+              <TableRow>
+                <TableCell padding="none" colSpan={10}>
+                  <Collapse hidden={!open} in={open}>
+                    {<AccountsTable accountArray={accountArray} />}
+                  </Collapse>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10]}
+          rowsPerPageOptions={[3, 6]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -334,21 +397,28 @@ export default function CustomersTable(props) {
           <Button
             variant="contained"
             color="primary"
-            className={classes.submitBtn}
+            className={classes.correctButton}
             onClick={onSubmit}
           >
+            <CheckCircleOutlineIcon className={classes.icon} />
             Submit
           </Button>
           <Button
             variant="contained"
             color="primary"
-            className={classes.submitBtn}
+            className={classes.invalidButton}
             onClick={props.handleCloseSearch}
           >
+            <HighlightOffIcon className={classes.icon} />
             Cancel
           </Button>
         </Grid>
       </Paper>
+      <AccountsModal
+        accountArray={accountArray}
+        openCustomerAccounts={openCustomerAccounts}
+        setOpenCustomerAccounts={setOpenCustomerAccounts}
+      />
     </div>
   );
 }

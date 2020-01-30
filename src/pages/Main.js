@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   paper: {
-    height: '25vh',
+    height: '16vh',
     backgroundColor: '#9e9e9e'
   },
   modal: {
@@ -50,6 +50,7 @@ function Main() {
   const [customerIdentified, setCustomerIdentified] = useState(false);
   const [user, setUser] = useState([]);
   const [customer, setCustomer] = useState([]);
+  const [poaFor, setPOA] = React.useState(null);
   const [iVRProfile, setIVRProfile] = useState([]);
   const classes = useStyles();
   const [statusColor, setStatusColor] = React.useState('red');
@@ -86,7 +87,6 @@ function Main() {
     setOpenIdentified(true);
   };
 
-
   const handleClose = () => {
     setOpenIdentified(false);
     setReady(false);
@@ -112,7 +112,7 @@ function Main() {
       } else {
       }
     } else {
-      console.log("The no user path has been taken")
+      console.log('The no user path has been taken');
       setOpenIdentified(false);
       setOnCall(true);
       setReady(false);
@@ -133,7 +133,7 @@ function Main() {
     setCustomer([]);
     setWithCustomer(false);
     setReady(true);
-    setCustomerIdentified(false)
+    setCustomerIdentified(false);
     // await delay(3000);
     getIVRCall();
   };
@@ -162,13 +162,16 @@ function Main() {
         statusColor={statusColor}
         levelColor={levelColor}
         customerIdentified={customerIdentified}
-      setCustomerIdentified={setCustomerIdentified}
+        setCustomerIdentified={setCustomerIdentified}
         vConfirmationColor={vConfirmationColor}
         vLevelConfirmationColor={vLevelConfirmationColor}
-        setCustomer={ setCustomer}
+        setCustomer={setCustomer}
       />
       <Paper className={classes.paper} />
-      <WorkingContainer className={classes.workingContainer} />
+      <WorkingContainer
+        customerIdentified={customerIdentified}
+        className={classes.workingContainer}
+      />
       <AvayaToolBar
         setWaiting={changeStatusToReady}
         hangUp={stopCall}

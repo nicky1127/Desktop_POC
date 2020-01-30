@@ -8,26 +8,20 @@ import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
-import HomeIcon from '@material-ui/icons/Home';
 import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import SubtitlesIcon from '@material-ui/icons/Subtitles';
-import SearchIcon from '@material-ui/icons/Search';
-import PublicIcon from '@material-ui/icons/Public';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
 // carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import constants from '../constants';
+import AdditionalInfoPane from '../components/IDForms/AdditionalInfo';
+import SwitchPartiesPane from '../components/IDForms/SwitchParties';
+import CorrespondancePane from '../components/IDForms/CorrespondanceInfo';
+import POAPane from '../components/IDForms/POA';
 
 // import customers from '../mock/api/customers.json';
 
@@ -87,17 +81,25 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
     minWidth: 100
   },
-  slide1: {
+  slide0: {
     position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 0 ? 'block' : 'none')
   },
-  slide2: {
+  slide1: {
     position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 1 ? 'block' : 'none')
-  }
+  },
+  slide2: {
+    position: props => (props.activeStep === 2 ? 'static' : 'absolute'),
+    display: props => (props.activeStep === 2 ? 'block' : 'none')
+  },
+  slide3: {
+    position: props => (props.activeStep === 3 ? 'static' : 'absolute'),
+    display: props => (props.activeStep === 3 ? 'block' : 'none')
+  },
 }));
 
-export default function Expansion(props) {
+export default function IDExpansion(props) {
   const [checked, setChecked] = useState(false);
 
   const onClickBtn = () => {
@@ -110,12 +112,17 @@ export default function Expansion(props) {
   const [bank, setBank] = React.useState('');
   const [account, setAccount] = React.useState('');
   const handleNext = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 1) {
-        return 0;
-      }
-      return prevActiveStep + 1;
-    });
+    if (activeStep === 0) {
+      setActiveStep(1);
+    } else if (activeStep === 1) {
+      setActiveStep(2);
+    } 
+    // else if (activeStep === 2) {
+    //   setActiveStep(3);
+    // } 
+    else {
+      setActiveStep(0);
+    }
   };
 
   const handleBack = () => {
@@ -142,10 +149,8 @@ export default function Expansion(props) {
     let value;
     if (props.iVRProfile.account_number && props.iVRProfile.account_number) {
       return 'Account Number and Sort Code';
-    } else if (props.iVRProfile.last_name && props.iVRProfile.address_postcode) {
-      return 'Surname and Postcode';
     } else {
-      return 'unIdentified';
+      return 'Surname and Postcode';
     }
   };
 
@@ -193,97 +198,35 @@ export default function Expansion(props) {
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
             <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide1}>
+              <Fade in={activeStep === 0} className={classes.slide0}>
                 <Paper elevation={4}>
-                  <div>
-                    <h3>Additional Customer Information</h3>
-                    <List dense>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <SubtitlesIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={`Sort Code: ${props.customer.sort_code}`} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <HomeIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`${props.customer.address_line_1},${props.customer.address_city} `}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <PublicIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`${props.customer.address_country},${props.customer.address_postcode} `}
-                        />
-                      </ListItem>
-                    </List>
-                  </div>
+                  <AdditionalInfoPane {...props} />
                 </Paper>
               </Fade>
-              <Fade in={activeStep === 1} className={classes.slide2}>
+              <Fade in={activeStep === 1} className={classes.slide1}>
                 <Paper elevation={4}>
-                  <div>
-                    <h3>Switch Parties</h3>
-
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Brand</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={bank}
-                        onChange={handleChangeBank}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Lloyds</MenuItem>
-                        <MenuItem value={20}>Halifax</MenuItem>
-                        <MenuItem value={30}>Scotland</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Type</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={account}
-                        onChange={handleChangeAccount}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Current</MenuItem>
-                        <MenuItem value={20}>Savings</MenuItem>
-                        <MenuItem value={30}>Debit</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={account}
-                        onChange={handleChangeAccount}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>5642224</MenuItem>
-                        <MenuItem value={20}>9830293</MenuItem>
-                        <MenuItem value={30}>7389103</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
+                  <CorrespondancePane {...props} />
                 </Paper>
               </Fade>
+              <Fade in={activeStep === 2} className={classes.slide2}>
+                <Paper elevation={4}>
+                  <SwitchPartiesPane
+                    bank={bank}
+                    handleChangeBank={handleChangeBank}
+                    account={account}
+                    handleChangeAccount={handleChangeAccount}
+                  />
+                </Paper>
+              </Fade>
+              {/* <Fade in={activeStep === 3} className={classes.slide3}>
+                <Paper elevation={4}>
+                  <POAPane {...props} />
+                </Paper>
+              </Fade> */}
             </Box>
             <MobileStepper
               variant="dots"
-              steps={2}
+              steps={4}
               position="static"
               activeStep={activeStep}
               className={classes.stepper}

@@ -6,7 +6,8 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
-      position: 'absolute'
+      position: 'absolute',
+      backgroundColor: "grey"
     },
     icon: { marginRight: theme.spacing(-2) },
     heading: {
@@ -32,7 +33,8 @@ const useStyles = makeStyles(theme => ({
       position: 'relative'
     },
     expansionSummary: {
-      height: props => props.height
+      height: props => props.height,
+      backgroundColor: "#F1F1F1"
     },
     expansionDropdown: {
       height: '30vh'
@@ -78,37 +80,9 @@ export default function PlaceHolderExpansion(props) {
   
     // carousel
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [bank, setBank] = React.useState('');
-    const [account, setAccount] = React.useState('');
-    const handleNext = () => {
-      setActiveStep(prevActiveStep => {
-        if (prevActiveStep === 1) {
-          return 0;
-        }
-        return prevActiveStep + 1;
-      });
-    };
-  
-    const handleBack = () => {
-      setActiveStep(prevActiveStep => {
-        if (prevActiveStep === 0) {
-          return 1;
-        }
-        return prevActiveStep - 1;
-      });
-    };
-  
-    const handleChangeBank = event => {
-      setBank(event.target.value);
-    };
-  
-    const handleChangeAccount = event => {
-      setAccount(event.target.value);
-    };
   
     //
-    const classes = useStyles({ ...props, checked, activeStep });
+    const classes = useStyles({ ...props});
   
     return (
       <div className={classes.root}>

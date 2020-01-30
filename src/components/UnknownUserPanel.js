@@ -168,9 +168,7 @@ export default function IDSearchPanel(props) {
   };
 
   const onSubmit = async () => {
-    console.log('the api call has', account, sort_code, surname, postcode);
     const response = await apiCustomer.getCustomerBySearch(account, sort_code, surname, postcode);
-    console.log('the api call has', account, sort_code, surname, postcode);
     const rows = customerRows(response);
     setCustomerArray(rows);
     setOpenCustomerSearch(true);
@@ -189,9 +187,23 @@ export default function IDSearchPanel(props) {
     }
   };
 
+  const onSubmitSelection2 = async (id) => {
+    const response = await apiCustomer.getCustomerByPartyId(id)
+    if (response) {
+      props.setCustomer(response);
+      props.vLevelConfirmationColor(response);
+      props.vConfirmationColor();
+      setOpenCustomerSearch(false);
+      props.setCustomerIdentified(true);
+    } else {
+    }
+  };
+
   const IDSelection = methodSelected => {
     if (methodSelected === 10) {
       return 'Account Number';
+    } else if (methodSelected === 30) {
+      return 'PAN Number';
     } else {
       return 'Surname';
     }
@@ -221,20 +233,12 @@ export default function IDSearchPanel(props) {
                   />
                 </ListItem>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12}>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
                   </ListItemIcon>
                   <ListItemText primary={`${props.customer.date_of_birth}`} />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12}>
-                <ListItem>
-                  <ListItemIcon className={classes.icon}>
-                    <AccountBalanceIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`Account number: ${props.customer.account_number}`} />
                 </ListItem>
 
                 <ListItem>
@@ -296,7 +300,7 @@ export default function IDSearchPanel(props) {
                             </MenuItem>
                             <MenuItem value={10}>Account/SortCode</MenuItem>
                             <MenuItem value={20}>Surname/Postcode</MenuItem>
-                            <MenuItem value={30}>IB Username</MenuItem>
+                            <MenuItem value={30}>PAN Number</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -361,6 +365,7 @@ export default function IDSearchPanel(props) {
         openCustomerSearch={openCustomerSearch}
         onSubmitSelection={onSubmitSelection}
         handleCloseSearch={handleCloseSearch}
+        onSubmitSelection2={onSubmitSelection2}
         {...props}
       />
     </div>

@@ -11,27 +11,20 @@ import SecurityIcon from '@material-ui/icons/Security';
 import Grid from '@material-ui/core/Grid';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import WarningIcon from '@material-ui/icons/Warning';
-import HelpIcon from '@material-ui/icons/Help';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import HomeWorkIcon from '@material-ui/icons/HomeWork';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import apiVerification from '../api/ApiVerification';
-import apiIndicators from '../api/ApiIndicators';
 
 //carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+
+import PasswordVerifyPane from '../components/VerificationForms/PasswordVerify';
+import SecurityVerifyPane from '../components/VerificationForms/SecurityVerify';
+import QBAVerifyPane from '../components/VerificationForms/QBAVerify';
+import IndicatorsListPane from './IndicatorsForms/IndicatorList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,7 +69,10 @@ const useStyles = makeStyles(theme => ({
     height: props => props.height
   },
   expansionDropdown: {
-    height: '34vh'
+    height: props => (props.activeStep === 2 ? '30vh' : '33vh')
+  },
+  expansionDropdown2: {
+    height: props => (props.activeStep === 4 ? '37vh' : '35vh')
   },
   expandIcon: {
     padding: '3px',
@@ -117,30 +113,21 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
     minWidth: 120
   },
-  slide1: {
+  slide0: {
     position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 0 ? 'block' : 'none')
   },
-  slide2: {
+  slide4: {
     position: props => (props.activeStep2 === 4 ? 'static' : 'absolute'),
     display: props => (props.activeStep2 === 4 ? 'block' : 'none')
   },
-  slide3: {
+  slide2: {
     position: props => (props.activeStep === 2 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 2 ? 'block' : 'none')
   },
-
-  correctButton: {
-    marginRight: theme.spacing(2),
-    backgroundColor: '#40DA53'
-  },
-  wrongButton: {
-    marginRight: theme.spacing(2),
-    backgroundColor: '#D60909'
-  },
-  invalidButton: {
-    marginRight: theme.spacing(2),
-    backgroundColor: '#D60909'
+  slide1: {
+    position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
+    display: props => (props.activeStep === 1 ? 'block' : 'none')
   },
   redIcon: {
     color: '#d50000'
@@ -158,16 +145,6 @@ export default function CallerVerifyExpansion(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [vMethod, setVMethod] = React.useState(null);
   const [levelPass, setLevelPass] = React.useState(null);
-
-  const onChangeSurname = evt => {
-    setSurname(evt.target.value);
-  };
-  const onChangePostCode = evt => {
-    setPostcode(evt.target.value);
-  };
-  const onChangeBankingCode = evt => {
-    setBankingcode(evt.target.value);
-  };
 
   const onClickBtn = async () => {
     if (checked === false) {
@@ -197,14 +174,6 @@ export default function CallerVerifyExpansion(props) {
 
   const open = Boolean(anchorEl);
 
-  const getOtherIndicators = async params => {
-    const response = await apiIndicators.getOtherIndicators(params);
-    if (response) {
-      setQuestion(response);
-    } else {
-    }
-  };
-
   const onClickBtn2 = () => {
     if (checked2 === false) {
       setChecked2(true);
@@ -219,37 +188,17 @@ export default function CallerVerifyExpansion(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [activeStep2, setActiveStep2] = React.useState(4);
 
-  const onSubmit = () => {
-    if (activeStep === 0 && surname.toUpperCase() === props.customer.last_name.toUpperCase()) {
-      setVLevel(20);
-      setLevelPass(1);
-    } else if (
-      activeStep === 1 &&
-      postcode.toUpperCase() === props.customer.address_postcode.toUpperCase()
-    ) {
-      setVLevel(40);
-      setLevelPass(2);
-    } else if (
-      activeStep === 2 &&
-      parseInt(bankingCode) === parseInt(props.customer.security_code)
-    ) {
-      setVLevel(55);
-      setLevelPass(3);
-      setVMethod('Security Code');
-    } else if (
-      activeStep === 0 &&
-      surname.toUpperCase() !== props.customer.last_name.toUpperCase()
-    ) {
-      window.alert('Incorrect Surname');
-    } else if (
-      activeStep === 1 &&
-      postcode.toUpperCase() !== props.customer.address_postcode.toUpperCase()
-    ) {
-      window.alert('Incorrect PostCode');
-    } else if (activeStep === 2 && bankingCode !== props.customer.security_code) {
-      window.alert('Incorrect Security Code');
+  const onSubmitCorrect = () => {
+    if (activeStep === 0) {
+      setActiveStep(1);
+    } else if (activeStep === 1) {
+      setActiveStep(2);
+    } else {
+      setActiveStep(0);
     }
   };
+
+  const onSubmit = () => {};
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => {
@@ -276,48 +225,6 @@ export default function CallerVerifyExpansion(props) {
       return vMethod;
     } else {
       return 'No verification';
-    }
-  };
-
-  const verification_level = (props, vLevel) => {
-    if (props.customer.verification_level && vLevel !== null) {
-      return vLevel;
-    } else if (props.customer.verification_level && vLevel === null) {
-      setVLevel(props.customer.verification_level);
-      return props.customer.verification_level;
-    } else {
-      return 'Please Step up';
-    }
-  };
-
-  const verificationButtonColor1 = levelPass => {
-    if (levelPass === 1) {
-      return classes.correctButton;
-    } else {
-      return classes.normalButton;
-    }
-  };
-  const verificationButtonColor2 = levelPass => {
-    if (levelPass === 2) {
-      return classes.correctButton;
-    } else {
-      return classes.normalButton;
-    }
-  };
-
-  const borderColorSelector = levelPass => {
-    if (levelPass === 1) {
-      return classes.greenBorder;
-    } else {
-      return classes.normalBorder;
-    }
-  };
-
-  const borderColorSelector2 = levelPass => {
-    if (levelPass === 2) {
-      return classes.greenBorder;
-    } else {
-      return classes.normalBorder;
     }
   };
 
@@ -409,187 +316,48 @@ export default function CallerVerifyExpansion(props) {
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
             <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide1}>
+              <Fade in={activeStep === 0} className={classes.slide0}>
                 <Paper elevation={4}>
-                  <div>
-                    <h3>Step Up: Question 1</h3>
-                    <FormControl className={classes.formControl}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={3} spacing={3}>
-                          <ListItem>
-                            <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <InputLabel id="Verification Question 1"></InputLabel>
-                          <TextField
-                            required
-                            id="filled-required"
-                            value={question.question}
-                            variant="outlined"
-                            className={classes.textField}
-                            InputProps={{
-                              readOnly: true,
-                              classes: {
-                                notchedOutline: borderColorSelector(levelPass)
-                              },
-                              startAdornment: (
-                                <InputAdornment
-                                  position="start"
-                                  className={verificationButtonColor1(levelPass)}
-                                >
-                                  <HelpIcon />
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid container spacing={2}>
-                        <Grid item xs={3} spacing={3}>
-                          <ListItem>
-                            <ListItemText classes={{ root: classes.name }} primary={`Answer:`} />
-                          </ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <InputLabel id="Verification Question 1 Answer"></InputLabel>
-                          <TextField
-                            required
-                            id="filled-required"
-                            value={valuebuilder(props)}
-                            variant="outlined"
-                            className={classes.textField}
-                            InputProps={{
-                              readOnly: true,
-                              classes: {
-                                notchedOutline: borderColorSelector(levelPass)
-                              },
-                              startAdornment: (
-                                <InputAdornment
-                                  position="start"
-                                  className={verificationButtonColor1(levelPass)}
-                                >
-                                  <HelpIcon />
-                                </InputAdornment>
-                              )
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-                    </FormControl>
-                    <Grid container spacing={2}>
-                      <Grid item xs={4} spacing={3}>
-                        <Button
-                          variant="contained"
-                          className={classes.correctButton}
-                          onClick={onSubmit}
-                        >
-                          Correct
-                        </Button>
-                      </Grid>
-                      <Grid item xs={4} spacing={3}>
-                        <Button
-                          variant="contained"
-                          className={classes.wrongButton}
-                          onClick={onSubmit}
-                        >
-                          Wrong
-                        </Button>
-                      </Grid>
-                      <Grid item xs={4} spacing={3}>
-                        <Button
-                          variant="contained"
-                          className={classes.invalidButton}
-                          onClick={onSubmit}
-                        >
-                          Invalid
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </div>
+                  <PasswordVerifyPane
+                    onSubmitCorrect={onSubmitCorrect}
+                    onSubmit={onSubmit}
+                    question={question}
+                    valuebuilder={valuebuilder}
+                    {...props}
+                  />
                 </Paper>
               </Fade>
-              <Fade in={activeStep === 1} className={classes.slide2}>
+              <Fade in={activeStep === 1} className={classes.slide1}>
                 <Paper elevation={4}>
-                  <div>
-                    <h3>Step Up</h3>
-                    <h5>Please ask the customer the following;</h5>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="Verification Question 2"></InputLabel>
-
-                      <TextField
-                        required
-                        id="filled-required"
-                        defaultValue=""
-                        variant="outlined"
-                        InputProps={{
-                          classes: {
-                            notchedOutline: borderColorSelector2(levelPass)
-                          },
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <HomeWorkIcon />
-                            </InputAdornment>
-                          )
-                        }}
-                        onChange={onChangePostCode}
-                      />
-                    </FormControl>
-                    <Grid container>
-                      <Grid item xs={4}>
-                        <ListItem>
-                          <Button
-                            variant="contained"
-                            className={verificationButtonColor2(levelPass)}
-                            onClick={onSubmit}
-                          >
-                            Submit
-                          </Button>
-                        </ListItem>
-                      </Grid>
-                    </Grid>
-                  </div>
+                  <SecurityVerifyPane
+                    onSubmitCorrect={onSubmitCorrect}
+                    onSubmit={onSubmit}
+                    question={question}
+                    valuebuilder={valuebuilder}
+                    {...props}
+                  />
+                </Paper>
+              </Fade>
+              <Fade in={activeStep === 2} className={classes.slide2}>
+                <Paper elevation={4}>
+                  <QBAVerifyPane
+                    onSubmitCorrect={onSubmitCorrect}
+                    onSubmit={onSubmit}
+                    question={question}
+                    valuebuilder={valuebuilder}
+                    {...props}
+                  />
                 </Paper>
               </Fade>
             </Box>
           </Paper>
         </Collapse>
         <Collapse in={checked2}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
+          <Paper elevation={4} className={classes.expansionDropdown2}>
             <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep2 === 4} className={classes.slide2}>
+              <Fade in={activeStep2 === 4} className={classes.slide4}>
                 <Paper elevation={4}>
-                  <div>
-                    <h3>Indicators</h3>
-                    <List dense={true}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Code: A23</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Description: Stuff</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Code: A56</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Description: Stuff</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Code: A76</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Description: Stuff</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Code: A98</ListItem>
-                        </Grid>
-                        <Grid item xs={5} spacing={3}>
-                          <ListItem>Description: Stuff</ListItem>
-                        </Grid>
-                      </Grid>
-                    </List>
-                  </div>
+                  <IndicatorsListPane />
                 </Paper>
               </Fade>
             </Box>

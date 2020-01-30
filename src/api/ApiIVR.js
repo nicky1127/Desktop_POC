@@ -11,7 +11,7 @@ export class ApiIVRCalls extends Api {
       const idRandom = Math.floor(Math.random() * 2) + 1; 
       console.log(idRandom);
       
-      const call = response.find(item => item.call_Id === 2);
+      const call = response.find(item => item.call_Id === 1);
 
       customer = call;
     } catch (err) {}

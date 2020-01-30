@@ -9,7 +9,7 @@ export class ApiVerification extends Api {
     let verificationQuestion;
     try {
       const response = await this._getCached(uriVerify, params, settingsExpiryInMinutes, true);
-      const idRandom = Math.floor(Math.random() * 3) + 1; 
+      const idRandom = Math.floor(Math.random() * 2) + 1; 
       console.log(idRandom);
       
       const call = response.find(item => item.id === idRandom);

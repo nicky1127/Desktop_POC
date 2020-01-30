@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '47%',
+    left: '60%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
   },
@@ -131,7 +131,7 @@ export default function CallContextExpansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
-  const waitTime = moment.duration(props.customer.wait_time, 'seconds').seconds();
+  const waitTime = moment.duration(props.iVRProfile.wait_time, 'seconds').seconds();
 
   const waitTimeColor = waitTime => {
     if (parseInt(waitTime) >= 10) {
@@ -157,7 +157,7 @@ export default function CallContextExpansion(props) {
               <ListItemIcon className={classes.icon}>
                 <ForumIcon />
               </ListItemIcon>
-              <ListItemText primary={`Say Anything: ${props.customer.Say_Anything}`} />
+              <ListItemText primary={`Say Anything: ${props.iVRProfile.say_anything}`} />
             </ListItem>
             <Grid container>
               <Grid xs={9}>
@@ -165,15 +165,7 @@ export default function CallContextExpansion(props) {
                   <ListItemIcon className={classes.icon}>
                     <DataUsageIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`IVR Intent: Replace Card`} />
-                </ListItem>
-              </Grid>
-              <Grid xs={3}>
-                <ListItem>
-                  <Button size="small" variant="contained" className={classes.invalidButton}>
-                    Wrong
-                    {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                  </Button>
+                  <ListItemText primary={`IVR Intent: ${props.iVRProfile.ivr_intent}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -201,13 +193,13 @@ export default function CallContextExpansion(props) {
                         <ListItemIcon className={classes.icon}>
                           <DialpadIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`VDN: 2243`} />
+                        <ListItemText primary={`VDN: ${props.iVRProfile.vdn}`} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon className={classes.icon}>
                           <ExitToAppIcon />
                         </ListItemIcon>
-                        <ListItemText primary={`Transfer from:  ${props.customer.transfer_from}`} />
+                        <ListItemText primary={`Transfer from:  ${props.iVRProfile.transfered_from}`} />
                       </ListItem>
                     </List>
                   </div>

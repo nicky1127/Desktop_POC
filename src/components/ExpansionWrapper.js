@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Expansion from './Expansion';
+import IDExpansion from './IDExpansion';
 import CallerVerifyExpansion from './CallerVerifyExpansion';
 import CallContextExpansion from './CallContextExpansion';
 import IDSearchPanel from './UnknownUserPanel';
@@ -28,21 +28,21 @@ const useStyles = makeStyles(theme => ({
 export default function AtAGlancePanel(props) {
   const classes = useStyles();
 
-  const renderloading = () => <div>Loading</div>;
+  const logo = "/images/bee_icon.jpg";
 
   const renderForm = () => (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={2} className={classes.logo}>
+        <Grid item xs={1} className={classes.logo}>
           <img
-            src="/images/lloyds_logo.png"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
+            src={`${logo}`}
+            style={{ width: '90%', display: 'block', margin: '15px auto' }}
           />
         </Grid>
-        <Grid item xs={10} className={classes.subGridRoot}>
+        <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
-              <Expansion height="16vh" {...props} />
+              <IDExpansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
               <CallContextExpansion height="16vh" {...props} />
@@ -59,19 +59,19 @@ export default function AtAGlancePanel(props) {
   const renderIDCustomer = () => (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={2} className={classes.logo}>
+        <Grid item xs={1} className={classes.logo}>
           <img
-            src="/images/lloyds_logo.png"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
+            src={`${logo}`}
+            style={{ width: '90%', display: 'block', margin: '15px auto',  }}
           />
         </Grid>
-        <Grid item xs={10} className={classes.subGridRoot}>
+        <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
               <IDSearchPanel height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="16vh" {...props} />
+              <CallContextExpansion height="16vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
               <PlaceHolderExpansion height="16vh" {...props} />
@@ -85,13 +85,13 @@ export default function AtAGlancePanel(props) {
   const renderNoCustomer = () => (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={2} className={classes.logo}>
+        <Grid item xs={1} className={classes.logo}>
           <img
-            src="/images/lloyds_logo.png"
-            style={{ width: '50%', display: 'block', margin: '15px auto' }}
+            src={`${logo}`}
+            style={{ width: '90%', display: 'block', margin: '15px auto'}}
           />
         </Grid>
-        <Grid item xs={10} className={classes.subGridRoot}>
+        <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
               <PlaceHolderExpansion height="15.8vh" />
