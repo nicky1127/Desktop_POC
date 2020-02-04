@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 export default function AtAGlancePanel(props) {
   const classes = useStyles();
 
-  const logo = "/images/bee_icon.jpg";
+  const logo = "/images/lbg_icon.jpg";
 
   const renderForm = () => (
     <div className={classes.root}>
