@@ -19,17 +19,6 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid #000',
     padding: theme.spacing(2, 3)
   },
-  extendedIcon: {
-    marginRight: theme.spacing(1)
-  },
-  pickupButton: {
-    marginRight: theme.spacing(1),
-    backgroundColor: '#00ff00'
-  },
-  rejectButton: {
-    marginRight: theme.spacing(1),
-    backgroundColor: '#ff0000'
-  }
 }));
 
 export default function CustomerSearchModal(props) {

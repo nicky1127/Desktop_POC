@@ -54,7 +54,7 @@ export default function SwitchPartiesPane(props) {
 
   return (
     <div>
-      <h3>Switch Parties</h3>
+      <h2>Switch Parties</h2>
 
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Brand</InputLabel>

@@ -11,6 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import IDPanelModal from '../components/Modals/IDModal'
 
 // carousel
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -101,46 +102,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function IDExpansion(props) {
   const [checked, setChecked] = useState(false);
+  const [openIDPanels, setOpenIDPanels] = useState(false);
 
-  const onClickBtn = () => {
-    setChecked(prev => !prev);
-  };
+  const onOpenClick =  () => {
+    setOpenIDPanels(true)
+  }
+
+  const onCloseClick =  () => {
+    setOpenIDPanels(false)
+  }
 
   // carousel
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [bank, setBank] = React.useState('');
-  const [account, setAccount] = React.useState('');
-  const handleNext = () => {
-    if (activeStep === 0) {
-      setActiveStep(1);
-    } else if (activeStep === 1) {
-      setActiveStep(2);
-    } 
-    // else if (activeStep === 2) {
-    //   setActiveStep(3);
-    // } 
-    else {
-      setActiveStep(0);
-    }
-  };
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 0) {
-        return 1;
-      }
-      return prevActiveStep - 1;
-    });
-  };
 
-  const handleChangeBank = event => {
-    setBank(event.target.value);
-  };
-
-  const handleChangeAccount = event => {
-    setAccount(event.target.value);
-  };
+  
 
   //
   const classes = useStyles({ ...props, checked, activeStep });
@@ -195,60 +172,14 @@ export default function IDExpansion(props) {
             </Grid>
           </List>
         </Box>
-        <Collapse in={checked}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide0}>
-                <Paper elevation={4}>
-                  <AdditionalInfoPane {...props} />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 1} className={classes.slide1}>
-                <Paper elevation={4}>
-                  <CorrespondancePane {...props} />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 2} className={classes.slide2}>
-                <Paper elevation={4}>
-                  <SwitchPartiesPane
-                    bank={bank}
-                    handleChangeBank={handleChangeBank}
-                    account={account}
-                    handleChangeAccount={handleChangeAccount}
-                  />
-                </Paper>
-              </Fade>
-              {/* <Fade in={activeStep === 3} className={classes.slide3}>
-                <Paper elevation={4}>
-                  <POAPane {...props} />
-                </Paper>
-              </Fade> */}
-            </Box>
-            <MobileStepper
-              variant="dots"
-              steps={4}
-              position="static"
-              activeStep={activeStep}
-              className={classes.stepper}
-              nextButton={
-                <Button size="small" onClick={handleNext}>
-                  Next
-                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={handleBack}>
-                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                  Back
-                </Button>
-              }
-            />
-          </Paper>
-        </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+        <IconButton classes={{ root: classes.expandIcon }} onClick={onOpenClick}>
           <ExpandMoreIcon />
         </IconButton>
       </Paper>
+      <IDPanelModal 
+      openIDPanels={openIDPanels}
+      onCloseClick={onCloseClick}
+      {...props}/>
     </div>
   );
 }

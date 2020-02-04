@@ -6,11 +6,11 @@ import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
 import PublicIcon from '@material-ui/icons/Public';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    position: 'absolute'
+    position: 'absolute',
+    maxWidth: 'none',
   },
   icon: { marginRight: theme.spacing(-1) },
   address: {
@@ -39,35 +39,28 @@ const useStyles = makeStyles(theme => ({
     left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
-  },
+  }
 }));
 
 export default function CorrespondancePane(props) {
-
-
-
   //
-  const classes = useStyles({ ...props});
+  const classes = useStyles({ ...props });
 
   return (
-    <div>
-      <h3>Correspondance Information</h3>
-      <List dense>
-      <ListItem>
+    <div >
+      <h2>Correspondance Information</h2>
+      <List classes={{ root: classes.expansionContainer }}>
+        <ListItem>
           <ListItemIcon className={classes.icon}>
             <DraftsIcon />
           </ListItemIcon>
-          <ListItemText
-            primary={`${props.customer.address_line_1} `}
-          />
+          <ListItemText primary={`${props.customer.address_line_1} `} />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <DraftsIcon />
           </ListItemIcon>
-          <ListItemText
-            primary={`${props.customer.address_city} `}
-          />
+          <ListItemText primary={`${props.customer.address_city} `} />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>

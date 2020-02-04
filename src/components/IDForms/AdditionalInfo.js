@@ -50,8 +50,8 @@ export default function AdditionalInfoPane(props) {
 
   return (
     <div>
-      <h3>Additional Customer Information</h3>
-      <List dense>
+      <h2>Additional Customer Information</h2>
+      <List classes={{ root: classes.expansionContainer }}>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <PhoneForwardedIcon />
