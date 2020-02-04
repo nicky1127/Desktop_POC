@@ -15,8 +15,8 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import TextField from '@material-ui/core/TextField';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import apiCustomer from '../api/ApiCustomer';
-import { customerRows } from '../helperFiles/CustomerHelpers';
 import CustomerSearchModal from '../components/Modals/CustomerSearch';
+import { customerRows } from '../HelperFiles/CustomerHelpers';
 
 // carousel
 import Button from '@material-ui/core/Button';
@@ -24,6 +24,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
