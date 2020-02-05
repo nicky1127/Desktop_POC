@@ -18,13 +18,7 @@ import apiVerification from '../api/ApiVerification';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-
-import PasswordVerifyPane from '../components/VerificationForms/PasswordVerify';
-import SecurityVerifyPane from '../components/VerificationForms/SecurityVerify';
-import QBAVerifyPane from '../components/VerificationForms/QBAVerify';
-import IndicatorsListPane from './IndicatorsForms/IndicatorList';
+import VerificationModal from '../components/Modals/VerificationModal';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: { marginRight: theme.spacing(-2) },
   status_icon: { marginRight: theme.spacing(-2), color: props => props.statusColor },
-  level_icon: { marginRight: theme.spacing(-2), color: props => props.levelColor },
+  level_icon: { marginRight: theme.spacing(-2), color: props => props.levelPass < 2 ? 'red' : 'green'},
   heading: {
     fontSize: theme.typography.pxToRem(30),
 
@@ -76,7 +70,7 @@ const useStyles = makeStyles(theme => ({
   },
   expandIcon: {
     padding: '3px',
-    display: 'block',
+    display: props => (props.levelPass < 2 ? 'block' : 'none'),
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
@@ -106,28 +100,9 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(1),
     height: '25vh'
   },
-  stepper: {
-    flexGrow: 1
-  },
   formControl: {
     margin: theme.spacing(2),
     minWidth: 120
-  },
-  slide0: {
-    position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 0 ? 'block' : 'none')
-  },
-  slide4: {
-    position: props => (props.activeStep2 === 4 ? 'static' : 'absolute'),
-    display: props => (props.activeStep2 === 4 ? 'block' : 'none')
-  },
-  slide2: {
-    position: props => (props.activeStep === 2 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 2 ? 'block' : 'none')
-  },
-  slide1: {
-    position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 1 ? 'block' : 'none')
   },
   redIcon: {
     color: '#d50000'
@@ -137,32 +112,22 @@ const useStyles = makeStyles(theme => ({
 export default function CallerVerifyExpansion(props) {
   const [checked, setChecked] = useState(false);
   const [checked2, setChecked2] = useState(false);
-  const [surname, setSurname] = React.useState('');
-  const [question, setQuestion] = React.useState('');
-  const [postcode, setPostcode] = React.useState('');
-  const [bankingCode, setBankingcode] = React.useState('');
-  const [vLevel, setVLevel] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [vMethod, setVMethod] = React.useState(null);
-  const [levelPass, setLevelPass] = React.useState(null);
+  const [levelPass, setLevelPass] = React.useState(0);
+  const [openVerifyModal, setOpenVerifyModal] = React.useState(false);
+  const [question, setQuestion] = React.useState(1);
+  const [verificationArray, setVerificationArray] = React.useState([]);
 
-  const onClickBtn = async () => {
-    if (checked === false) {
-      await getVerificationQuestion();
-      setChecked(true);
-      setChecked2(false);
+  const onClickBtn = () => {
+    if (levelPass < 2) {
+      setOpenVerifyModal(true);
     } else {
-      setChecked(false);
     }
   };
 
-  const getVerificationQuestion = async () => {
-    const response = await apiVerification.getVerifyQuestion();
-    console.log(response);
-    if (response) {
-      setQuestion(response);
-    } else {
-    }
+  const onCloseVerifyModal = () => {
+    setOpenVerifyModal(false);
   };
   const handlePopoverOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -183,47 +148,34 @@ export default function CallerVerifyExpansion(props) {
     }
   };
 
-  //carousel
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [activeStep2, setActiveStep2] = React.useState(4);
-
   const onSubmitCorrect = () => {
-    if (activeStep === 0) {
-      setActiveStep(1);
-    } else if (activeStep === 1) {
-      setActiveStep(2);
-    } else {
-      setActiveStep(0);
-    }
+    setQuestion(prevQuestion => {
+      return prevQuestion + 1;
+    });
+    setLevelPass(prevLevelPass => {
+      return prevLevelPass + 1;
+    });
   };
 
-  const onSubmit = () => {};
-
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 0 && levelPass === 1) {
-        return 1;
-      } else if (prevActiveStep === 1 && levelPass === 2) {
-        return 2;
-      } else if (prevActiveStep === 2 && levelPass === 3) {
-        return 0;
-      } else {
-        window.alert('Please complete the security question before proceeding');
-        return prevActiveStep;
-      }
+  const onSubmitInvalid = () => {
+    setQuestion(prevQuestion => {
+      return prevQuestion + 1;
     });
   };
 
   //
-  const classes = useStyles({ ...props, checked, checked2, activeStep, activeStep2 });
+  const classes = useStyles({ ...props, levelPass });
 
   const verificationBy = (props, vMethod) => {
     if (props.iVRProfile.verification_by && vMethod === null) {
       return props.iVRProfile.verification_by;
     } else if (props.iVRProfile.verification_by && vMethod !== null) {
       return vMethod;
-    } else {
+    } else if (levelPass === 2) {
+      return 'Password and QBA';
+    } else if (levelPass !== 2 && question > 2) {
+      return 'Unable to Verify';
+    }else {
       return 'No verification';
     }
   };
@@ -236,10 +188,10 @@ export default function CallerVerifyExpansion(props) {
     }
   };
 
-  const valuebuilder = props => {
-    const answer = eval(`props.customer.${question.key}`);
-    return answer;
-  };
+  // const valuebuilder = props => {
+  //   const answer = eval(`props.customer.${question.key}`);
+  //   return answer;
+  // };
 
   return (
     <div className={classes.root}>
@@ -313,83 +265,23 @@ export default function CallerVerifyExpansion(props) {
             <Typography> Please see indicator A505 on the dropdown</Typography>
           </Popover>
         </Box>
-        <Collapse in={checked}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide0}>
-                <Paper elevation={4}>
-                  <PasswordVerifyPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmit}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 1} className={classes.slide1}>
-                <Paper elevation={4}>
-                  <SecurityVerifyPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmit}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 2} className={classes.slide2}>
-                <Paper elevation={4}>
-                  <QBAVerifyPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmit}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-            </Box>
-          </Paper>
-        </Collapse>
-        <Collapse in={checked2}>
-          <Paper elevation={4} className={classes.expansionDropdown2}>
-            <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep2 === 4} className={classes.slide4}>
-                <Paper elevation={4}>
-                  <IndicatorsListPane />
-                </Paper>
-              </Fade>
-            </Box>
-            <MobileStepper
-              variant="dots"
-              steps={2}
-              position="static"
-              activeStep={activeStep}
-              className={classes.stepper}
-              nextButton={
-                <Button size="small" onClick={handleNext}>
-                  Next
-                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-              }
-              backButton={
-                <Button size="small">
-                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                  Back
-                </Button>
-              }
-            />
-          </Paper>
-        </Collapse>
         <IconButton className={classes.expandIcon} onClick={onClickBtn}>
           <ExpandMoreIcon />
         </IconButton>
 
-        <IconButton className={classes.expandIcon2} onClick={onClickBtn2}>
+        {/* <IconButton className={classes.expandIcon2} onClick={onClickBtn2}>
           <ExpandMoreIcon />
-        </IconButton>
+        </IconButton> */}
       </Paper>
+      <VerificationModal
+        {...props}
+        openVerifyModal={openVerifyModal}
+        onCloseVerifyModal={onCloseVerifyModal}
+        levelPass={levelPass}
+        question={question}
+        onSubmitCorrect={onSubmitCorrect}
+        onSubmitInvalid={onSubmitInvalid}
+      />
     </div>
   );
 }

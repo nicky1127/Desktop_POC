@@ -57,27 +57,26 @@ export default function QBAVerifyPane(props) {
       backgroundColor: '#007FE3',
       color: 'white'
     },
-    answerBox:{
-        boxSizing: 'border-box'
+    answerBox: {
+      boxSizing: 'border-box'
     }
   }));
 
   const classes = useStyles({ ...props });
 
-
-
   return (
     <div>
-      <h3>Step Up Verification:Question Based Authentification</h3>
-      <FormControl className={classes.formControl}>
-        <Grid container>
-          <Grid item xs={3}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
-            </ListItem>
-          </Grid>
-          <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question :Password"></InputLabel>
+      <List className={classes.modalContent}>
+        <h2>Step Up Verification:Question Based Authentification</h2>
+        
+          <Grid container>
+            <Grid item xs={3}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={9}>
+              {/* <InputLabel id="Verification Question :Password"></InputLabel>
                           <TextField
                             required
                             id="filled-required"
@@ -99,18 +98,18 @@ export default function QBAVerifyPane(props) {
                               )
                             }}
                           /> */}
-            <ListItem>{props.question.question}</ListItem>
+              <ListItem>{props.question.question}</ListItem>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Answer:`} />
-            </ListItem>
-          </Grid>
-          <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question 1 Answer"></InputLabel> */}
-            {/* <TextField
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Answer:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={9}>
+              {/* <InputLabel id="Verification Question 1 Answer"></InputLabel> */}
+              {/* <TextField
                             required
                             id="filled-required"
                             value={props.valuebuilder(props)}
@@ -131,37 +130,48 @@ export default function QBAVerifyPane(props) {
                               )
                             }}
                           /> */}
-            <Box display="flex" borderColor="primary.main" className={classes.answerBox}>
-              <ListItem>{props.valuebuilder(props)}</ListItem>
-            </Box>
+              <Box display="flex" borderColor="primary.main" className={classes.answerBox}>
+                <ListItem>{props.valuebuilder(props)}</ListItem>
+              </Box>
+            </Grid>
+          </Grid>
+        
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.correctButton}
+              onClick={props.onSubmitCorrect}
+              size="small"
+            >
+              <CheckCircleOutlineIcon className={classes.icon} />
+              Correct
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.incorrectButton}
+              size="small"
+              onClick={props.onSubmitInvalid}
+            >
+              <HighlightOffIcon className={classes.icon} />
+              Incorrect
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.invalidButton}
+              size="small"
+              onClick={props.onSubmitInvalid}
+            >
+              <ExitToAppIcon className={classes.icon} />
+              Invalid
+            </Button>
           </Grid>
         </Grid>
-      </FormControl>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
-            size="small"
-          >
-            <CheckCircleOutlineIcon className={classes.icon} />
-            Correct
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button variant="contained" className={classes.incorrectButton} size="small">
-            <HighlightOffIcon className={classes.icon} />
-            Incorrect
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button variant="contained" className={classes.invalidButton} size="small">
-            <ExitToAppIcon className={classes.icon} />
-            Invalid
-          </Button>
-        </Grid>
-      </Grid>
+      </List>
     </div>
   );
 }

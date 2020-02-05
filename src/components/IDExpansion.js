@@ -13,19 +13,6 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import IDPanelModal from '../components/Modals/IDModal'
 
-// carousel
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-
-import AdditionalInfoPane from '../components/IDForms/AdditionalInfo';
-import SwitchPartiesPane from '../components/IDForms/SwitchParties';
-import CorrespondancePane from '../components/IDForms/CorrespondanceInfo';
-import POAPane from '../components/IDForms/POA';
-
-// import customers from '../mock/api/customers.json';
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',

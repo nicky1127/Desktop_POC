@@ -14,6 +14,7 @@ import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/c
 import moment from 'moment';
 import constants from '../constants';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
+import CallContextModal from '../components/Modals/CallContextModal';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ComputerIcon from '@material-ui/icons/Computer';
 import PersonIcon from '@material-ui/icons/Person';
@@ -101,32 +102,19 @@ const useStyles = makeStyles(theme => ({
 export default function CallContextExpansion(props) {
   const [checked, setChecked] = useState(false);
 
-  const onClickBtn = () => {
-    setChecked(prev => !prev);
+  const [openCallPanels, setOpenCallPanels] = useState(false);
+
+  const onOpenCallsClick = () => {
+    setOpenCallPanels(true);
+  };
+
+  const onCloseCallsClick = () => {
+    setOpenCallPanels(false);
   };
 
   //carousel
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 1) {
-        return 0;
-      } else {
-        return prevActiveStep + 1;
-      }
-    });
-  };
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 0) {
-        return 1;
-      } else {
-        return prevActiveStep - 1;
-      }
-    });
-  };
+  const [activeStep, setActiveStep] = React.useState(0);
 
   //
   const classes = useStyles({ ...props, checked, activeStep });
@@ -171,122 +159,15 @@ export default function CallContextExpansion(props) {
             </Grid>
           </List>
         </Box>
-        <Collapse in={checked}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box classes={{ root: classes.auditSummary }}>
-              <Fade in={activeStep === 0} className={classes.slide1}>
-                <Paper elevation={4}>
-                  <div>
-                    <h3>Additional Call Information</h3>
-                    <List dense={true}>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <PhoneInTalkIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`Call Time:  ${moment(props.customer.call_time).format(
-                            timeFormat.call_time
-                          )}`}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <DialpadIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={`VDN: ${props.iVRProfile.vdn}`} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <ExitToAppIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={`Transfer from:  ${props.iVRProfile.transfered_from}`} />
-                      </ListItem>
-                    </List>
-                  </div>
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 1} className={classes.slide2}>
-                <Paper elevation={4} >
-                  <div>
-                    <h3>IVR Audit</h3>
-                    <List dense>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <ComputerIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={'Please enter your account number followed by the hash key'}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'90345675 #'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <ComputerIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'Thank you. Please hold for an agent'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'Okay.Bloody banks'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <ComputerIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'*Transfering to agent'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'Okay.Bloody banks'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon className={classes.icon}>
-                          <ComputerIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'*Transfering to agent'} />
-                      </ListItem>
-                    </List>
-                  </div>
-                </Paper>
-              </Fade>
-            </Box>
-            <MobileStepper
-              variant="dots"
-              steps={2}
-              position="static"
-              activeStep={activeStep}
-              className={classes.stepper}
-              nextButton={
-                <Button size="small" onClick={handleNext}>
-                  Next
-                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={handleBack}>
-                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                  Back
-                </Button>
-              }
-            />
-          </Paper>
-          <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
-            <ExpandMoreIcon />
-          </IconButton>
-        </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+        <IconButton classes={{ root: classes.expandIcon }} onClick={onOpenCallsClick}>
           <ExpandMoreIcon />
         </IconButton>
       </Paper>
+      <CallContextModal
+        openCallPanels={openCallPanels}
+        onCloseCallsClick={onCloseCallsClick}
+        {...props}
+      />
     </div>
   );
 }

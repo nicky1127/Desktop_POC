@@ -4,15 +4,15 @@ import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import AdditionalInfoPane from '../IDForms/AdditionalInfo';
-import CorrespondancePane from '../IDForms/CorrespondanceInfo';
-import SwitchPartiesPane from '../IDForms/SwitchParties';
+import PasswordVerifyPane from '../VerificationForms/PasswordVerify';
+import SecurityVerifyPane from '../VerificationForms/SecurityVerify';
+import UnableToVerifyPane from '../VerificationForms/UnableToVerify';
 
 const useStyles = makeStyles(theme => ({
   modal: {
     margin: 'auto',
-    maxHeight: 600,
-    maxWidth: 950,
+    maxHeight: 550,
+    maxWidth: 700,
     overflow: 'scroll'
   },
   paper_modal: {
@@ -22,48 +22,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IDPanelModal(props) {
+export default function VerificationModal(props) {
   const classes = useStyles();
   const theme = useTheme();
+let verifyDom = null
+  
+      
+    if (props.levelPass < 2) {
+      if (props.question === 1) {
+        
+        verifyDom = <PasswordVerifyPane {...props} />;
+      } else if (props.question === 2) {
+        
+        verifyDom = <SecurityVerifyPane {...props} />;
+      }else{
+        verifyDom = <UnableToVerifyPane {...props} />;
+      }
+    }else{
+        props.onCloseVerifyModal()
+    }
 
-  let IDDom = null;
-
-  if (props.withCustomer === true && props.customerIdentified === true) {
-    IDDom = (
-      <div>
-        <AdditionalInfoPane {...props} />
-
-        <CorrespondancePane {...props} />
-        <SwitchPartiesPane {...props} />
-      </div>
-    );
-  } else {
-    IDDom = (
-      <div>
-        <AdditionalInfoPane {...props} />
-
-        <CorrespondancePane {...props} />
-        <SwitchPartiesPane {...props} />
-      </div>
-    );
-  }
-
+  //   const renderPasswordVerify = () => (
   return (
     <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.openIDPanels}
-        onClose={props.onCloseClick}
+        open={props.openVerifyModal}
+        onClose={props.onCloseVerifyModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={props.openIDPanels}>
-          <div className={classes.paper_modal}>{IDDom}</div>
+        <Fade in={props.openVerifyModal}>
+          <div className={classes.paper_modal}>
+            {verifyDom}
+          </div>
         </Fade>
       </Modal>
     </div>

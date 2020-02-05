@@ -4,9 +4,8 @@ import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import AdditionalInfoPane from '../IDForms/AdditionalInfo';
-import CorrespondancePane from '../IDForms/CorrespondanceInfo';
-import SwitchPartiesPane from '../IDForms/SwitchParties';
+import AdditionalCallInfo from '../CallContextForms/AdditionalCallInfo';
+import IVRInfo from '../CallContextForms/IVRAudit'
 
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
@@ -27,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IDPanelModal(props) {
+export default function CallContextModal(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -37,20 +36,20 @@ export default function IDPanelModal(props) {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.openIDPanels}
-        onClose={props.onCloseClick}
+        open={props.openCallPanels}
+        onClose={props.onCloseCallsClick}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={props.openIDPanels}>
+        <Fade in={props.openCallPanels}>
           <div className={classes.paper_modal}>
-            <AdditionalInfoPane {...props} />
+            <AdditionalCallInfo {...props} />
+            <IVRInfo {...props}/>
 
-            <CorrespondancePane {...props} />
-            <SwitchPartiesPane {...props} />
+            
             {/* <MobileStepper
               variant="dots"
               steps={4}

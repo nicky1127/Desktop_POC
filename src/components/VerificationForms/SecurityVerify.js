@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import Fab from '@material-ui/core/Fab';
+import { List } from '@material-ui/core';
 
 export default function SecurityVerifyPane(props) {
   const [securityQuestion, setQuestion] = React.useState(
@@ -54,6 +54,11 @@ export default function SecurityVerifyPane(props) {
       backgroundColor: '#DE0C3B',
       left: '100%',
       color: 'white'
+    },
+    modalContent: {
+      boxSizing: 'border-box',
+      borderBottom: '5px solid #26a69a',
+      position: 'relative'
     }
   }));
 
@@ -61,96 +66,79 @@ export default function SecurityVerifyPane(props) {
 
   return (
     <div>
-      <h3>Step Up Verification: Security Number</h3>
-      <FormControl className={classes.formControl}>
-        <Grid container>
-          <Grid item xs={3}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
-            </ListItem>
+      <List className={classes.modalContent}>
+        <h2>Step Up Verification: Security Number</h2>
+        <FormControl className={classes.formControl}>
+          <Grid container>
+            <Grid item xs={3}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={9}>
+              <ListItem>{securityQuestion}</ListItem>
+            </Grid>
           </Grid>
-          <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question :Security Number"></InputLabel>
-            <TextField
-              id="Security Question"
-              value={securityQuestion}
-              multiline
-              rows={2}
-              rowsMax={4}
-              className={classes.textFieldMulti}
-              variant="outlined"
-              InputProps={{
-                shrink: true,
-                classes: {
-                  notchedOutline: "primary"
-                },
-                readOnly: true
-              }}
-              autoFocus
-            /> */}
-            <ListItem>{securityQuestion}</ListItem>
+          <Grid container>
+            <Grid item xs={4} spacing={1}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Answers:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={3} spacing={4}>
+              <InputLabel id="Verification Question 1 Answer"></InputLabel>
+              <TextField
+                required
+                id="Answer S1"
+                label={'2nd'}
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    notchedOutline: 'primary'
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={3} spacing={3} spacing={1}>
+              <TextField
+                required
+                id="Answer S2"
+                label={'4th'}
+                variant="outlined"
+                className={classes.textField}
+                InputProps={{
+                  classes: {
+                    notchedOutline: 'primary'
+                  }
+                }}
+              />
+            </Grid>
+          </Grid>
+        </FormControl>
+        <Grid container spacing={2}>
+          <Grid item xs={4} spacing={3}>
+            <Button
+              variant="contained"
+              className={classes.correctButton}
+              onClick={props.onSubmitCorrect}
+            >
+              <CheckCircleOutlineIcon className={classes.icon} />
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={4} spacing={3}>
+            <Button
+              variant="contained"
+              className={classes.forgotenButton}
+              onClick={props.onSubmitInvalid}
+            >
+              <HelpIcon className={classes.icon} />
+              Forgotten
+            </Button>
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={4} spacing={1}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Answers:`} />
-            </ListItem>
-          </Grid>
-          <Grid item xs={3} spacing={4}>
-            <InputLabel id="Verification Question 1 Answer"></InputLabel>
-            <TextField
-              required
-              id="Answer S1"
-              label={'2nd'}
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  notchedOutline: 'primary'
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={3} spacing={3} spacing={1}>
-            <TextField
-              required
-              id="Answer S2"
-              label={'4th'}
-              variant="outlined"
-              className={classes.textField}
-              InputProps={{
-                classes: {
-                  notchedOutline: 'primary'
-                }
-              }}
-            />
-          </Grid>
-        </Grid>
-      </FormControl>
-      <Grid container spacing={2}>
-        <Grid item xs={4} spacing={3}>
-          <Button
-            variant="contained"
-            className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
-          >
-            <CheckCircleOutlineIcon className={classes.icon} />
-            Submit
-          </Button>
-          {/* <Fab variant="extended">
-        <CheckCircleOutlineIcon className={classes.correctButton}
-            onClick={props.onSubmitCorrect}/>
-        Correct
-      </Fab> */}
-        </Grid>
-        <Grid item xs={4} spacing={3}>
-          <Button variant="contained" className={classes.forgotenButton}>
-            <HelpIcon className={classes.icon} />
-            Forgotten
-          </Button>
-        </Grid>
-      </Grid>
+      </List>
     </div>
   );
 }
