@@ -145,7 +145,7 @@ export default function SecurityVerifyPane(props) {
       </Fab> */}
         </Grid>
         <Grid item xs={4} spacing={3}>
-          <Button variant="contained" className={classes.forgotenButton}>
+          <Button variant="contained" className={classes.forgotenButton} onClick={props.onSubmit}>
             <HelpIcon className={classes.icon} />
             Forgotten
           </Button>

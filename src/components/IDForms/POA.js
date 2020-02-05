@@ -4,7 +4,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
 import PublicIcon from '@material-ui/icons/Public';
-import apiCustomer from '../../api/ApiCustomer';
 
 const useStyles = makeStyles(theme => ({
   root: {
