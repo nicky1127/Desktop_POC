@@ -11,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 export default function AddressQuestionPane(props) {
   const birthdayQuestion= 'What is the first line of your Address ?';
   const key = 'address_line_1';
+  const vString= "Address";
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -93,7 +94,7 @@ export default function AddressQuestionPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
             size="small"
           >
             <CheckCircleOutlineIcon className={classes.icon} />

@@ -77,7 +77,7 @@ export default function MainVerifyPane(props) {
     if (props.levelPass > 2 && props.question > 2) {
       return 'Unable to Verify';
     } else if (props.levelPass >= 2) {
-      return 'Password and QBA';
+      return props.verificationMethod;
     } else if (props.activeStep === 4) {
       return 'Unable to Verify';
     } else {
@@ -148,7 +148,7 @@ export default function MainVerifyPane(props) {
             </ListItemIcon>
             <ListItemText
               classes={{ root: classes.name }}
-              primary={`Verification by: ${verificationBy(props, vMethod)}`}
+              primary={`Verified by: ${verificationBy(props, vMethod)}`}
             />
           </ListItem>
         </List>

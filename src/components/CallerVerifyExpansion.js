@@ -124,6 +124,7 @@ export default function CallerVerifyExpansion(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [activeStep2, setActiveStep2] = React.useState(0);
   const [levelPass, setLevelPass] = React.useState(0);
+  const [verificationMethod, setVerificationMethod] = React.useState(null);
 
   const onClickBtn = async () => {
     if (checked === false) {
@@ -155,14 +156,21 @@ export default function CallerVerifyExpansion(props) {
     }
   };
 
-  const onSubmitCorrect = () => {
+  const onSubmitCorrect = vString => {
     let passes = levelPass;
+    let correctArray = verificationMethod;
     if (levelPass < 2) {
       setLevelPass(prevLevelPass => {
         return prevLevelPass + 1;
       });
       passes = passes + 1;
       setNextQuestion(passes);
+      if (correctArray === null) {
+        correctArray = vString ;
+      } else {
+        correctArray += ` & ${vString}`;
+      }
+      setVerificationMethod(correctArray);
     } else {
       setChecked(false);
       setChecked2(false);
@@ -171,7 +179,6 @@ export default function CallerVerifyExpansion(props) {
 
   const onSubmitInvalid = () => {
     if (levelPass < 2) {
-      console.log('path');
       setActiveStep(prevActiveStep => {
         return prevActiveStep + 1;
       });
@@ -184,11 +191,11 @@ export default function CallerVerifyExpansion(props) {
   const handleNext = () => {
     if (activeStep2 === 0) {
       setActiveStep2(prevActiveStep2 => {
-        return prevActiveStep2  + 1;
+        return prevActiveStep2 + 1;
       });
     } else {
       setActiveStep2(prevActiveStep2 => {
-        return prevActiveStep2  - 1;
+        return prevActiveStep2 - 1;
       });
     }
   };
@@ -196,11 +203,11 @@ export default function CallerVerifyExpansion(props) {
   const handleBack = () => {
     if (activeStep2 === 0) {
       setActiveStep2(prevActiveStep2 => {
-        return prevActiveStep2  + 1;
+        return prevActiveStep2 + 1;
       });
     } else {
       setActiveStep2(prevActiveStep2 => {
-        return prevActiveStep2  - 1;
+        return prevActiveStep2 - 1;
       });
     }
   };
@@ -222,6 +229,7 @@ export default function CallerVerifyExpansion(props) {
           levelPass={levelPass}
           question={question}
           activeStep={activeStep}
+          verificationMethod={verificationMethod}
         />
         <Collapse in={checked}>
           <Paper elevation={4} className={classes.expansionDropdown}>
@@ -293,7 +301,11 @@ export default function CallerVerifyExpansion(props) {
                 </Paper>
               </Fade>
             </Box>
-            <MobileVerifyStepper activeStep2={activeStep2} handleNext={handleNext} handleBack={handleBack}/>
+            <MobileVerifyStepper
+              activeStep2={activeStep2}
+              handleNext={handleNext}
+              handleBack={handleBack}
+            />
           </Paper>
         </Collapse>
         <IconButton className={classes.expandIcon} onClick={onClickBtn}>

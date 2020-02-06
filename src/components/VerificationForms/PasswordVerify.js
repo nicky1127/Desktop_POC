@@ -13,6 +13,7 @@ export default function PasswordVerifyPane(props) {
   const [passwordQuestion, setQuestion] = React.useState(
     'Please confirm the 3rd and 5th characters of your password'
   );
+  const vString = 'Password';
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -111,7 +112,7 @@ export default function PasswordVerifyPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
           >
             <CheckCircleOutlineIcon className={classes.icon} />
             Submit

@@ -11,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 export default function BirthdayQuestionPane(props) {
   const birthdayQuestion = 'What is your Date of birth ?';
   const key = 'date_of_birth';
+  const vString= "DOB";
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -93,7 +94,7 @@ export default function BirthdayQuestionPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
             size="small"
           >
             <CheckCircleOutlineIcon className={classes.icon} />
