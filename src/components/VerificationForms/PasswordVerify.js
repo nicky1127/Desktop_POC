@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { ListItem, ListItemText } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import Fab from '@material-ui/core/Fab';
 
 export default function PasswordVerifyPane(props) {
   const [passwordQuestion, setQuestion] = React.useState(
     'Please confirm the 3rd and 5th characters of your password'
   );
+  const vString = 'Password';
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -69,24 +67,6 @@ export default function PasswordVerifyPane(props) {
             </ListItem>
           </Grid>
           <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question :Password"></InputLabel>
-            <TextField
-              id="Password Question"
-              value={passwordQuestion}
-              multiline
-              // rows={2}
-              // rowsMax="4"
-              maxLines={null}
-              className={classes.textFieldMulti}
-              variant="outlined"
-              InputProps={{
-                classes: {
-                  notchedOutline: "primary"
-                },
-                readOnly: true,
-                
-              }}
-              /> */}
             <ListItem>{passwordQuestion}</ListItem>
           </Grid>
         </Grid>
@@ -132,14 +112,14 @@ export default function PasswordVerifyPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
           >
             <CheckCircleOutlineIcon className={classes.icon} />
             Submit
           </Button>
         </Grid>
         <Grid item xs={4} spacing={3}>
-          <Button variant="contained" className={classes.forgotenButton}>
+          <Button variant="contained" className={classes.forgotenButton} onClick={props.onSubmit}>
             <HelpIcon className={classes.icon} />
             Forgotten
           </Button>

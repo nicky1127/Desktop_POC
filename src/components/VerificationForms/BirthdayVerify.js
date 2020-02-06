@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { ListItem, ListItemText, Box } from '@material-ui/core';
-import HelpIcon from '@material-ui/icons/Help';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-export default function QBAVerifyPane(props) {
+export default function BirthdayQuestionPane(props) {
+  const birthdayQuestion = 'What is your Date of birth ?';
+  const key = 'date_of_birth';
+  const vString= "DOB";
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -57,14 +55,12 @@ export default function QBAVerifyPane(props) {
       backgroundColor: '#007FE3',
       color: 'white'
     },
-    answerBox:{
-        boxSizing: 'border-box'
+    answerBox: {
+      boxSizing: 'border-box'
     }
   }));
 
   const classes = useStyles({ ...props });
-
-
 
   return (
     <div>
@@ -77,29 +73,7 @@ export default function QBAVerifyPane(props) {
             </ListItem>
           </Grid>
           <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question :Password"></InputLabel>
-                          <TextField
-                            required
-                            id="filled-required"
-                            value={props.question.question}
-                            variant="outlined"
-                            className={classes.textField}
-                            InputProps={{
-                              readOnly: true,
-                              classes: {
-                                notchedOutline: "primary"
-                              },
-                              startAdornment: (
-                                <InputAdornment
-                                  position="start"
-                                //   className={verificationButtonColor1(levelPass)}
-                                >
-                                  <HelpIcon />
-                                </InputAdornment>
-                              )
-                            }}
-                          /> */}
-            <ListItem>{props.question.question}</ListItem>
+            <ListItem>{birthdayQuestion}</ListItem>
           </Grid>
         </Grid>
         <Grid container spacing={2}>
@@ -109,30 +83,8 @@ export default function QBAVerifyPane(props) {
             </ListItem>
           </Grid>
           <Grid item xs={9}>
-            {/* <InputLabel id="Verification Question 1 Answer"></InputLabel> */}
-            {/* <TextField
-                            required
-                            id="filled-required"
-                            value={props.valuebuilder(props)}
-                            variant="outlined"
-                            className={classes.textField}
-                            InputProps={{
-                              readOnly: true,
-                              classes: {
-                                notchedOutline: "primary"
-                              },
-                              startAdornment: (
-                                <InputAdornment
-                                  position="start"
-                                //   className={verificationButtonColor1(levelPass)}
-                                >
-                                  <HelpIcon />
-                                </InputAdornment>
-                              )
-                            }}
-                          /> */}
             <Box display="flex" borderColor="primary.main" className={classes.answerBox}>
-              <ListItem>{props.valuebuilder(props)}</ListItem>
+              <ListItem>{props.valuebuilder(props, key)}</ListItem>
             </Box>
           </Grid>
         </Grid>
@@ -142,7 +94,7 @@ export default function QBAVerifyPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
             size="small"
           >
             <CheckCircleOutlineIcon className={classes.icon} />
@@ -150,13 +102,23 @@ export default function QBAVerifyPane(props) {
           </Button>
         </Grid>
         <Grid item xs={4}>
-          <Button variant="contained" className={classes.incorrectButton} size="small">
+          <Button
+            variant="contained"
+            className={classes.incorrectButton}
+            size="small"
+            onClick={props.onSubmit}
+          >
             <HighlightOffIcon className={classes.icon} />
             Incorrect
           </Button>
         </Grid>
         <Grid item xs={4}>
-          <Button variant="contained" className={classes.invalidButton} size="small">
+          <Button
+            variant="contained"
+            className={classes.invalidButton}
+            size="small"
+            onClick={props.onSubmit}
+          >
             <ExitToAppIcon className={classes.icon} />
             Invalid
           </Button>

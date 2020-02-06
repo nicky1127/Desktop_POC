@@ -21,9 +21,6 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import AdditionalInfoPane from '../components/IDForms/AdditionalInfo';
 import SwitchPartiesPane from '../components/IDForms/SwitchParties';
 import CorrespondancePane from '../components/IDForms/CorrespondanceInfo';
-import POAPane from '../components/IDForms/POA';
-
-// import customers from '../mock/api/customers.json';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -96,7 +93,7 @@ const useStyles = makeStyles(theme => ({
   slide3: {
     position: props => (props.activeStep === 3 ? 'static' : 'absolute'),
     display: props => (props.activeStep === 3 ? 'block' : 'none')
-  },
+  }
 }));
 
 export default function IDExpansion(props) {
@@ -112,15 +109,11 @@ export default function IDExpansion(props) {
   const [bank, setBank] = React.useState('');
   const [account, setAccount] = React.useState('');
   const handleNext = () => {
-    if (activeStep === 0) {
-      setActiveStep(1);
-    } else if (activeStep === 1) {
-      setActiveStep(2);
-    } 
-    // else if (activeStep === 2) {
-    //   setActiveStep(3);
-    // } 
-    else {
+    if (activeStep <= 1) {
+      setActiveStep(prevActiveStep => {
+        return prevActiveStep + 1;
+      });
+    } else {
       setActiveStep(0);
     }
   };
@@ -226,7 +219,7 @@ export default function IDExpansion(props) {
             </Box>
             <MobileStepper
               variant="dots"
-              steps={4}
+              steps={3}
               position="static"
               activeStep={activeStep}
               className={classes.stepper}

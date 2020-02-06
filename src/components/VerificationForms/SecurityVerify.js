@@ -16,6 +16,7 @@ export default function SecurityVerifyPane(props) {
   const [securityQuestion, setQuestion] = React.useState(
     'Please confirm the 2nd and 4th values of your security number'
   );
+  const vString = "Security Number";
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -133,7 +134,7 @@ export default function SecurityVerifyPane(props) {
           <Button
             variant="contained"
             className={classes.correctButton}
-            onClick={props.onSubmitCorrect}
+            onClick={() => {props.onSubmitCorrect(vString)}}
           >
             <CheckCircleOutlineIcon className={classes.icon} />
             Submit
@@ -145,7 +146,7 @@ export default function SecurityVerifyPane(props) {
       </Fab> */}
         </Grid>
         <Grid item xs={4} spacing={3}>
-          <Button variant="contained" className={classes.forgotenButton}>
+          <Button variant="contained" className={classes.forgotenButton} onClick={props.onSubmit}>
             <HelpIcon className={classes.icon} />
             Forgotten
           </Button>
