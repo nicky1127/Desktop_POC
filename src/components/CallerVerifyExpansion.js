@@ -18,6 +18,8 @@ import MobileVerifyStepper from './VerificationForms/VerifyStepper';
 import AddressQuestionPane from './VerificationForms/AddressVerify';
 import NoTokensPane from './VerificationForms/UnableToVerifyForm';
 
+import VerificationModal from './Modals/VerificationModal'
+
 
 import { StylesContext } from '@material-ui/styles';
 
@@ -49,11 +51,8 @@ const useStyles = makeStyles(theme => ({
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },
-  expansionDropdown: {
-    height: props => (props.activeStep === 2 ? '30vh' : '33vh')
-  },
   expansionDropdown2: {
-    height: props => (props.activeStep === 4 ? '37vh' : '35vh')
+    height: props => (props.activeStep === 5 ? '37vh' : '35vh')
   },
   expandIcon: {
     padding: '3px',
@@ -88,10 +87,6 @@ const useStyles = makeStyles(theme => ({
   stepper: {
     flexGrow: 1
   },
-  slide0: {
-    position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 0 ? 'block' : 'none')
-  },
   slide5: {
     position: props => (props.activeStep2 === 0 ? 'static' : 'absolute'),
     display: props => (props.activeStep2 === 0 ? 'block' : 'none')
@@ -100,93 +95,56 @@ const useStyles = makeStyles(theme => ({
     position: props => (props.activeStep2 === 1 ? 'static' : 'absolute'),
     display: props => (props.activeStep2 === 1 ? 'block' : 'none')
   },
-  slide2: {
-    position: props => (props.activeStep === 2 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 2 ? 'block' : 'none')
-  },
-  slide1: {
-    position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 1 ? 'block' : 'none')
-  },
-  slide3: {
-    position: props => (props.activeStep === 3 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 3 ? 'block' : 'none')
-  },
-  slideNoToken: {
-    position: props => (props.activeStep === 4 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 4 ? 'block' : 'none')
-  }
 }));
 
 export default function CallerVerifyExpansion(props) {
-  const [checked, setChecked] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [question, setQuestion] = React.useState(1);
   const [activeStep, setActiveStep] = React.useState(0);
   const [activeStep2, setActiveStep2] = React.useState(0);
   const [levelPass, setLevelPass] = React.useState(0);
   const [verificationMethod, setVerificationMethod] = React.useState(null);
+  const [openVerifyModal, setOpenVerifyModal] = React.useState(false);
 
-  const onClickBtn = async () => {
-    if (checked === false) {
-      setChecked(true);
-      setChecked2(false);
+  const onClickBtn = () => {
+    if (levelPass < 2) {
+      setOpenVerifyModal(true);
     } else {
-      setChecked(false);
     }
+  };
+
+  const onCloseVerifyModal = () => {
+    setOpenVerifyModal(false);
   };
 
   const onClickBtn2 = () => {
     if (checked2 === false) {
       setChecked2(true);
-      setChecked(false);
     } else {
       setChecked2(false);
     }
   };
 
-  const setNextQuestion = passes => {
-    //function required as state management is slower than rerender
-    if (passes < 2) {
-      setActiveStep(prevActiveStep => {
-        return prevActiveStep + 1;
-      });
-    } else {
-      setChecked(false);
-      setChecked2(false);
-    }
-  };
-
-  const onSubmitCorrect = vString => {
-    let passes = levelPass;
+  const onSubmitCorrect = (vString) => {
+    setQuestion(prevQuestion => {
+      return prevQuestion + 1;
+    });
+    setLevelPass(prevLevelPass => {
+      return prevLevelPass + 1;
+    });
     let correctArray = verificationMethod;
-    if (levelPass < 2) {
-      setLevelPass(prevLevelPass => {
-        return prevLevelPass + 1;
-      });
-      passes = passes + 1;
-      setNextQuestion(passes);
-      if (correctArray === null) {
-        correctArray = vString ;
-      } else {
-        correctArray += ` & ${vString}`;
-      }
-      setVerificationMethod(correctArray);
+    if (correctArray === null) {
+      correctArray = vString ;
     } else {
-      setChecked(false);
-      setChecked2(false);
+      correctArray += ` & ${vString}`;
     }
+    setVerificationMethod(correctArray);
   };
 
   const onSubmitInvalid = () => {
-    if (levelPass < 2) {
-      setActiveStep(prevActiveStep => {
-        return prevActiveStep + 1;
-      });
-    } else {
-      setChecked(false);
-      setChecked2(false);
-    }
+    setQuestion(prevQuestion => {
+      return prevQuestion + 1;
+    });
   };
 
   const handleNext = () => {
@@ -219,7 +177,7 @@ export default function CallerVerifyExpansion(props) {
   };
 
   //
-  const classes = useStyles({ ...props, checked, checked2, activeStep, activeStep2, levelPass });
+  const classes = useStyles({ ...props, checked2, activeStep, activeStep2, levelPass });
   const theme = useTheme();
 
   return (
@@ -232,62 +190,6 @@ export default function CallerVerifyExpansion(props) {
           activeStep={activeStep}
           verificationMethod={verificationMethod}
         />
-        <Collapse in={checked}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide0}>
-                <Paper elevation={4}>
-                  {/* Paper is needed outside component to render correctly */}
-                  <PasswordVerifyPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmitInvalid}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 1} className={classes.slide1}>
-                <Paper elevation={4}>
-                  <SecurityVerifyPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmitInvalid}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 2} className={classes.slide2}>
-                <Paper elevation={4}>
-                  <BirthdayQuestionPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmitInvalid}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 3} className={classes.slide3}>
-                <Paper elevation={4}>
-                  <AddressQuestionPane
-                    onSubmitCorrect={onSubmitCorrect}
-                    onSubmit={onSubmitInvalid}
-                    question={question}
-                    valuebuilder={valuebuilder}
-                    {...props}
-                  />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 4} className={classes.slideNoToken}>
-                <Paper elevation={4}>
-                  <NoTokensPane {...props} />
-                </Paper>
-              </Fade>
-            </Box>
-          </Paper>
-        </Collapse>
         <Collapse in={checked2}>
           <Paper elevation={4} className={classes.expansionDropdown2}>
             <Box className={classes.expansionDropdownContent}>
@@ -317,6 +219,17 @@ export default function CallerVerifyExpansion(props) {
           <ExpandMoreIcon />
         </IconButton>
       </Paper>
+      <VerificationModal
+        {...props}
+        openVerifyModal={openVerifyModal}
+        onCloseVerifyModal={onCloseVerifyModal}
+        levelPass={levelPass}
+        valuebuilder={valuebuilder}
+        question={question}
+        onSubmitCorrect={onSubmitCorrect}
+        onSubmit={onSubmitInvalid}
+      />
+
     </div>
   );
 }

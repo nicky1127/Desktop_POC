@@ -5,10 +5,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import PasswordVerifyPane from '../VerificationForms/PasswordVerify';
 import SecurityVerifyPane from '../VerificationForms/SecurityVerify';
-import BirthdayQuestionPane from './VerificationForms/BirthdayVerify';
-import AddressQuestionPane from './VerificationForms/AddressVerify';
-import NoTokensPane from './VerificationForms/UnableToVerifyForm';
-
+import BirthdayQuestionPane from '../VerificationForms/BirthdayVerify';
+import AddressQuestionPane from '../VerificationForms/AddressVerify';
+import NoTokensPane from '../VerificationForms/UnableToVerifyForm';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -27,22 +26,23 @@ const useStyles = makeStyles(theme => ({
 export default function VerificationModal(props) {
   const classes = useStyles();
   const theme = useTheme();
-let verifyDom = null
-  
-      
-    if (props.levelPass < 2) {
-      if (props.question === 1) {
-        
-        verifyDom = <PasswordVerifyPane {...props} />;
-      } else if (props.question === 2) {
-        
-        verifyDom = <SecurityVerifyPane {...props} />;
-      }else{
-        verifyDom = <UnableToVerifyPane {...props} />;
-      }
-    }else{
-        props.onCloseVerifyModal()
+  let verifyDom = null;
+
+  if (props.levelPass < 2) {
+    if (props.question === 1) {
+      verifyDom = <PasswordVerifyPane {...props} />;
+    } else if (props.question === 2) {
+      verifyDom = <SecurityVerifyPane {...props} />;
+    } else if (props.question === 3) {
+      verifyDom = <BirthdayQuestionPane {...props} />;
+    } else if (props.question === 4) {
+      verifyDom = <AddressQuestionPane {...props} />;
+    } else {
+      verifyDom = <NoTokensPane {...props} />;
     }
+  } else {
+    props.onCloseVerifyModal();
+  }
   return (
     <div>
       <Modal
@@ -58,9 +58,7 @@ let verifyDom = null
         }}
       >
         <Fade in={props.openVerifyModal}>
-          <div className={classes.paper_modal}>
-            {verifyDom}
-          </div>
+          <div className={classes.paper_modal}>{verifyDom}</div>
         </Fade>
       </Modal>
     </div>
