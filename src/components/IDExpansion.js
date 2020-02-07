@@ -49,21 +49,19 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
-    paddingBottom: '33px',
+    // paddingBottom: '33px',
+    paddingBottom: props => (props.dropdownNo > 0 ? '45px' : '33px'),
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },
   expansionSummary: {
     height: '14vh'
   },
-  expansionDropdown: {
-    height: '25vh'
-  },
   expandIcon: {
     padding: '3px',
     display: 'block',
     position: 'absolute',
-    bottom: '1px',
+    bottom: '6px',
     left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
@@ -72,11 +70,9 @@ const useStyles = makeStyles(theme => ({
     padding: '3px',
     display: 'block',
     position: 'absolute',
-    bottom: '1px',
+    bottom: '6px',
     right: '3%',
     transform: 'rotate(270deg)'
-    // transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    // transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
   expansionDropdownContent: {
     height: '17vh'
@@ -87,27 +83,13 @@ const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(2),
     minWidth: 100
-  },
-  slide0: {
-    position: props => (props.activeStep === 0 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 0 ? 'block' : 'none')
-  },
-  slide1: {
-    position: props => (props.activeStep === 1 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 1 ? 'block' : 'none')
-  },
-  slide2: {
-    position: props => (props.activeStep === 2 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 2 ? 'block' : 'none')
-  },
-  slide3: {
-    position: props => (props.activeStep === 3 ? 'static' : 'absolute'),
-    display: props => (props.activeStep === 3 ? 'block' : 'none')
   }
 }));
 
 export default function IDExpansion(props) {
   const [dropdownNo, setDropdownNo] = useState(0);
+
+  const { customer, iVRProfile } = props;
 
   const onClickExtendBtn = () => {
     if (dropdownNo < 3) {
@@ -120,29 +102,8 @@ export default function IDExpansion(props) {
     setDropdownNo(0);
   };
 
-  // carousel
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
   const [bank, setBank] = React.useState('');
   const [account, setAccount] = React.useState('');
-  const handleNext = () => {
-    if (activeStep <= 1) {
-      setActiveStep(prevActiveStep => {
-        return prevActiveStep + 1;
-      });
-    } else {
-      setActiveStep(0);
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => {
-      if (prevActiveStep === 0) {
-        return 1;
-      }
-      return prevActiveStep - 1;
-    });
-  };
 
   const handleChangeBank = event => {
     setBank(event.target.value);
@@ -153,15 +114,14 @@ export default function IDExpansion(props) {
   };
 
   //
-  const classes = useStyles({ ...props, dropdownNo, activeStep });
+  const classes = useStyles({ ...props, dropdownNo });
 
-  const IDParam = props => {
-    let value;
-    if (props.iVRProfile.account_number && props.iVRProfile.account_number) {
+  const IDParam = (profile = {}) => {
+    console.log('profile', profile);
+    if (profile.account_number && profile.account_number) {
       return 'Account Number and Sort Code';
-    } else {
-      return 'Surname and Postcode';
     }
+    return 'Surname and Postcode';
   };
   let doubleArrowDom;
   if (dropdownNo > 0) {
@@ -185,23 +145,22 @@ export default function IDExpansion(props) {
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`${props.customer.title}  ${props.customer.name}`}
+                    primary={`${customer.title}  ${customer.name}`}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <CakeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`${props.customer.date_of_birth}`} />
+                  <ListItemText primary={`${customer.date_of_birth}`} />
                 </ListItem>
               </Grid>
               <Grid item xs={12}>
-
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
                     <FingerprintIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`ID by: ${IDParam(props)}`} />
+                  <ListItemText primary={`ID by: ${IDParam(iVRProfile)}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -211,15 +170,11 @@ export default function IDExpansion(props) {
           <Paper elevation={4} className={classes.expansionDropdownContent}>
             <AdditionalInfoPane {...props} />
           </Paper>
-          {/* </Box> */}
-          {/* </Paper> */}
         </Collapse>
         <Collapse in={dropdownNo > 1}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
             <CorrespondancePane {...props} />
           </Paper>
-          {/* </Box> */}
-          {/* </Paper> */}
         </Collapse>
         <Collapse in={dropdownNo > 2}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
