@@ -67,10 +67,10 @@ function Main() {
     }
   };
 
-  const vLevelConfirmationColor = customer => {
-    if (customer.verification_level > 40) {
+  const vLevelConfirmationColor = ctr => {
+    if (ctr.verification_level > 40) {
       setLevelColor('blue');
-    } else if (customer.verification_level > 20) {
+    } else if (ctr.verification_level > 20) {
       setLevelColor('green');
     } else {
     }
@@ -93,6 +93,7 @@ function Main() {
   const handleClose = () => {
     setOpenIdentified(false);
     setReady(false);
+    setBrandScheme(constants.brandSchemes[0]);
   };
 
   const handleAccept = async () => {
