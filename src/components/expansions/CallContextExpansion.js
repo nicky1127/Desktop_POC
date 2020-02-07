@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Collapse from '@material-ui/core/Collapse';
 import { ExpandMore, DoubleArrow } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
-import moment from 'moment';
-
 
 import IVRLog from '../CallContextForms/IVRLog';
 import ContextAdditionalInfo from '../CallContextForms/ContextMoreInfo';
@@ -89,7 +87,7 @@ export default function CallContextExpansion(props) {
         </Collapse>
         <Collapse in={dropdownNo > 1}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <IVRLog {...props} />
+            <IVRLog {...props} height="31vh" />
           </Paper>
         </Collapse>
         <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>
