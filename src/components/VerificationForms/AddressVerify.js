@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { ListItem, ListItemText, Box } from '@material-ui/core';
+import { List, ListItem, ListItemText, Box } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
@@ -57,6 +57,11 @@ export default function AddressQuestionPane(props) {
     },
     answerBox: {
       boxSizing: 'border-box'
+    },
+    modalContent: {
+      boxSizing: 'border-box',
+      borderBottom: '5px solid #26a69a',
+      position: 'relative'
     }
   }));
 
@@ -64,6 +69,7 @@ export default function AddressQuestionPane(props) {
 
   return (
     <div>
+      <List className={classes.modalContent}>
       <h3>Step Up Verification:Question Based Authentification</h3>
       <FormControl className={classes.formControl}>
         <Grid container>
@@ -114,6 +120,7 @@ export default function AddressQuestionPane(props) {
           </Button>
         </Grid>
       </Grid>
+      </List>
     </div>
   );
 }

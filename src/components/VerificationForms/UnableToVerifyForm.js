@@ -15,19 +15,24 @@ export default function NoTokensPane(props) {
           width: '60%',
           height: '20px',
           textAlign: 'center'
-        },
+        }, modalContent: {
+          boxSizing: 'border-box',
+          borderBottom: '5px solid #26a69a',
+          position: 'relative'
+        }
       }));
     
       const classes = useStyles({ ...props });
     
       return (
         <div>
+          <List className={classes.modalContent}>
           <Grid container direction="row" alignItems="center" >
             <Grid item align="center" xs={12} >
               <Icon>
                 <ErrorIcon className={classes.icon} />
               </Icon>
-              <List className={classes.modalContent }>
+              <List>
                 <ListItem>
                   <ListItemText classes={{ root: classes.name }} primary={"Unable to Verify Customer"} />
                 </ListItem>
@@ -37,6 +42,7 @@ export default function NoTokensPane(props) {
               </List>
             </Grid>
           </Grid>
+          </List>
         </div>
       )
 }

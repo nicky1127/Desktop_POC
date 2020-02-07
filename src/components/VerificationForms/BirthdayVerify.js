@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { ListItem, ListItemText, Box } from '@material-ui/core';
+import { List, ListItem, ListItemText, Box } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 export default function BirthdayQuestionPane(props) {
   const birthdayQuestion = 'What is your Date of birth ?';
   const key = 'date_of_birth';
-  const vString= "DOB";
+  const vString = 'DOB';
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -57,6 +57,11 @@ export default function BirthdayQuestionPane(props) {
     },
     answerBox: {
       boxSizing: 'border-box'
+    },
+    modalContent: {
+      boxSizing: 'border-box',
+      borderBottom: '5px solid #26a69a',
+      position: 'relative'
     }
   }));
 
@@ -64,66 +69,70 @@ export default function BirthdayQuestionPane(props) {
 
   return (
     <div>
-      <h3>Step Up Verification:Question Based Authentification</h3>
-      <FormControl className={classes.formControl}>
-        <Grid container>
-          <Grid item xs={3}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
-            </ListItem>
+      <List className={classes.modalContent}>
+        <h3>Step Up Verification:Question Based Authentification</h3>
+        <FormControl className={classes.formControl}>
+          <Grid container>
+            <Grid item xs={3}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Question:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={9}>
+              <ListItem>{birthdayQuestion}</ListItem>
+            </Grid>
           </Grid>
-          <Grid item xs={9}>
-            <ListItem>{birthdayQuestion}</ListItem>
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <ListItem>
+                <ListItemText classes={{ root: classes.name }} primary={`Answer:`} />
+              </ListItem>
+            </Grid>
+            <Grid item xs={9}>
+              <Box display="flex" borderColor="primary.main" className={classes.answerBox}>
+                <ListItem>{props.valuebuilder(props, key)}</ListItem>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        </FormControl>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <ListItem>
-              <ListItemText classes={{ root: classes.name }} primary={`Answer:`} />
-            </ListItem>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.correctButton}
+              onClick={() => {
+                props.onSubmitCorrect(vString);
+              }}
+              size="small"
+            >
+              <CheckCircleOutlineIcon className={classes.icon} />
+              Correct
+            </Button>
           </Grid>
-          <Grid item xs={9}>
-            <Box display="flex" borderColor="primary.main" className={classes.answerBox}>
-              <ListItem>{props.valuebuilder(props, key)}</ListItem>
-            </Box>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.incorrectButton}
+              size="small"
+              onClick={props.onSubmit}
+            >
+              <HighlightOffIcon className={classes.icon} />
+              Incorrect
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              className={classes.invalidButton}
+              size="small"
+              onClick={props.onSubmit}
+            >
+              <ExitToAppIcon className={classes.icon} />
+              Invalid
+            </Button>
           </Grid>
         </Grid>
-      </FormControl>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            className={classes.correctButton}
-            onClick={() => {props.onSubmitCorrect(vString)}}
-            size="small"
-          >
-            <CheckCircleOutlineIcon className={classes.icon} />
-            Correct
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            className={classes.incorrectButton}
-            size="small"
-            onClick={props.onSubmit}
-          >
-            <HighlightOffIcon className={classes.icon} />
-            Incorrect
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            className={classes.invalidButton}
-            size="small"
-            onClick={props.onSubmit}
-          >
-            <ExitToAppIcon className={classes.icon} />
-            Invalid
-          </Button>
-        </Grid>
-      </Grid>
+      </List>
     </div>
   );
 }

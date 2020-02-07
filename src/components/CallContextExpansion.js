@@ -102,15 +102,6 @@ export default function CallContextExpansion(props) {
   //
   const classes = useStyles({ ...props, checked, activeStep });
 
-  const waitTime = moment.duration(props.iVRProfile.wait_time, 'seconds').seconds();
-
-  const waitTimeColor = waitTime => {
-    if (parseInt(waitTime) >= 10) {
-      return classes.redIcon;
-    } else {
-      return classes.greenIcon;
-    }
-  };
 
   return (
     <div className={classes.root}>
