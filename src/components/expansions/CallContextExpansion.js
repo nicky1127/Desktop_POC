@@ -87,7 +87,7 @@ export default function CallContextExpansion(props) {
         </Collapse>
         <Collapse in={dropdownNo > 1}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <IVRLog {...props} height="31vh" />
+            <IVRLog {...props} height="34vh" />
           </Paper>
         </Collapse>
         <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>

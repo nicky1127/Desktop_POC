@@ -21,10 +21,10 @@ export default function IVRLog(props) {
 
   return (
     <div>
-      <Typography variant="h6" className={classes.caption}>
-        IVR Audit
-      </Typography>
       <Box className={classes.auditContainer}>
+        <Typography variant="h6" className={classes.caption}>
+          IVR Audit
+        </Typography>
         <List dense>
           <ListItem>
             <ListItemIcon className={classes.icon}>
