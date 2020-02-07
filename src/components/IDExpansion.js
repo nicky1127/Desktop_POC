@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Collapse from '@material-ui/core/Collapse';
-import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,15 +12,9 @@ import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
-// carousel
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-
-import AdditionalInfoPane from '../components/IDForms/AdditionalInfo';
-import SwitchPartiesPane from '../components/IDForms/SwitchParties';
-import CorrespondancePane from '../components/IDForms/CorrespondanceInfo';
+import AdditionalInfoPane from './IDForms/AdditionalInfo';
+import SwitchPartiesPane from './IDForms/SwitchParties';
+import CorrespondancePane from './IDForms/CorrespondanceInfo';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
   expansionDropdownContent: {
     height: '17vh',
-    marginTop:'10px',
+    marginTop: '10px',
     paddingTop: '10px'
   },
   expandIcon: {
