@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
-    paddingBottom: props => (props.dropdownNo > 0 ? '45px' : '33px'),
+    paddingBottom: props => (props.dropdownNo !== 0 ? '45px' : '33px'),
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },

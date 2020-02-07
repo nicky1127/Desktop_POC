@@ -27,10 +27,11 @@ const useStyles = makeStyles(theme => ({
   expansionContainer: {
     boxSizing: 'border-box',
     borderBottom: '5px solid #26a69a',
+    paddingBottom: props => (props.dropdownNo !== 0 ? '45px' : '33px'),
     position: 'relative'
   },
   expansionSummary: {
-    height: props => props.height
+    height: '14vh'
   },
   auditSummary: {
     margin: theme.spacing(1),
@@ -47,9 +48,9 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '60%',
+    left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
+    transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
   expansionDropdownContent: {
     margin: theme.spacing(1),
@@ -70,10 +71,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CallContextExpansion(props) {
-  const [checked, setChecked] = useState(false);
+  const [dropdownNo, setDropdownNo] = useState(0);
 
-  const onClickBtn = () => {
-    setChecked(prev => !prev);
+  const onClickExtendBtn = () => {
+    if (!dropdownNo) {
+      setDropdownNo(prev => prev + 1);
+    } else {
+      setDropdownNo(0);
+    }
   };
 
   //carousel
@@ -83,9 +88,8 @@ export default function CallContextExpansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 1) {
         return 0;
-      } else {
-        return prevActiveStep + 1;
       }
+      return prevActiveStep + 1;
     });
   };
 
@@ -93,14 +97,13 @@ export default function CallContextExpansion(props) {
     setActiveStep(prevActiveStep => {
       if (prevActiveStep === 0) {
         return 1;
-      } else {
-        return prevActiveStep - 1;
       }
+      return prevActiveStep - 1;
     });
   };
 
   //
-  const classes = useStyles({ ...props, checked, activeStep });
+  const classes = useStyles({ ...props, dropdownNo, activeStep });
 
   const waitTime = moment.duration(props.iVRProfile.wait_time, 'seconds').seconds();
 
@@ -118,7 +121,7 @@ export default function CallContextExpansion(props) {
         <Box classes={{ root: classes.expansionSummary }}>
           <CallContextMainPane {...props} />
         </Box>
-        <Collapse in={checked}>
+        <Collapse in={dropdownNo}>
           <Paper elevation={4} className={classes.expansionDropdown}>
             <Box classes={{ root: classes.auditSummary }}>
               <Fade in={activeStep === 0} className={classes.slide1}>
@@ -152,11 +155,11 @@ export default function CallContextExpansion(props) {
               }
             />
           </Paper>
-          <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+          {/* <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
             <ExpandMoreIcon />
-          </IconButton>
+          </IconButton> */}
         </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>
           <ExpandMoreIcon />
         </IconButton>
       </Paper>
