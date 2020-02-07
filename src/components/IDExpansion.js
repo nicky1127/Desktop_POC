@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     bottom: '5px',
     left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    transform: props => (props.checked ? 'rotate(180deg)' : 'rotate(0deg)')
+    transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
   expansionDropdownContent: {
     margin: theme.spacing(1),
@@ -97,10 +97,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IDExpansion(props) {
-  const [checked, setChecked] = useState(false);
+  const [dropdownNo, setDropdownNo] = useState(0);
 
   const onClickBtn = () => {
-    setChecked(prev => !prev);
+    if (dropdownNo < 3) {
+      setDropdownNo(prev => prev + 1);
+    }
   };
 
   // carousel
@@ -136,7 +138,7 @@ export default function IDExpansion(props) {
   };
 
   //
-  const classes = useStyles({ ...props, checked, activeStep });
+  const classes = useStyles({ ...props, dropdownNo, activeStep });
 
   const IDParam = props => {
     let value;
@@ -188,54 +190,36 @@ export default function IDExpansion(props) {
             </Grid>
           </List>
         </Box>
-        <Collapse in={checked}>
+        <Collapse in={dropdownNo > 0}>
           <Paper elevation={4} className={classes.expansionDropdown}>
             <Box className={classes.expansionDropdownContent}>
-              <Fade in={activeStep === 0} className={classes.slide0}>
-                <Paper elevation={4}>
-                  <AdditionalInfoPane {...props} />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 1} className={classes.slide1}>
-                <Paper elevation={4}>
-                  <CorrespondancePane {...props} />
-                </Paper>
-              </Fade>
-              <Fade in={activeStep === 2} className={classes.slide2}>
-                <Paper elevation={4}>
-                  <SwitchPartiesPane
-                    bank={bank}
-                    handleChangeBank={handleChangeBank}
-                    account={account}
-                    handleChangeAccount={handleChangeAccount}
-                  />
-                </Paper>
-              </Fade>
-              {/* <Fade in={activeStep === 3} className={classes.slide3}>
-                <Paper elevation={4}>
-                  <POAPane {...props} />
-                </Paper>
-              </Fade> */}
+              <Paper elevation={4}>
+                <AdditionalInfoPane {...props} />
+              </Paper>
             </Box>
-            <MobileStepper
-              variant="dots"
-              steps={3}
-              position="static"
-              activeStep={activeStep}
-              className={classes.stepper}
-              nextButton={
-                <Button size="small" onClick={handleNext}>
-                  Next
-                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={handleBack}>
-                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                  Back
-                </Button>
-              }
-            />
+          </Paper>
+        </Collapse>
+        <Collapse in={dropdownNo > 1}>
+          <Paper elevation={4} className={classes.expansionDropdown}>
+            <Box className={classes.expansionDropdownContent}>
+              <Paper elevation={4}>
+                <CorrespondancePane {...props} />
+              </Paper>
+            </Box>
+          </Paper>
+        </Collapse>
+        <Collapse in={dropdownNo > 2}>
+          <Paper elevation={4} className={classes.expansionDropdown}>
+            <Box className={classes.expansionDropdownContent}>
+              <Paper elevation={4}>
+                <SwitchPartiesPane
+                  bank={bank}
+                  handleChangeBank={handleChangeBank}
+                  account={account}
+                  handleChangeAccount={handleChangeAccount}
+                />
+              </Paper>
+            </Box>
           </Paper>
         </Collapse>
         <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
