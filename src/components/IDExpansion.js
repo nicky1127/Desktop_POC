@@ -49,13 +49,17 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
-    // paddingBottom: '33px',
     paddingBottom: props => (props.dropdownNo > 0 ? '45px' : '33px'),
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },
   expansionSummary: {
     height: '14vh'
+  },
+  expansionDropdownContent: {
+    height: '17vh',
+    marginTop:'10px',
+    paddingTop: '10px'
   },
   expandIcon: {
     padding: '3px',
@@ -73,9 +77,6 @@ const useStyles = makeStyles(theme => ({
     bottom: '6px',
     right: '3%',
     transform: 'rotate(270deg)'
-  },
-  expansionDropdownContent: {
-    height: '17vh'
   },
   stepper: {
     flexGrow: 1
@@ -117,7 +118,6 @@ export default function IDExpansion(props) {
   const classes = useStyles({ ...props, dropdownNo });
 
   const IDParam = (profile = {}) => {
-    console.log('profile', profile);
     if (profile.account_number && profile.account_number) {
       return 'Account Number and Sort Code';
     }
