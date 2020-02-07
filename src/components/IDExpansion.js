@@ -7,6 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import PersonIcon from '@material-ui/icons/Person';
 import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
@@ -25,7 +26,8 @@ import CorrespondancePane from '../components/IDForms/CorrespondanceInfo';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    position: 'absolute'
+    position: 'absolute',
+    height: props => props.height
   },
   icon: { marginRight: theme.spacing(-1) },
   heading: {
@@ -47,29 +49,37 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
+    paddingBottom: '33px',
     borderBottom: '5px solid #26a69a',
     position: 'relative'
   },
   expansionSummary: {
-    height: props => props.height
+    height: '14vh'
   },
   expansionDropdown: {
-    height: '30vh'
+    height: '25vh'
   },
   expandIcon: {
     padding: '3px',
     display: 'block',
-    margin: '0 auto',
     position: 'absolute',
-    bottom: '5px',
+    bottom: '1px',
     left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
+  condenseIcon: {
+    padding: '3px',
+    display: 'block',
+    position: 'absolute',
+    bottom: '1px',
+    right: '3%',
+    transform: 'rotate(270deg)'
+    // transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    // transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
+  },
   expansionDropdownContent: {
-    margin: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    height: '20vh'
+    height: '17vh'
   },
   stepper: {
     flexGrow: 1
@@ -99,10 +109,15 @@ const useStyles = makeStyles(theme => ({
 export default function IDExpansion(props) {
   const [dropdownNo, setDropdownNo] = useState(0);
 
-  const onClickBtn = () => {
+  const onClickExtendBtn = () => {
     if (dropdownNo < 3) {
       setDropdownNo(prev => prev + 1);
+    } else {
+      setDropdownNo(0);
     }
+  };
+  const onClickCondenseBtn = () => {
+    setDropdownNo(0);
   };
 
   // carousel
@@ -148,6 +163,14 @@ export default function IDExpansion(props) {
       return 'Surname and Postcode';
     }
   };
+  let doubleArrowDom;
+  if (dropdownNo > 0) {
+    doubleArrowDom = (
+      <IconButton classes={{ root: classes.condenseIcon }} onClick={onClickCondenseBtn}>
+        <DoubleArrowIcon />
+      </IconButton>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -173,12 +196,6 @@ export default function IDExpansion(props) {
                 </ListItem>
               </Grid>
               <Grid item xs={12}>
-                {/* <ListItem>
-                  <ListItemIcon className={classes.icon}>
-                    <AccountBalanceIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`Account number: ${props.customer.account_number}`} />
-                </ListItem> */}
 
                 <ListItem>
                   <ListItemIcon className={classes.icon}>
@@ -191,40 +208,33 @@ export default function IDExpansion(props) {
           </List>
         </Box>
         <Collapse in={dropdownNo > 0}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Paper elevation={4}>
-                <AdditionalInfoPane {...props} />
-              </Paper>
-            </Box>
+          <Paper elevation={4} className={classes.expansionDropdownContent}>
+            <AdditionalInfoPane {...props} />
           </Paper>
+          {/* </Box> */}
+          {/* </Paper> */}
         </Collapse>
         <Collapse in={dropdownNo > 1}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Paper elevation={4}>
-                <CorrespondancePane {...props} />
-              </Paper>
-            </Box>
+          <Paper elevation={4} className={classes.expansionDropdownContent}>
+            <CorrespondancePane {...props} />
           </Paper>
+          {/* </Box> */}
+          {/* </Paper> */}
         </Collapse>
         <Collapse in={dropdownNo > 2}>
-          <Paper elevation={4} className={classes.expansionDropdown}>
-            <Box className={classes.expansionDropdownContent}>
-              <Paper elevation={4}>
-                <SwitchPartiesPane
-                  bank={bank}
-                  handleChangeBank={handleChangeBank}
-                  account={account}
-                  handleChangeAccount={handleChangeAccount}
-                />
-              </Paper>
-            </Box>
+          <Paper elevation={4} className={classes.expansionDropdownContent}>
+            <SwitchPartiesPane
+              bank={bank}
+              handleChangeBank={handleChangeBank}
+              account={account}
+              handleChangeAccount={handleChangeAccount}
+            />
           </Paper>
         </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
+        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>
           <ExpandMoreIcon />
         </IconButton>
+        {doubleArrowDom}
       </Paper>
     </div>
   );
