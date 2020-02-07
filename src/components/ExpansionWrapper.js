@@ -80,9 +80,9 @@ export default function AtAGlancePanel(props) {
   const renderNoCustomer = () => (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        {/* <Grid item xs={1} className={classes.logo}>
+        <Grid item xs={1} className={classes.logo}>
           <img src={`${logo}`} style={{ width: '90%', display: 'block', margin: '40px auto' }} />
-        </Grid> */}
+        </Grid>
         <Grid item xs={11}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
