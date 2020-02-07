@@ -24,6 +24,8 @@ import apiCustomer from '../../api/ApiCustomer';
 import Collapse from '@material-ui/core/Collapse';
 import AccountsModal from '../Modals/Accountsmodal';
 import AccountsTable from '../tables/AccountsTable';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { List} from '@material-ui/core';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -193,13 +195,24 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     backgroundColor: '#0A9014',
     color: 'white',
-    left: '5%'
+    left: '1%'
+  },
+  backButton: {
+    marginRight: theme.spacing(2),
+    backgroundColor: '#1F98D1',
+    color: 'white',
+    left: '3%'
   },
   invalidButton: {
     marginRight: theme.spacing(2),
     backgroundColor: '#DE0C3B',
     color: 'white',
-    left: '10%'
+    left: '5%'
+  },
+  modalContent: {
+    boxSizing: 'border-box',
+    borderBottom: '5px solid #26a69a',
+    position: 'relative'
   }
 }));
 
@@ -301,6 +314,7 @@ export default function CustomersTable(props) {
 
   return (
     <div className={classes.root}>
+      <List className={classes.modalContent}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -406,6 +420,15 @@ export default function CustomersTable(props) {
           <Button
             variant="contained"
             color="primary"
+            className={classes.backButton}
+            onClick={props.handleBack}
+          >
+            <ExitToAppIcon className={classes.icon} />
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
             className={classes.invalidButton}
             onClick={props.handleCloseSearch}
           >
@@ -419,6 +442,7 @@ export default function CustomersTable(props) {
         openCustomerAccounts={openCustomerAccounts}
         setOpenCustomerAccounts={setOpenCustomerAccounts}
       />
+      </List>
     </div>
   );
 }

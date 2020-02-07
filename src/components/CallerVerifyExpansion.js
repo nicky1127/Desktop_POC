@@ -10,18 +10,11 @@ import IconButton from '@material-ui/core/IconButton';
 //carousel
 
 import MainVerifyPane from '../components/VerificationForms/MainVerifyPanel';
-import PasswordVerifyPane from '../components/VerificationForms/PasswordVerify';
-import SecurityVerifyPane from '../components/VerificationForms/SecurityVerify';
-import BirthdayQuestionPane from './VerificationForms/BirthdayVerify';
 import IndicatorsListPane from './IndicatorsForms/IndicatorList';
 import MobileVerifyStepper from './VerificationForms/VerifyStepper';
-import AddressQuestionPane from './VerificationForms/AddressVerify';
-import NoTokensPane from './VerificationForms/UnableToVerifyForm';
 
 import VerificationModal from './Modals/VerificationModal'
 
-
-import { StylesContext } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {

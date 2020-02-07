@@ -6,13 +6,20 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CustomersTable from '../../components/tables/CustomersTable';
 import CustomersTable2 from '../../components/tables/CustomerTable2';
-
+import IDSearchForm from '../IDForms/UnknownUserSearch';
 
 const useStyles = makeStyles(theme => ({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    margin: 'auto',
+    maxHeight: 550,
+    maxWidth: 1200,
+    // overflow: 'scroll'
+  },
+  modal2: {
+    margin: 'auto',
+    maxHeight: 550,
+    maxWidth: 900,
+    // overflow: 'scroll'
   },
   paper_modal: {
     backgroundColor: theme.palette.background.paper,
@@ -33,14 +40,44 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomerSearchModal(props) {
+  const [customerArray, setCustomerArray] = React.useState(null);
+  const [searchLevel, setSearchLevel] = React.useState(1);
   const classes = useStyles();
+
+  const handleBack = () => {
+    setSearchLevel(1);
+  };
+
+  const sizeSelector = () => {
+    let format;
+    if (searchLevel === 1) {
+      format = classes.modal2;
+    } else {
+      format =classes.modal
+    }
+    return format
+  };
+
+  let searchDom = null;
+
+  if (searchLevel === 1) {
+    searchDom = (
+      <IDSearchForm
+        {...props}
+        setCustomerArray={setCustomerArray}
+        setSearchLevel={setSearchLevel}
+      />
+    );
+  } else {
+    searchDom = <CustomersTable {...props} customerArray={customerArray} handleBack={handleBack} />;
+  }
 
   return (
     <div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        className={classes.modal}
+        className={sizeSelector()}
         open={props.openCustomerSearch}
         onClose={props.handleClose}
         closeAfterTransition
@@ -50,11 +87,7 @@ export default function CustomerSearchModal(props) {
         }}
       >
         <Fade in={props.openCustomerSearch}>
-          <div className={classes.paper_modal}>
-            <CustomersTable {...props} />
-            
-            
-          </div>
+          <div className={classes.paper_modal}>{searchDom}</div>
         </Fade>
       </Modal>
     </div>

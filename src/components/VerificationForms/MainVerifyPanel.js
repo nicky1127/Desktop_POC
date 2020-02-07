@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Popover from '@material-ui/core/Popover';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import SecurityIcon from '@material-ui/icons/Security';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';

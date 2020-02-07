@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { ListItem, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -51,6 +51,10 @@ export default function PasswordVerifyPane(props) {
       backgroundColor: '#DE0C3B',
       left: '100%',
       color: 'white'
+    },modalContent: {
+      boxSizing: 'border-box',
+      borderBottom: '5px solid #26a69a',
+      position: 'relative'
     }
   }));
 
@@ -59,6 +63,7 @@ export default function PasswordVerifyPane(props) {
   return (
     <div>
       <h3>Step Up Verification: Password</h3>
+      <List className={classes.modalContent}>
       <FormControl className={classes.formControl}>
         <Grid container>
           <Grid item xs={3}>
@@ -125,6 +130,7 @@ export default function PasswordVerifyPane(props) {
           </Button>
         </Grid>
       </Grid>
+      </List>
     </div>
   );
 }
