@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
   },
   name: {
     fontWeight: 'bold',
-    // overflow: 'hidden',
     width: '60%',
     height: '20px'
   },
@@ -81,9 +80,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IDExpansion(props) {
+  const { customer, iVRProfile } = props;
   const [dropdownNo, setDropdownNo] = useState(0);
 
-  const { customer, iVRProfile } = props;
+  const classes = useStyles({ ...props, dropdownNo });
 
   const onClickExtendBtn = () => {
     if (dropdownNo < 3) {
@@ -106,9 +106,6 @@ export default function IDExpansion(props) {
   const handleChangeAccount = event => {
     setAccount(event.target.value);
   };
-
-  //
-  const classes = useStyles({ ...props, dropdownNo });
 
   const IDParam = (profile = {}) => {
     if (profile.account_number && profile.account_number) {

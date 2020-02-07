@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CallContextExpansion(props) {
   const [dropdownNo, setDropdownNo] = useState(0);
+  const { iVRProfile } = props;
 
   const onClickExtendBtn = () => {
     if (!dropdownNo) {
@@ -81,7 +82,7 @@ export default function CallContextExpansion(props) {
     }
   };
 
-  //carousel
+  // carousel
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const handleNext = () => {
@@ -102,18 +103,7 @@ export default function CallContextExpansion(props) {
     });
   };
 
-  //
   const classes = useStyles({ ...props, dropdownNo, activeStep });
-
-  const waitTime = moment.duration(props.iVRProfile.wait_time, 'seconds').seconds();
-
-  const waitTimeColor = waitTime => {
-    if (parseInt(waitTime) >= 10) {
-      return classes.redIcon;
-    } else {
-      return classes.greenIcon;
-    }
-  };
 
   return (
     <div className={classes.root}>
@@ -155,9 +145,6 @@ export default function CallContextExpansion(props) {
               }
             />
           </Paper>
-          {/* <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
-            <ExpandMoreIcon />
-          </IconButton> */}
         </Collapse>
         <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>
           <ExpandMoreIcon />
