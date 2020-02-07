@@ -69,13 +69,6 @@ const useStyles = makeStyles(theme => ({
     bottom: '6px',
     right: '3%',
     transform: 'rotate(270deg)'
-  },
-  stepper: {
-    flexGrow: 1
-  },
-  formControl: {
-    margin: theme.spacing(2),
-    minWidth: 100
   }
 }));
 
