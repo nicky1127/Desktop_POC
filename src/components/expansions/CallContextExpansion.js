@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: '10px',
     paddingTop: '10px'
   },
+  contextAdditionalInfo: {
+    height: '17vh'
+  },
   expandIcon: {
     padding: '3px',
     display: 'block',
@@ -81,7 +84,10 @@ export default function CallContextExpansion(props) {
           <CallContextMainPane {...props} />
         </Box>
         <Collapse in={dropdownNo > 0}>
-          <Paper elevation={4} className={classes.expansionDropdownContent}>
+          <Paper
+            elevation={4}
+            className={`${classes.expansionDropdownContent} ${classes.contextAdditionalInfo}`}
+          >
             <ContextAdditionalInfo {...props} />
           </Paper>
         </Collapse>

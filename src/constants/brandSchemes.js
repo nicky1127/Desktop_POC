@@ -5,6 +5,12 @@ const data = [
     primaryClr: '#0d274a',
     secondaryClr: '#439aab',
     logo: '/images/mbna_icon.png'
+  },
+  {
+    brand: 'HALIFAX',
+    primaryClr: '#2360b2',
+    secondaryClr: '#595fc9',
+    logo: '/images/halifax_icon.png'
   }
 ];
 export default data;
