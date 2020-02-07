@@ -14,9 +14,9 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import IVRLog from './CallContextForms/IVRLog';
-import ContextAdditionalInfo from './CallContextForms/ContextMoreInfo';
-import CallContextMainPane from './CallContextForms/MainCallContextPane';
+import IVRLog from '../CallContextForms/IVRLog';
+import ContextAdditionalInfo from '../CallContextForms/ContextMoreInfo';
+import CallContextMainPane from '../CallContextForms/MainCallContextPane';
 
 const useStyles = makeStyles(theme => ({
   root: {

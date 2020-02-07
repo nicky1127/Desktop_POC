@@ -9,14 +9,14 @@ import IconButton from '@material-ui/core/IconButton';
 
 //carousel
 
-import MainVerifyPane from '../components/VerificationForms/MainVerifyPanel';
-import PasswordVerifyPane from '../components/VerificationForms/PasswordVerify';
-import SecurityVerifyPane from '../components/VerificationForms/SecurityVerify';
-import BirthdayQuestionPane from './VerificationForms/BirthdayVerify';
-import IndicatorsListPane from './IndicatorsForms/IndicatorList';
-import MobileVerifyStepper from './VerificationForms/VerifyStepper';
-import AddressQuestionPane from './VerificationForms/AddressVerify';
-import NoTokensPane from './VerificationForms/UnableToVerifyForm';
+import MainVerifyPane from '../VerificationForms/MainVerifyPanel';
+import PasswordVerifyPane from '../VerificationForms/PasswordVerify';
+import SecurityVerifyPane from '../VerificationForms/SecurityVerify';
+import BirthdayQuestionPane from '../VerificationForms/BirthdayVerify';
+import IndicatorsListPane from '../IndicatorsForms/IndicatorList';
+import MobileVerifyStepper from '../VerificationForms/VerifyStepper';
+import AddressQuestionPane from '../VerificationForms/AddressVerify';
+import NoTokensPane from '../VerificationForms/UnableToVerifyForm';
 
 
 import { StylesContext } from '@material-ui/styles';

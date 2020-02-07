@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import IDExpansion from './IDExpansion';
-import CallerVerifyExpansion from './CallerVerifyExpansion';
-import CallContextExpansion from './CallContextExpansion';
+import IDExpansion from './expansions/IDExpansion';
+import CallerVerifyExpansion from './expansions/CallerVerifyExpansion';
+import CallContextExpansion from './expansions/CallContextExpansion';
 import IDSearchPanel from './UnknownUserPanel';
 import PlaceHolderExpansion from './PlaceHolderPanel';
 

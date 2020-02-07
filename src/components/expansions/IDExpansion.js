@@ -12,9 +12,9 @@ import CakeIcon from '@material-ui/icons/Cake';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
-import AdditionalInfoPane from './IDForms/AdditionalInfo';
-import SwitchPartiesPane from './IDForms/SwitchParties';
-import CorrespondancePane from './IDForms/CorrespondanceInfo';
+import AdditionalInfoPane from '../IDForms/AdditionalInfo';
+import SwitchPartiesPane from '../IDForms/SwitchParties';
+import CorrespondancePane from '../IDForms/CorrespondanceInfo';
 
 const useStyles = makeStyles(theme => ({
   root: {
