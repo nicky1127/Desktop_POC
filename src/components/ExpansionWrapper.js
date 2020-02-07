@@ -20,24 +20,21 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     backgroundColor: '#fff',
-    borderBottom: '5px solid #26a69a',
+    borderBottom: props => `5px solid ${props.brandScheme.secondaryClr}`,
     height: '16.5vh'
   }
 }));
 
 export default function AtAGlancePanel(props) {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
-  const logo = "/images/lbg_icon.jpg";
+  const logo = '/images/lbg_icon.jpg';
 
   const renderForm = () => (
     <div className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={1} className={classes.logo}>
-          <img
-            src={`${logo}`}
-            style={{ width: '90%', display: 'block', margin: '15px auto' }}
-          />
+          <img src={`${logo}`} style={{ width: '90%', display: 'block', margin: '15px auto' }} />
         </Grid>
         <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
@@ -60,10 +57,7 @@ export default function AtAGlancePanel(props) {
     <div className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={1} className={classes.logo}>
-          <img
-            src={`${logo}`}
-            style={{ width: '90%', display: 'block', margin: '15px auto',  }}
-          />
+          <img src={`${logo}`} style={{ width: '90%', display: 'block', margin: '15px auto' }} />
         </Grid>
         <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
@@ -86,21 +80,18 @@ export default function AtAGlancePanel(props) {
     <div className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={1} className={classes.logo}>
-          <img
-            src={`${logo}`}
-            style={{ width: '90%', display: 'block', margin: '15px auto'}}
-          />
+          <img src={`${logo}`} style={{ width: '90%', display: 'block', margin: '15px auto' }} />
         </Grid>
         <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="15.8vh" />
+              <PlaceHolderExpansion height="15.8vh" brandScheme={props.brandScheme} />
+            </Grid>
+            <Grid item xs={4} className={classes.grid} >
+              <PlaceHolderExpansion height="15.8vh" brandScheme={props.brandScheme}/>
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="15.8vh" />
-            </Grid>
-            <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="15.8vh" />
+              <PlaceHolderExpansion height="15.8vh" brandScheme={props.brandScheme} />
             </Grid>
           </Grid>
         </Grid>

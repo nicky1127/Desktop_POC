@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
-    borderBottom: '5px solid #26a69a',
+    borderBottom: props => `5px solid ${props.brandScheme.secondaryClr}`,
     position: 'relative'
   },
   expansionDropdown: {

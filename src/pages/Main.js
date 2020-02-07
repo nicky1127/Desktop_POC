@@ -10,6 +10,8 @@ import apiIVRCalls from '../api/ApiIVR';
 import Paper from '@material-ui/core/Paper';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
 
+import constants from '../constants';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -55,6 +57,7 @@ function Main() {
   const classes = useStyles();
   const [statusColor, setStatusColor] = React.useState('red');
   const [levelColor, setLevelColor] = React.useState('red');
+  const [brandScheme, setBrandScheme] = useState(constants.brandSchemes[0]);
 
   const vConfirmationColor = () => {
     if (iVRProfile.verified === true) {
@@ -123,8 +126,20 @@ function Main() {
   const getIVRCall = async () => {
     const response = await apiIVRCalls.callIVR();
     setIVRProfile(response);
+    selectBrandScheme(response);
 
     handleOpen();
+  };
+
+  const selectBrandScheme = ivr => {
+    console.log('ivr', ivr);
+    console.log('constants.brandSchemes', constants.brandSchemes);
+    const { brand } = ivr;
+    if (brand) {
+      const result = constants.brandSchemes.filter(scheme => scheme.brand === brand);
+      console.log('result',result)
+      if (result && result.length === 1) setBrandScheme(result[0]);
+    }
   };
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -157,6 +172,7 @@ function Main() {
         ready={ready}
         onCall={onCall}
         customer={customer}
+        brandScheme={brandScheme}
         withCustomer={withCustomer}
         iVRProfile={iVRProfile}
         statusColor={statusColor}
@@ -171,6 +187,7 @@ function Main() {
       <WorkingContainer
         customerIdentified={customerIdentified}
         className={classes.workingContainer}
+        brandScheme={brandScheme}
       />
       <AvayaToolBar
         setWaiting={changeStatusToReady}

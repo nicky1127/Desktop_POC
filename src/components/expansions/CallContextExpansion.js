@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   icon: { marginRight: theme.spacing(-1) },
   expansionContainer: {
     boxSizing: 'border-box',
-    borderBottom: '5px solid #26a69a',
+    borderBottom: props => `5px solid ${props.brandScheme.secondaryClr}`,
     paddingBottom: props => (props.dropdownNo !== 0 ? '45px' : '33px'),
     position: 'relative'
   },
