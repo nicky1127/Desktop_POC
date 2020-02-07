@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   paper: {
-    height: '16vh',
+    height: '18vh',
     backgroundColor: '#9e9e9e'
   },
   modal: {
@@ -132,12 +132,9 @@ function Main() {
   };
 
   const selectBrandScheme = ivr => {
-    console.log('ivr', ivr);
-    console.log('constants.brandSchemes', constants.brandSchemes);
     const { brand } = ivr;
     if (brand) {
       const result = constants.brandSchemes.filter(scheme => scheme.brand === brand);
-      console.log('result',result)
       if (result && result.length === 1) setBrandScheme(result[0]);
     }
   };
