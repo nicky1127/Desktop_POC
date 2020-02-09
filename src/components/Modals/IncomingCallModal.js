@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
@@ -12,8 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Icon } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -29,6 +28,9 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {
     marginRight: theme.spacing(1)
   },
+  buttons: {
+    paddingTop: theme.spacing(5)
+  },
   pickupButton: {
     marginRight: theme.spacing(1),
     backgroundColor: '#00ff00'
@@ -36,11 +38,18 @@ const useStyles = makeStyles(theme => ({
   rejectButton: {
     marginRight: theme.spacing(1),
     backgroundColor: '#ff0000'
+  },
+  greenIcon: {
+    color: '#33cc33'
+  },
+  redIcon: {
+    color: '#ff1a1a'
   }
 }));
 
 export default function IncomingCallModal(props) {
   const classes = useStyles();
+  const { iVRProfile, openIdentified, handleClose, handleAccept } = props;
 
   return (
     <div>
@@ -48,15 +57,15 @@ export default function IncomingCallModal(props) {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.openIdentified}
-        onClose={props.handleClose}
+        open={openIdentified}
+        onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={props.openIdentified}>
+        <Fade in={openIdentified}>
           <div className={classes.paper_modal}>
             <Grid container direction="row" alignItems="center">
               <Grid item align="center" xs={12}>
@@ -73,37 +82,41 @@ export default function IncomingCallModal(props) {
                 </ListItemIcon>
                 <ListItemText
                   classes={{ root: classes.name }}
-                  primary={`${props.iVRProfile.full_name}`}
+                  primary={`${iVRProfile.full_name}`}
                 />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={`Sort Code: ${props.iVRProfile.sort_code}`} />
+                <ListItemText primary={`Sort Code: ${iVRProfile.sort_code}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <AccountBoxIcon />
                 </ListItemIcon>
-                <ListItemText primary={`Account Number: ${props.iVRProfile.account_number}`} />
+                <ListItemText primary={`Account Number: ${iVRProfile.account_number}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
-                  <FingerprintIcon />
+                  <FingerprintIcon
+                    className={iVRProfile.identified ? classes.greenIcon : classes.redIcon}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={`Caller Identification Status:  ${props.iVRProfile.identified}`} />
+                <ListItemText primary={`Caller Identification Status:  ${iVRProfile.identified}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
-                  <VerifiedUserIcon />
+                  <VerifiedUserIcon
+                    className={iVRProfile.verified ? classes.greenIcon : classes.redIcon}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={`ID Verification Status:  ${props.iVRProfile.verified}`} />
+                <ListItemText primary={`ID Verification Status:  ${iVRProfile.verified}`} />
               </ListItem>
-              <Grid container spacing={2}>
+              <Grid container className={classes.buttons} spacing={5}>
                 <Grid item xs={6} justify="space-between">
                   <ListItem>
-                    <Fab variant="extended" className={classes.pickupButton} onClick={props.handleAccept}>
+                    <Fab variant="extended" className={classes.pickupButton} onClick={handleAccept}>
                       <PhoneInTalkSharpIcon className={classes.extendedIcon} />
                       Accept
                     </Fab>
@@ -111,7 +124,7 @@ export default function IncomingCallModal(props) {
                 </Grid>
                 <Grid item xs={6} justify="space-between">
                   <ListItem>
-                    <Fab variant="extended" className={classes.rejectButton} onClick={props.handleClose}>
+                    <Fab variant="extended" className={classes.rejectButton} onClick={handleClose}>
                       <CallEndSharpIcon className={classes.extendedIcon} />
                       Reject
                     </Fab>

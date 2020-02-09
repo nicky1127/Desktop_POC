@@ -9,11 +9,11 @@ import IconButton from '@material-ui/core/IconButton';
 
 //carousel
 
-import MainVerifyPane from '../components/VerificationForms/MainVerifyPanel';
-import IndicatorsListPane from './IndicatorsForms/IndicatorList';
-import MobileVerifyStepper from './VerificationForms/VerifyStepper';
+import MainVerifyPane from '../VerificationForms/MainVerifyPanel';
+import IndicatorsListPane from '../IndicatorsForms/IndicatorList';
+import MobileVerifyStepper from '../VerificationForms/VerifyStepper';
 
-import VerificationModal from './Modals/VerificationModal'
+import VerificationModal from '../Modals/VerificationModal';
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
   expansionContainer: {
     boxSizing: 'border-box',
-    borderBottom: '5px solid #26a69a',
+    borderBottom: props => `5px solid ${props.brandScheme.secondaryClr}`,
     position: 'relative'
   },
   expansionDropdown2: {
