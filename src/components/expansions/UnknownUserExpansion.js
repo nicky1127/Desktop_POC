@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import CakeIcon from '@material-ui/icons/Cake';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Button } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import apiCustomer from '../../api/ApiCustomer';
 import CustomerSearchModal from '../Modals/CustomerSearch';
@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute'
   },
   icon: { marginRight: theme.spacing(-1) },
+  redIcon: {
+    color: '#d50000'
+  },
   name: {
     fontWeight: 'bold',
     width: '60%',
@@ -32,13 +35,12 @@ const useStyles = makeStyles(theme => ({
   expansionSummary: {
     height: '14vh'
   },
-  expandIcon: {
-    padding: '3px',
+  identifyBtn: {
+    padding: '2px 10px',
     display: 'block',
     position: 'absolute',
     bottom: '56x',
-    left: '47%',
-    transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+    left: '40%'
   },
   submitBtn: {
     // padding: '3px',
@@ -95,35 +97,38 @@ export default function UnknownUserExpansion(props) {
         <Box classes={{ root: classes.expansionSummary }}>
           <List dense>
             <Grid container>
-              <Grid item xs={6}>
-                <ListItem>
-                  <ListItemIcon className={classes.icon}>
-                    <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText classes={{ root: classes.name }} primary={`Unknown`} />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12}>
-                <ListItem>
-                  <ListItemIcon className={classes.icon}>
-                    <CakeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`Unknown`} />
-                </ListItem>
+              <ListItem>
+                <ListItemIcon className={classes.icon}>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText classes={{ root: classes.name }} primary={`Unknown`} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon className={classes.icon}>
+                  <CakeIcon />
+                </ListItemIcon>
+                <ListItemText primary={`Unknown`} />
+              </ListItem>
 
-                <ListItem>
-                  <ListItemIcon className={classes.icon}>
-                    <FingerprintIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={`ID by: Unidentified`} />
-                </ListItem>
-              </Grid>
+              <ListItem>
+                <ListItemIcon className={`${classes.icon} ${classes.redIcon}`}>
+                  <FingerprintIcon />
+                </ListItemIcon>
+                <ListItemText primary={`ID by: Unidentified`} />
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  className={classes.identifyBtn}
+                  onClick={onClickBtn}
+                  // endIcon={<Icon>send</Icon>}
+                >
+                  Identify
+                </Button>
+              </ListItem>
             </Grid>
           </List>
         </Box>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickBtn}>
-          <ExpandMoreIcon />
-        </IconButton>
       </Paper>
       <CustomerSearchModal
         openCustomerSearch={openCustomerSearch}

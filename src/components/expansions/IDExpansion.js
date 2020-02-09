@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     height: props => props.height
   },
   icon: { marginRight: theme.spacing(-1) },
+  greenIcon: {
+    color: '#33cc33'
+  },
   heading: {
     fontSize: theme.typography.pxToRem(30),
     fontWeight: theme.typography.fontWeightRegular,
@@ -140,7 +143,7 @@ export default function IDExpansion(props) {
               </Grid>
               <Grid item xs={12}>
                 <ListItem>
-                  <ListItemIcon className={classes.icon}>
+                  <ListItemIcon className={`${classes.icon} ${classes.greenIcon}`}>
                     <FingerprintIcon />
                   </ListItemIcon>
                   <ListItemText primary={`ID by: ${IDParam(iVRProfile)}`} />
