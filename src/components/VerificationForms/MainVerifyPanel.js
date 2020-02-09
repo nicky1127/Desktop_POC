@@ -1,6 +1,6 @@
 import React from 'react';
 import Popover from '@material-ui/core/Popover';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import SecurityIcon from '@material-ui/icons/Security';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -86,11 +86,10 @@ export default function MainVerifyPane(props) {
   };
 
   const otherIndicators = props => {
-    if (props.customer.indicators.other) {
+    if (!props.customer.indicators.other) {
       return 'None';
-    } else {
-      return 'Present';
     }
+    return 'Present';
   };
   const open = Boolean(anchorEl);
 
@@ -136,9 +135,9 @@ export default function MainVerifyPane(props) {
             <ListItemText
               classes={{ root: classes.name }}
               primary={
-                <Typography style={{ color: 'red' }}>{`Service Needs : ${otherIndicators(
-                  props
-                )}`}</Typography>
+                <Typography style={{ color: 'red' }}>
+                  {/* {`Service Needs : ${otherIndicators(props)}`} */}
+                </Typography>
               }
             />
           </ListItem>
