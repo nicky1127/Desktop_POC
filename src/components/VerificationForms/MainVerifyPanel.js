@@ -2,7 +2,7 @@ import React from 'react';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
 import SecurityIcon from '@material-ui/icons/Security';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import WarningIcon from '@material-ui/icons/Warning';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
@@ -35,10 +35,18 @@ const useStyles = makeStyles(theme => ({
   },
   text_root: {
     background: 'blue'
+  },
+  verifyBtn: {
+    padding: '2px 10px',
+    display: 'block',
+    position: 'absolute',
+    bottom: '56x',
+    left: '50%'
   }
 }));
 
 export default function MainVerifyPane(props) {
+  const { onClickVerifyBtn } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [vMethod, setVMethod] = React.useState(null);
 
@@ -71,6 +79,22 @@ export default function MainVerifyPane(props) {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
+
+  let verifyBtnDom;
+  if (props.levelPass === 0) {
+    verifyBtnDom = (
+      <Button
+        size="small"
+        variant="contained"
+        color="primary"
+        className={classes.verifyBtn}
+        onClick={onClickVerifyBtn}
+        // endIcon={<Icon>send</Icon>}
+      >
+        Verify
+      </Button>
+    );
+  }
 
   return (
     <div>
@@ -105,7 +129,7 @@ export default function MainVerifyPane(props) {
               classes={{ root: classes.name }}
               primary={
                 <Typography style={{ color: 'red' }}>
-                  {/* {`Service Needs : ${otherIndicators(props)}`} */}
+                  {`Service Needs : ${otherIndicators(props)}`}
                 </Typography>
               }
             />
@@ -118,6 +142,7 @@ export default function MainVerifyPane(props) {
               classes={{ root: classes.name }}
               primary={`Verified by: ${verificationBy(props, vMethod)}`}
             />
+            {verifyBtnDom}
           </ListItem>
         </List>
 

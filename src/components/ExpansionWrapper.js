@@ -68,12 +68,12 @@ export default function AtAGlancePanel(props) {
             <Grid item xs={4} className={classes.grid}>
               <CallContextExpansion height="18vh" {...props} />
             </Grid>
-            {/* <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="18vh" {...props} />
-            </Grid> */}
             <Grid item xs={4} className={classes.grid}>
-              <CallerVerifyExpansion height="18vh" {...props} />
+              <PlaceHolderExpansion height="18vh" {...props} />
             </Grid>
+            {/* <Grid item xs={4} className={classes.grid}>
+              <CallerVerifyExpansion height="18vh" {...props} />
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

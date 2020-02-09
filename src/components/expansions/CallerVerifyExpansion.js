@@ -79,7 +79,7 @@ export default function CallerVerifyExpansion(props) {
     setDropdownNo(0);
   };
 
-  const onClickBtn = () => {
+  const onClickVerifyBtn = () => {
     if (levelPass < 2) {
       setOpenVerifyModal(true);
     }
@@ -126,6 +126,7 @@ export default function CallerVerifyExpansion(props) {
             question={question}
             // activeStep={activeStep}
             verificationMethod={verificationMethod}
+            onClickVerifyBtn={onClickVerifyBtn}
           />
         </Box>
         <Collapse in={dropdownNo > 0}>
