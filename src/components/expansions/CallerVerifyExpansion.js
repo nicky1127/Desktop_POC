@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: '10px',
     paddingTop: '10px'
   },
-  expandIcon: {
+  verifyIcon: {
     padding: '3px',
     display: 'block',
     margin: '0 auto',
@@ -46,13 +46,13 @@ const useStyles = makeStyles(theme => ({
     display: props => (props.levelPass < 2 ? 'block' : 'none'),
     transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
-  expandIcon2: {
+  expandIcon: {
     padding: '3px',
     display: 'block',
     margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '70%',
+    left: '47%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
     transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)')
   }
@@ -134,11 +134,11 @@ export default function CallerVerifyExpansion(props) {
             <IndicatorsListPane />
           </Paper>
         </Collapse>
-        {/* <IconButton className={classes.expandIcon} onClick={onClickBtn}>
+        {/* <IconButton className={classes.verifyIcon} onClick={onClickBtn}>
           <ExpandMoreIcon />
         </IconButton> */}
 
-        <IconButton className={classes.expandIcon2} onClick={onClickExtendBtn}>
+        <IconButton className={classes.expandIcon} onClick={onClickExtendBtn}>
           <ExpandMoreIcon />
         </IconButton>
       </Paper>
