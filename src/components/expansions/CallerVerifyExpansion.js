@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
     height: '14vh'
   },
   expansionDropdownContent: {
-    height: '53vh',
     marginTop: '10px',
     paddingTop: '10px'
   },
@@ -131,7 +130,7 @@ export default function CallerVerifyExpansion(props) {
         </Box>
         <Collapse in={dropdownNo > 0}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <IndicatorsListPane />
+            <IndicatorsListPane height="52vh" />
           </Paper>
         </Collapse>
         {/* <IconButton className={classes.verifyIcon} onClick={onClickBtn}>
