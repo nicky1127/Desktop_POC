@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import IDExpansion from './expansions/IDExpansion';
 import CallerVerifyExpansion from './expansions/CallerVerifyExpansion';
 import CallContextExpansion from './expansions/CallContextExpansion';
-import IDSearchPanel from './UnknownUserPanel';
+import UnknownUserExpansion from './expansions/UnknownUserExpansion';
 import PlaceHolderExpansion from './PlaceHolderPanel';
 
 const useStyles = makeStyles(theme => ({
@@ -63,13 +63,13 @@ export default function AtAGlancePanel(props) {
         <Grid item xs={11} className={classes.subGridRoot}>
           <Grid container spacing={0} className={classes.subGridRoot}>
             <Grid item xs={4} className={classes.grid}>
-              <IDSearchPanel height="16vh" {...props} />
+              <UnknownUserExpansion height="18vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <CallContextExpansion height="16vh" {...props} />
+              <CallContextExpansion height="18vh" {...props} />
             </Grid>
             <Grid item xs={4} className={classes.grid}>
-              <PlaceHolderExpansion height="16vh" {...props} />
+              <PlaceHolderExpansion height="18vh" {...props} />
             </Grid>
           </Grid>
         </Grid>
