@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CallerVerifyExpansion(props) {
   const [question, setQuestion] = React.useState(1);
-  const [activeStep, setActiveStep] = useState(0);
+  // const [activeStep, setActiveStep] = useState(0);
   const [levelPass, setLevelPass] = React.useState(0);
   const [verificationMethod, setVerificationMethod] = React.useState(null);
   const [openVerifyModal, setOpenVerifyModal] = React.useState(false);
@@ -83,7 +83,7 @@ export default function CallerVerifyExpansion(props) {
   const onClickBtn = () => {
     if (levelPass < 2) {
       setOpenVerifyModal(true);
-    } 
+    }
   };
 
   const onCloseVerifyModal = () => {
@@ -120,14 +120,14 @@ export default function CallerVerifyExpansion(props) {
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
-      <Box classes={{ root: classes.expansionSummary }}>
-        <MainVerifyPane
-          {...props}
-          levelPass={levelPass}
-          question={question}
-          activeStep={activeStep}
-          verificationMethod={verificationMethod}
-        />
+        <Box classes={{ root: classes.expansionSummary }}>
+          <MainVerifyPane
+            {...props}
+            levelPass={levelPass}
+            question={question}
+            // activeStep={activeStep}
+            verificationMethod={verificationMethod}
+          />
         </Box>
         <Collapse in={dropdownNo > 0}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>

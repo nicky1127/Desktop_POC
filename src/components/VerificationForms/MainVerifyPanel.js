@@ -13,17 +13,14 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     position: 'absolute'
   },
-  icon: { marginRight: theme.spacing(-2) },
+  icon: { marginRight: theme.spacing(-1) },
+  redIcon: {
+    color: '#d50000'
+  },
   status_icon: { marginRight: theme.spacing(-2), color: props => props.statusColor },
   level_icon: {
-    marginRight: theme.spacing(-2),
+    marginRight: theme.spacing(-1),
     color: props => (props.levelPass < 2 ? 'red' : 'green')
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(30),
-
-    fontWeight: theme.typography.fontWeightRegular,
-    textAlign: 'right'
   },
   popover: {
     pointerEvents: 'none'
@@ -38,34 +35,6 @@ const useStyles = makeStyles(theme => ({
   },
   text_root: {
     background: 'blue'
-  },
-  address: {
-    fontWeight: 'bold',
-    overflow: 'hidden',
-    width: '60%',
-    height: '20px'
-  },
-  expansionContainer: {
-    boxSizing: 'border-box',
-    borderBottom: '5px solid #26a69a',
-    position: 'relative'
-  },
-  expansionSummary: {
-    height: props => props.height
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3)
-  },
-  textField: {
-    width: 300
-  },
-  expansionDropdownContent: {
-    margin: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    height: '25vh'
-  },
-  redIcon: {
-    color: '#d50000'
   }
 }));
 
@@ -73,16 +42,18 @@ export default function MainVerifyPane(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [vMethod, setVMethod] = React.useState(null);
 
+  const classes = useStyles({ ...props });
+
   const verificationBy = (props, vMethod) => {
     if (props.levelPass > 2 && props.question > 2) {
       return 'Unable to Verify';
     } else if (props.levelPass >= 2) {
       return props.verificationMethod;
-    } else if (props.activeStep === 4) {
-      return 'Unable to Verify';
-    } else {
-      return 'No verification';
+      // } else if (props.activeStep === 4) {
+      //   return 'Unable to Verify';
     }
+    return 'No verification';
+    // }
   };
 
   const otherIndicators = props => {
@@ -101,14 +72,12 @@ export default function MainVerifyPane(props) {
     setAnchorEl(null);
   };
 
-  const classes = useStyles({ ...props });
-
   return (
     <div>
       <Box classes={{ root: classes.expansionSummary }}>
         <List dense>
           <ListItem>
-            <ListItemIcon className={classes.redIcon}>
+            <ListItemIcon className={`${classes.icon} ${classes.redIcon}`}>
               <WarningIcon />
             </ListItemIcon>
             <ListItemText
@@ -129,7 +98,7 @@ export default function MainVerifyPane(props) {
           </ListItem>
 
           <ListItem>
-            <ListItemIcon className={classes.redIcon}>
+            <ListItemIcon className={`${classes.icon} ${classes.redIcon}`}>
               <ContactSupportIcon />
             </ListItemIcon>
             <ListItemText
