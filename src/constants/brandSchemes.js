@@ -9,7 +9,7 @@ const data = [
   {
     brand: 'HALIFAX',
     primaryClr: '#2360b2',
-    secondaryClr: '#595fc9',
+    secondaryClr: '#00e5ff',
     logo: '/images/halifax_icon.png'
   }
 ];

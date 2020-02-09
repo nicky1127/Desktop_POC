@@ -8,11 +8,10 @@ export class ApiIVRCalls extends Api {
     let customer;
     try {
       const response = await this._getCached(uriIVR, params, IVRCallsExpiryInMinutes, true);
-      console.log('response',response);
       // const idRandom = Math.floor(Math.random() * 2) + 3;
       // console.log('ivr no', idRandom);
 
-      const call = response.find(item => item.call_Id === 4);
+      const call = response.find(item => item.call_Id === 2);
 
       customer = call;
     } catch (err) {}
