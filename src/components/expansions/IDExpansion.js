@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import PersonIcon from '@material-ui/icons/Person';
 import CakeIcon from '@material-ui/icons/Cake';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
 import AdditionalInfoPane from '../IDForms/AdditionalInfo';
@@ -56,22 +56,40 @@ const useStyles = makeStyles(theme => ({
     marginTop: '10px',
     paddingTop: '10px'
   },
+  panelName: {
+    color: '#bbb',
+    padding: '3px',
+    display: 'block',
+    fontSize: '14px',
+    position: 'absolute',
+    bottom: '6px',
+    left: '9%',
+    '&:hover': {
+      color: '#444',
+      cursor: 'pointer'
+    }
+  },
   expandIcon: {
     padding: '3px',
     display: 'block',
     position: 'absolute',
-    bottom: '6px',
-    left: '47%',
+    bottom: '5px',
+    left: '3%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)')
+    transform: props => (props.dropdownNo === 3 ? 'rotate(180deg)' : 'rotate(0deg)'),
+    '&:hover + .paneName': {
+      color: '#444',
+      cursor: 'pointer'
+    }
   },
   condenseIcon: {
     padding: '3px',
     display: 'block',
     position: 'absolute',
-    bottom: '6px',
-    right: '3%',
-    transform: 'rotate(270deg)'
+    bottom: '5px',
+    right: '5%',
+    transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    transform: props => (props.dropdownNo === 0 ? 'rotate(90deg)' : 'rotate(270deg)')
   }
 }));
 
@@ -89,7 +107,11 @@ export default function IDExpansion(props) {
     }
   };
   const onClickCondenseBtn = () => {
-    setDropdownNo(0);
+    if (dropdownNo === 0) {
+      setDropdownNo(3);
+    } else {
+      setDropdownNo(0);
+    }
   };
 
   const [bank, setBank] = React.useState('');
@@ -109,13 +131,20 @@ export default function IDExpansion(props) {
     }
     return 'Surname and Postcode';
   };
-  let doubleArrowDom;
-  if (dropdownNo > 0) {
-    doubleArrowDom = (
-      <IconButton classes={{ root: classes.condenseIcon }} onClick={onClickCondenseBtn}>
-        <DoubleArrowIcon />
-      </IconButton>
-    );
+
+  let panelName;
+  switch (dropdownNo) {
+    case 0:
+      panelName = 'Additional Customer Information';
+      break;
+    case 1:
+      panelName = 'Correspndence Information';
+      break;
+    case 2:
+      panelName = 'Switch Parties';
+      break;
+    default:
+      panelName = '';
   }
 
   return (
@@ -172,10 +201,20 @@ export default function IDExpansion(props) {
             />
           </Paper>
         </Collapse>
-        <IconButton classes={{ root: classes.expandIcon }} onClick={onClickExtendBtn}>
+        <IconButton
+          disableRipple
+          disableFocusRipple
+          classes={{ root: classes.expandIcon }}
+          onClick={onClickExtendBtn}
+        >
           <ExpandMoreIcon />
         </IconButton>
-        {doubleArrowDom}
+        <Typography className={`${classes.panelName} paneName`} onClick={onClickExtendBtn}>
+          {panelName}
+        </Typography>
+        <IconButton classes={{ root: classes.condenseIcon }} onClick={onClickCondenseBtn}>
+          <DoubleArrowIcon />
+        </IconButton>
       </Paper>
     </div>
   );

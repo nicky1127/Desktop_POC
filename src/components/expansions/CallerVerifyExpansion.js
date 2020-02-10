@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -45,15 +45,31 @@ const useStyles = makeStyles(theme => ({
     display: props => (props.levelPass < 2 ? 'block' : 'none'),
     transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)')
   },
+  panelName: {
+    color: '#bbb',
+    padding: '3px',
+    display: 'block',
+    fontSize: '14px',
+    position: 'absolute',
+    bottom: '6px',
+    left: '9%',
+    '&:hover': {
+      color: '#444',
+      cursor: 'pointer'
+    }
+  },
   expandIcon: {
     padding: '3px',
     display: 'block',
-    margin: '0 auto',
     position: 'absolute',
     bottom: '5px',
-    left: '47%',
+    left: '3%',
     transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)')
+    transform: props => (props.dropdownNo === 1 ? 'rotate(180deg)' : 'rotate(0deg)'),
+    '&:hover + .paneName': {
+      color: '#444',
+      cursor: 'pointer'
+    }
   }
 }));
 
@@ -116,6 +132,15 @@ export default function CallerVerifyExpansion(props) {
     return answer;
   };
 
+  let panelName;
+  switch (dropdownNo) {
+    case 0:
+      panelName = 'Indicators';
+      break;
+    default:
+      panelName = '';
+  }
+
   return (
     <div className={classes.root}>
       <Paper classes={{ root: classes.expansionContainer }}>
@@ -141,6 +166,9 @@ export default function CallerVerifyExpansion(props) {
         <IconButton className={classes.expandIcon} onClick={onClickExtendBtn}>
           <ExpandMoreIcon />
         </IconButton>
+        <Typography className={`${classes.panelName} paneName`} onClick={onClickExtendBtn}>
+          {panelName}
+        </Typography>
       </Paper>
       <VerificationModal
         {...props}
