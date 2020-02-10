@@ -48,7 +48,7 @@ export default function IVRLog(props) {
             <ListItemIcon className={classes.icon}>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={'Okay.Bloody banks'} />
+            <ListItemText primary={'Okay.'} />
           </ListItem>
           <ListItem>
             <ListItemIcon className={classes.icon}>
@@ -60,7 +60,7 @@ export default function IVRLog(props) {
             <ListItemIcon className={classes.icon}>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={'Okay.Bloody banks'} />
+            <ListItemText primary={'Okay.'} />
           </ListItem>
           <ListItem>
             <ListItemIcon className={classes.icon}>
@@ -72,7 +72,7 @@ export default function IVRLog(props) {
             <ListItemIcon className={classes.icon}>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={'Okay.Bloody banks'} />
+            <ListItemText primary={'Okay.'} />
           </ListItem>
           <ListItem>
             <ListItemIcon className={classes.icon}>
@@ -84,7 +84,7 @@ export default function IVRLog(props) {
             <ListItemIcon className={classes.icon}>
               <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary={'Okay.Bloody banks'} />
+            <ListItemText primary={'Okay'} />
           </ListItem>
           <ListItem>
             <ListItemIcon className={classes.icon}>
