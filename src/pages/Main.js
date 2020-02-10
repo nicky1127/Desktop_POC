@@ -8,6 +8,7 @@ import apiSettingsConfig from '../api/ApiSettings';
 import apiCustomer from '../api/ApiCustomer';
 import apiIVRCalls from '../api/ApiIVR';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
 
 import constants from '../constants';
@@ -58,6 +59,8 @@ function Main() {
   const [statusColor, setStatusColor] = React.useState('red');
   const [levelColor, setLevelColor] = React.useState('red');
   const [brandScheme, setBrandScheme] = useState(constants.brandSchemes[0]);
+  const [closeAllDropdown, setCloseAllDropdown] = useState(false);
+  const [closeLayer, setCloseLayer] = useState(false);
 
   const vConfirmationColor = () => {
     if (iVRProfile.verified === true) {
@@ -160,6 +163,33 @@ function Main() {
     setOnCall(false);
   };
 
+  const openLayer = toggle => {
+    setCloseLayer(toggle);
+  };
+
+  const onClickWorkingContainer = () => {
+    setCloseAllDropdown(prev => {
+      return !prev;
+    });
+    setCloseLayer(false);
+  };
+
+  let layer;
+  if (closeLayer)
+    layer = (
+      <Box
+        style={{
+          backgroudcolor: 'red',
+          position: 'absolute',
+          'z-index':'4',
+          bottom: '0',
+          width: '100%',
+          height: '80vh'
+        }}
+        onClick={onClickWorkingContainer}
+      />
+    );
+
   const renderloading = () => <div>Loading</div>;
 
   const renderReady = () => (
@@ -180,13 +210,18 @@ function Main() {
         vConfirmationColor={vConfirmationColor}
         vLevelConfirmationColor={vLevelConfirmationColor}
         setCustomer={setCustomer}
+        closeAllDropdown={closeAllDropdown}
+        openLayer={openLayer}
       />
       <Paper className={classes.paper} />
       <WorkingContainer
         customerIdentified={customerIdentified}
         className={classes.workingContainer}
         brandScheme={brandScheme}
+        onClickWorkingContainer={onClickWorkingContainer}
       />
+      {layer}
+
       <AvayaToolBar
         setWaiting={changeStatusToReady}
         hangUp={stopCall}

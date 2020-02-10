@@ -104,7 +104,6 @@ export default function AtAGlancePanel(props) {
   );
 
   let content = null;
-  console.log(props.onCall);
   if (props.withCustomer === true && props.customerIdentified === true) {
     content = renderForm();
   } else if (props.withCustomer === true && props.customerIdentified === false) {

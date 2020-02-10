@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
@@ -75,9 +75,15 @@ export default function CallContextExpansion(props) {
 
   const classes = useStyles({ ...props, dropdownNo });
 
+  useEffect(() => {
+    console.log('props.closeAllDropdown', props.closeAllDropdown);
+    setDropdownNo(0);
+  }, [props.closeAllDropdown]);
+
   const onClickExtendBtn = () => {
     if (dropdownNo < 2) {
       setDropdownNo(prev => prev + 1);
+      props.openLayer(true);
     } else {
       setDropdownNo(0);
     }
@@ -85,6 +91,7 @@ export default function CallContextExpansion(props) {
   const onClickCondenseBtn = () => {
     if (dropdownNo === 0) {
       setDropdownNo(2);
+      props.openLayer(true);
     } else {
       setDropdownNo(0);
     }

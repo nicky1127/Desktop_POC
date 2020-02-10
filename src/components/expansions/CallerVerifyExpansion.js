@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -83,10 +83,14 @@ export default function CallerVerifyExpansion(props) {
   const [dropdownNo, setDropdownNo] = useState(0);
 
   const classes = useStyles({ ...props, dropdownNo, levelPass });
+  useEffect(() => {
+    setDropdownNo(0);
+  }, [props.closeAllDropdown]);
 
   const onClickExtendBtn = () => {
     if (dropdownNo < 1) {
       setDropdownNo(prev => prev + 1);
+      props.openLayer(true);
     } else {
       setDropdownNo(0);
     }
