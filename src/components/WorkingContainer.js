@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
     zIndex: 3,
-    height: '77vh'
+    height: '75vh'
   },
   container: {
     display: 'flex',
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    backgroundColor: '#00695c'
+    backgroundColor: props => `${props.brandScheme.primaryClr}`
   },
   drawerIcon: {
     color: 'white',
@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   drawerOpen: {
     width: drawerWidth,
     color: 'white',
-    backgroundColor: '#00695c',
+    backgroundColor: props => `${props.brandScheme.primaryClr}`,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   },
   drawerClose: {
     color: 'white',
-    backgroundColor: '#00695c',
+    backgroundColor: props => `${props.brandScheme.primaryClr}`,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -97,8 +97,8 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
     backgroundImage: props => (props.customerIdentified === true ? `url(${Background})` : ''),
-    backgroundSize: "100% 125%",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: '100% 125%',
+    backgroundRepeat: 'no-repeat',
     overflow: 'hidden'
   },
   image: {
@@ -109,12 +109,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MiniDrawer(props) {
-  const classes = useStyles({ ...props});
+  const classes = useStyles({ ...props });
+  console.log('props',props);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [appURL, setAppURL] = React.useState('');
-
-
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
@@ -153,7 +152,8 @@ export default function MiniDrawer(props) {
             <ListItem
               button
               onClick={() =>
-                onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
+                // onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
+                onChangeAppURL('http://localhost:4000')
               }
             >
               <ListItemIcon className={classes.listIcon}>

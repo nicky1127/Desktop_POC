@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,38 +8,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    position: 'absolute'
+  caption: {
+    paddingLeft: '16px',
+    fontWeight: 700
   },
   icon: { marginRight: theme.spacing(-1) },
-  heading: {
-    fontSize: theme.typography.pxToRem(30),
-    fontWeight: theme.typography.fontWeightRegular,
-    textAlign: 'right'
-  },
-  name: {
-    fontWeight: 'bold',
-    width: '60%',
-    height: '20px'
-  },
-  address: {
-    fontWeight: 'bold',
-    overflow: 'hidden',
-    width: '60%',
-    height: '20px'
-  },
-  expansionContainer: {
-    boxSizing: 'border-box',
-    borderBottom: '5px solid #26a69a',
-    position: 'relative'
-  },
-  expansionSummary: {
-    height: props => props.height
-  },
-  expansionDropdown: {
-    height: '30vh'
-  },
   formControl: {
     margin: theme.spacing(2),
     minWidth: 100
@@ -46,15 +20,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SwitchPartiesPane(props) {
-
   //
-  const classes = useStyles({ ...props});
-
-
+  const classes = useStyles({ ...props });
 
   return (
     <div>
-      <h3>Switch Parties</h3>
+      <Typography variant="h6" className={classes.caption}>
+        Switch Parties
+      </Typography>
 
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Brand</InputLabel>

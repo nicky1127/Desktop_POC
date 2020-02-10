@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { List} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import apiCustomer from '../../api/ApiCustomer';
 import { customerRows } from '../../HelperFiles/CustomerHelpers';
@@ -90,8 +90,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function IDSearchForm(props) {
-
-
   const [brand, setBrand] = React.useState('');
   const [methodSelected, setMethodSelected] = React.useState('');
   const [account, setAccount] = React.useState(null);
@@ -157,7 +155,7 @@ export default function IDSearchForm(props) {
   };
 
   return (
-    <div >
+    <div>
       <List className={classes.modalContent}>
         <h2>Identification Panel</h2>
         <Grid container spacing={1}>

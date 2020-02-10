@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import ForumIcon from '@material-ui/icons/Forum';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
@@ -17,24 +17,24 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CallContextMainPane(props) {
-  //
+  const { iVRProfile } = props;
+
   const classes = useStyles({ ...props });
 
-  const waitTime = moment.duration(props.iVRProfile.wait_time, 'seconds').seconds();
+  const waitTime = moment.duration(iVRProfile.wait_time, 'seconds').seconds();
 
-  const waitTimeColor = waitTime => {
-    if (parseInt(waitTime) >= 10) {
+  const waitTimeColor = time => {
+    if (parseInt(time, 10) >= 10) {
       return classes.redIcon;
-    } else {
-      return classes.greenIcon;
     }
+    return classes.greenIcon;
   };
 
   return (
     <div>
       <List dense>
         <ListItem>
-          <ListItemIcon className={waitTimeColor(waitTime)}>
+          <ListItemIcon className={`${waitTimeColor(waitTime)} ${classes.icon}`}>
             <WatchLaterIcon />
           </ListItemIcon>
           <ListItemText primary={`Time spent waiting: ${waitTime}`} />
@@ -44,7 +44,7 @@ export default function CallContextMainPane(props) {
           <ListItemIcon className={classes.icon}>
             <ForumIcon />
           </ListItemIcon>
-          <ListItemText primary={`Say Anything: ${props.iVRProfile.say_anything}`} />
+          <ListItemText primary={`Say Anything: ${iVRProfile.say_anything}`} />
         </ListItem>
         <Grid container>
           <Grid xs={9}>
@@ -52,7 +52,7 @@ export default function CallContextMainPane(props) {
               <ListItemIcon className={classes.icon}>
                 <DataUsageIcon />
               </ListItemIcon>
-              <ListItemText primary={`IVR Intent: ${props.iVRProfile.ivr_intent}`} />
+              <ListItemText primary={`IVR Intent: ${iVRProfile.ivr_intent}`} />
             </ListItem>
           </Grid>
         </Grid>
