@@ -152,7 +152,8 @@ export default function MiniDrawer(props) {
             <ListItem
               button
               onClick={() =>
-                onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
+                // onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
+                onChangeAppURL('http://localhost:4000')
               }
             >
               <ListItemIcon className={classes.listIcon}>
