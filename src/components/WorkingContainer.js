@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -108,9 +109,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MiniDrawer(props) {
+export default function WorkingContainer(props) {
   const classes = useStyles({ ...props });
-  console.log('props',props);
+  console.log('props', props);
+  const { customer, brandScheme } = props;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [appURL, setAppURL] = React.useState('');
@@ -124,9 +126,11 @@ export default function MiniDrawer(props) {
 
   let customerInfo = null;
 
+  const mcaURL = `http://localhost:4000?firstname=${customer.first_name}&lastname=${customer.last_name}&title=${customer.title}&brand=${brandScheme.brand}`;
+
   return (
     <div className={classes.root}>
-      <div className={classes.container}>
+      <Box className={classes.container}>
         <CssBaseline />
         <Drawer
           variant="permanent"
@@ -153,7 +157,7 @@ export default function MiniDrawer(props) {
               button
               onClick={() =>
                 // onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
-                onChangeAppURL('http://localhost:4000')
+                onChangeAppURL(mcaURL)
               }
             >
               <ListItemIcon className={classes.listIcon}>
@@ -199,16 +203,17 @@ export default function MiniDrawer(props) {
           </List>
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.iframeContainer}>
+          <Box className={classes.iframeContainer}>
             <iframe
               className={classes.iframe}
               src={`${appURL}`}
               allowFullScreen
               allow="encrypted-media"
+              onClick={props.onClickWorkingContainer}
             ></iframe>
-          </div>
+          </Box>
         </main>
-      </div>
+      </Box>
     </div>
   );
 }
