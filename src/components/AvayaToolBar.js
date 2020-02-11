@@ -109,7 +109,7 @@ export default function AvayaToolBar(props) {
     <div className={classes.grow}>
       <Toolbar className={classes.toolBar}>
         <Typography className={classes.title} variant="h4" noWrap>
-        CC ADVISER
+        CC ADVISOR
         </Typography>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
