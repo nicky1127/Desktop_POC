@@ -219,6 +219,7 @@ function Main() {
         className={classes.workingContainer}
         brandScheme={brandScheme}
         onClickWorkingContainer={onClickWorkingContainer}
+        customer={customer}
       />
       {layer}
 

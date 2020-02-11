@@ -1,5 +1,5 @@
 const data = [
-  { brand: 'LBG', primaryClr: '#00695c', secondaryClr: '#26a69a', logo: '/images/lbg_icon.jpg' },
+  { brand: 'LBG', primaryClr: '#006A4D', secondaryClr: '#26a69a', logo: '/images/lbg_icon.jpg' },
   {
     brand: 'MBNA',
     primaryClr: '#0d274a',
@@ -8,7 +8,7 @@ const data = [
   },
   {
     brand: 'HALIFAX',
-    primaryClr: '#2360b2',
+    primaryClr: '#0140BB',
     secondaryClr: '#00e5ff',
     logo: '/images/halifax_icon.png'
   }
