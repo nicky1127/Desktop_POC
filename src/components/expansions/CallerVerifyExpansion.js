@@ -4,6 +4,7 @@ import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import IconButton from '@material-ui/core/IconButton';
 
 //carousel
@@ -70,6 +71,15 @@ const useStyles = makeStyles(theme => ({
       color: '#444',
       cursor: 'pointer'
     }
+  },
+  condenseIcon: {
+    padding: '3px',
+    display: 'block',
+    position: 'absolute',
+    bottom: '5px',
+    right: '5%',
+    transition: 'transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    transform: props => (props.dropdownNo === 0 ? 'rotate(90deg)' : 'rotate(270deg)')
   }
 }));
 
@@ -96,7 +106,12 @@ export default function CallerVerifyExpansion(props) {
     }
   };
   const onClickCondenseBtn = () => {
-    setDropdownNo(0);
+    if (dropdownNo === 0) {
+      setDropdownNo(1);
+      props.openLayer(true);
+    } else {
+      setDropdownNo(0);
+    }
   };
 
   const onClickVerifyBtn = () => {
@@ -173,6 +188,9 @@ export default function CallerVerifyExpansion(props) {
         <Typography className={`${classes.panelName} paneName`} onClick={onClickExtendBtn}>
           {panelName}
         </Typography>
+        <IconButton classes={{ root: classes.condenseIcon }} onClick={onClickCondenseBtn}>
+          <DoubleArrowIcon />
+        </IconButton>
       </Paper>
       <VerificationModal
         {...props}
