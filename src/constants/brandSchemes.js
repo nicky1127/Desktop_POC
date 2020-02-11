@@ -1,5 +1,16 @@
 const data = [
-  { brand: 'LBG', primaryClr: '#006A4D', secondaryClr: '#26a69a', logo: '/images/lbg_icon.jpg' },
+  {
+    brand: 'LBG-GENERIC',
+    primaryClr: '#006A4D',
+    secondaryClr: '#26a69a',
+    logo: '/images/lbg_icon.jpg'
+  },
+  {
+    brand: 'LBG',
+    primaryClr: '#006A4D',
+    secondaryClr: '#26a69a',
+    logo: '/images/lloyds_logo.png'
+  },
   {
     brand: 'MBNA',
     primaryClr: '#0d274a',
