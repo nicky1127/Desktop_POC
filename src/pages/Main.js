@@ -129,6 +129,7 @@ function Main() {
 
   const getIVRCall = async () => {
     const response = await apiIVRCalls.callIVR();
+    console.log('response',response);
     setIVRProfile(response);
     selectBrandScheme(response);
 
