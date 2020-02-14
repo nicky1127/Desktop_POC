@@ -12,10 +12,11 @@ import ContextAdditionalInfo from '../CallContextForms/ContextMoreInfo';
 import CallContextMainPane from '../CallContextForms/MainCallContextPane';
 
 const mapStateToProps = state => {
-  if (state) {
+  const { IVRList } = state;
+  if (IVRList && IVRList.length > 0) {
     return { iVRProfile: state.IVRList[state.IVRNo] };
   }
-  return { iVRProfile: [] };
+  return { iVRProfile: {} };
 };
 
 const useStyles = makeStyles(theme => ({

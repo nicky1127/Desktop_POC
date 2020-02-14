@@ -18,10 +18,11 @@ import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
 
 const mapStateToProps = state => {
-  if (state) {
+  const { IVRList } = state;
+  if (IVRList && IVRList.length > 0) {
     return { iVRProfile: state.IVRList[state.IVRNo] };
   }
-  return { iVRProfile: [] };
+  return { iVRProfile: {} };
 };
 
 const useStyles = makeStyles(theme => ({

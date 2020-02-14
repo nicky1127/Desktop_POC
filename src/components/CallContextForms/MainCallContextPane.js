@@ -8,10 +8,11 @@ import moment from 'moment';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 
 const mapStateToProps = state => {
-  if (state) {
+  const { IVRList } = state;
+  if (IVRList && IVRList.length > 0) {
     return { iVRProfile: state.IVRList[state.IVRNo] };
   }
-  return { iVRProfile: [] };
+  return { iVRProfile: {} };
 };
 
 const useStyles = makeStyles(theme => ({

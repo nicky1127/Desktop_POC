@@ -244,7 +244,7 @@ function Main(props) {
       <IncomingCallModal
         openIdentified={openIdentified}
         handleClose={handleClose}
-        iVRProfile={iVRProfile}
+        // iVRProfile={iVRProfile}
         handleAccept={handleAccept}
         handleClose={handleClose}
       />

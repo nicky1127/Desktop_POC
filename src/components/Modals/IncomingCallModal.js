@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
@@ -13,6 +14,14 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import { List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
+
+const mapStateToProps = state => {
+  const { IVRList } = state;
+  if (IVRList && IVRList.length > 0) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: {} };
+};
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -47,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IncomingCallModal(props) {
+function IncomingCallModal(props) {
   const classes = useStyles();
   const { iVRProfile, openIdentified, handleClose, handleAccept } = props;
 
@@ -138,3 +147,7 @@ export default function IncomingCallModal(props) {
     </div>
   );
 }
+
+const ConnectedIncomingCallModal = connect(mapStateToProps)(IncomingCallModal);
+
+export default ConnectedIncomingCallModal;
