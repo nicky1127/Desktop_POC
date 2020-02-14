@@ -11,15 +11,17 @@ import apiIVRCalls from '../api/ApiIVR';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
-import { IVRList } from '../redux/actions/action-creator';
+
+import { setBrandScheme, IVRList } from '../redux/actions/action-creator';
 
 import constants from '../constants';
 
 const mapStateToProps = state => {
   if (state) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+    const { IVR } = state;
+    return { IVR };
   }
-  return { iVRProfile: [] };
+  return { IVR: {} };
 };
 
 const useStyles = makeStyles(theme => ({
@@ -63,21 +65,23 @@ function Main(props) {
   const [user, setUser] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [poaFor, setPOA] = React.useState(null);
-  const [iVRProfile, setIVRProfile] = useState([]);
+  const [iVRProfile, setIVRProfile1] = useState([]);
   const classes = useStyles();
-  const [statusColor, setStatusColor] = React.useState('red');
+  // const [statusColor, setStatusColor] = React.useState('red');
   const [levelColor, setLevelColor] = React.useState('red');
-  const [brandScheme, setBrandScheme] = useState(constants.brandSchemes[0]);
+  const [brandScheme, setBrandScheme1] = useState(constants.brandSchemes[0]);
   const [closeAllDropdown, setCloseAllDropdown] = useState(false);
   const [closeLayer, setCloseLayer] = useState(false);
 
-  const vConfirmationColor = () => {
-    if (iVRProfile.verified === true) {
-      setStatusColor('blue');
-    } else {
-      //
-    }
-  };
+  const { IVR } = props;
+
+  // const vConfirmationColor = () => {
+  //   if (iVRProfile.verified === true) {
+  //     setStatusColor('blue');
+  //   } else {
+  //     //
+  //   }
+  // };
 
   const vLevelConfirmationColor = ctr => {
     if (ctr.verification_level > 40) {
@@ -96,7 +100,12 @@ function Main(props) {
       setIsLoading(false);
     }
     fetchUser();
+    selectBrandScheme(props.IVR);
   }, []);
+
+  useEffect(() => {
+    selectBrandScheme(props.IVR);
+  }, [props.IVR]);
 
   const handleOpen = () => {
     setOpenIdentified(true);
@@ -105,16 +114,15 @@ function Main(props) {
   const handleClose = () => {
     setOpenIdentified(false);
     setReady(false);
-    setBrandScheme(constants.brandSchemes[0]);
+    setBrandScheme1(constants.brandSchemes[0]);
   };
 
   const handleAccept = async () => {
-    if (iVRProfile.identified === true) {
+    if (IVR.identified === true) {
       const response = await apiCustomer.getCustomerByAccount(
-        iVRProfile.account_number,
-        iVRProfile.sort_code
+        IVR.account_number,
+        IVR.sort_code
       );
-      console.log(response);
 
       if (response) {
         setCustomer(response);
@@ -123,7 +131,7 @@ function Main(props) {
         setReady(false);
         setWithCustomer(true);
         setCustomerIdentified(true);
-        vConfirmationColor();
+        // vConfirmationColor();
         vLevelConfirmationColor(response);
       } else {
       }
@@ -135,27 +143,34 @@ function Main(props) {
       setWithCustomer(true);
     }
   };
-
-  const getIVRCall = async () => {
-    const response = await apiIVRCalls.callIVR();
-    props.IVRList();
-    setIVRProfile(response);
-    selectBrandScheme(response);
-
-    handleOpen();
-  };
-
   const selectBrandScheme = ivr => {
     const { brand } = ivr;
     if (brand) {
       const result = constants.brandSchemes.filter(scheme => scheme.brand === brand);
-      if (result && result.length === 1) setBrandScheme(result[0]);
+      if (result && result.length === 1) {
+        // setBrandScheme1(result[0]);
+        props.setBrandScheme(result[0]);
+      } else {
+        props.setBrandScheme(constants.brandSchemes[0]);
+      }
+    } else {
+      props.setBrandScheme(constants.brandSchemes[0]);
     }
+  };
+
+  const getIVRCall = () => {
+    // const response = await apiIVRCalls.callIVR();
+
+    // setIVRProfile(response);
+    // console.log('props in Main', props);
+    // selectBrandScheme(props.iVRProfile);
+
+    handleOpen();
   };
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
-  const changeStatusToReady = async () => {
+  const changeStatusToReady = () => {
     setCustomer([]);
     setWithCustomer(false);
     setReady(true);
@@ -213,11 +228,11 @@ function Main(props) {
         brandScheme={brandScheme}
         withCustomer={withCustomer}
         // iVRProfile={iVRProfile}
-        statusColor={statusColor}
+        // statusColor={statusColor}
         levelColor={levelColor}
         customerIdentified={customerIdentified}
         setCustomerIdentified={setCustomerIdentified}
-        vConfirmationColor={vConfirmationColor}
+        // vConfirmationColor={vConfirmationColor}
         vLevelConfirmationColor={vLevelConfirmationColor}
         setCustomer={setCustomer}
         closeAllDropdown={closeAllDropdown}
@@ -246,7 +261,6 @@ function Main(props) {
         handleClose={handleClose}
         // iVRProfile={iVRProfile}
         handleAccept={handleAccept}
-        handleClose={handleClose}
       />
     </div>
   );
@@ -261,6 +275,6 @@ function Main(props) {
   return content;
 }
 
-const ConnectedMain = connect(mapStateToProps, { IVRList })(Main);
+const ConnectedMain = connect(mapStateToProps, { setBrandScheme })(Main);
 
 export default ConnectedMain;

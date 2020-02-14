@@ -12,9 +12,9 @@ import ContextAdditionalInfo from '../CallContextForms/ContextMoreInfo';
 import CallContextMainPane from '../CallContextForms/MainCallContextPane';
 
 const mapStateToProps = state => {
-  const { IVRList } = state;
-  if (IVRList && IVRList.length > 0) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+  if (state) {
+    const { IVR, brandScheme } = state;
+    return { iVRProfile: IVR, brandScheme };
   }
   return { iVRProfile: {} };
 };
@@ -85,7 +85,6 @@ function CallContextExpansion(props) {
   const classes = useStyles({ ...props, dropdownNo });
 
   useEffect(() => {
-    console.log('props.closeAllDropdown', props.closeAllDropdown);
     setDropdownNo(0);
   }, [props.closeAllDropdown]);
 

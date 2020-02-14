@@ -18,9 +18,9 @@ import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
 
 const mapStateToProps = state => {
-  const { IVRList } = state;
-  if (IVRList && IVRList.length > 0) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+  if (state) {
+    const { IVR, brandScheme } = state;
+    return { iVRProfile: IVR, brandScheme };
   }
   return { iVRProfile: {} };
 };

@@ -1,8 +1,9 @@
-import { GET_IVR_DATA } from '../constants/action-types';
+import { GET_IVR_DATA, SET_BRANDSCHEME } from '../constants/action-types';
 
 const initialState = {
-  IVRNo: 1,
-  IVRList: [],
+  IVRNo: 3,
+  IVR: {},
+  brandScheme: {},
   recordCreateLoading: false,
   recordDeleteLoading: false
 };
@@ -14,7 +15,11 @@ const reducer = (state = initialState, action) => {
   //     });
   //   }
   if (action.type === GET_IVR_DATA) {
-    return { ...state, IVRList: action.payload };
+    return { ...state, IVR: action.payload[state.IVRNo] };
+  }
+
+  if (action.type === SET_BRANDSCHEME) {
+    return { ...state, brandScheme: action.payload };
   }
 
   return state;

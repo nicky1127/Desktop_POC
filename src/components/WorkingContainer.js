@@ -1,30 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Paper from '@material-ui/core/Paper';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import PersonIcon from '@material-ui/icons/Person';
 import ContactlessIcon from '@material-ui/icons/Contactless';
-import AppleIcon from '@material-ui/icons/Apple';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import BuildIcon from '@material-ui/icons/Build';
 
 import customers from '../mock/api/customers.json';
+
+const mapStateToProps = state => {
+  const { brandScheme } = state;
+  return { brandScheme };
+};
 
 const drawerWidth = 240;
 
@@ -109,13 +109,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function WorkingContainer(props) {
+function WorkingContainer(props) {
   const classes = useStyles({ ...props });
-  console.log('props', props);
   const { customer, brandScheme } = props;
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [appURL, setAppURL] = React.useState('');
+  const mcaURL = `http://localhost:4000?firstname=${customer.first_name}&lastname=${customer.last_name}&title=${customer.title}&brand=${brandScheme.brand}`;
+
+  useEffect(() => {
+    if (!Array.isArray(customer)) {
+      setAppURL(mcaURL);
+    }
+  }, [props.customer]);
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
@@ -125,8 +130,6 @@ export default function WorkingContainer(props) {
   };
 
   let customerInfo = null;
-
-  const mcaURL = `http://localhost:4000?firstname=${customer.first_name}&lastname=${customer.last_name}&title=${customer.title}&brand=${brandScheme.brand}`;
 
   return (
     <div className={classes.root}>
@@ -217,3 +220,7 @@ export default function WorkingContainer(props) {
     </div>
   );
 }
+
+const ConnectedWorkingContainer = connect(mapStateToProps)(WorkingContainer);
+
+export default ConnectedWorkingContainer;

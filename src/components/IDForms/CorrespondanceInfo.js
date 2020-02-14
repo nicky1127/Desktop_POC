@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import DraftsIcon from '@material-ui/icons/Drafts';
 

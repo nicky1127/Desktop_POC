@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IDExpansion from './expansions/IDExpansion';
@@ -6,6 +7,11 @@ import CallerVerifyExpansion from './expansions/CallerVerifyExpansion';
 import CallContextExpansion from './expansions/CallContextExpansion';
 import UnknownUserExpansion from './expansions/UnknownUserExpansion';
 import PlaceHolderExpansion from './PlaceHolderPanel';
+
+const mapStateToProps = state => {
+  const { brandScheme } = state;
+  return { brandScheme };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,14 +25,14 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   logo: {
-    boxSizing:'content-box',
+    boxSizing: 'content-box',
     backgroundColor: '#fff',
     borderBottom: props => `5px solid ${props.brandScheme.secondaryClr}`,
     height: '18vh'
   }
 }));
 
-export default function AtAGlancePanel(props) {
+function ExpansionWrapper(props) {
   const classes = useStyles(props);
 
   const { logo } = props.brandScheme;
@@ -114,3 +120,7 @@ export default function AtAGlancePanel(props) {
 
   return content;
 }
+
+const ConnectedIDExpansionWrapper = connect(mapStateToProps)(ExpansionWrapper);
+
+export default ConnectedIDExpansionWrapper;

@@ -8,9 +8,9 @@ import moment from 'moment';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 
 const mapStateToProps = state => {
-  const { IVRList } = state;
-  if (IVRList && IVRList.length > 0) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+  if (state) {
+    const { IVR } = state;
+    return { iVRProfile: IVR };
   }
   return { iVRProfile: {} };
 };

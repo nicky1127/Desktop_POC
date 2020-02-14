@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import moment from 'moment';
-import constants from '../../constants';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import constants from '../../constants';
+
 const mapStateToProps = state => {
-  const { IVRList } = state;
-  if (IVRList && IVRList.length > 0) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+  if (state) {
+    const { IVR } = state;
+    return { iVRProfile: IVR };
   }
   return { iVRProfile: {} };
 };
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ContextAdditionalInfo(props) {
-  const {iVRProfile} = props;
+  const { iVRProfile } = props;
   const classes = useStyles({ ...props });
 
   return (
@@ -54,7 +55,7 @@ function ContextAdditionalInfo(props) {
           <ListItemIcon className={classes.icon}>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary={`Transfer from:  ${props.iVRProfile.transfered_from}`} />
+          <ListItemText primary={`Transfer from:  ${iVRProfile.transfered_from}`} />
         </ListItem>
       </List>
     </div>
