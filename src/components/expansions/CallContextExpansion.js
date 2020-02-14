@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import IVRLog from '../CallContextForms/IVRLog';
 import ContextAdditionalInfo from '../CallContextForms/ContextMoreInfo';
 import CallContextMainPane from '../CallContextForms/MainCallContextPane';
+
+const mapStateToProps = state => {
+  if (state) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: [] };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,7 +78,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CallContextExpansion(props) {
+function CallContextExpansion(props) {
   const [dropdownNo, setDropdownNo] = useState(0);
 
   const classes = useStyles({ ...props, dropdownNo });
@@ -141,3 +149,7 @@ export default function CallContextExpansion(props) {
     </div>
   );
 }
+
+const ConnectedCallContextExpansion = connect(mapStateToProps)(CallContextExpansion);
+
+export default ConnectedCallContextExpansion;

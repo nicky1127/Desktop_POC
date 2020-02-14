@@ -1,10 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ForumIcon from '@material-ui/icons/Forum';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
 import moment from 'moment';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
+
+const mapStateToProps = state => {
+  if (state) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: [] };
+};
 
 const useStyles = makeStyles(theme => ({
   icon: { marginRight: theme.spacing(-1) },
@@ -16,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CallContextMainPane(props) {
+function MainCallContextPane(props) {
   const { iVRProfile } = props;
 
   const classes = useStyles({ ...props });
@@ -60,3 +68,7 @@ export default function CallContextMainPane(props) {
     </div>
   );
 }
+
+const ConnectedMainCallContextPane = connect(mapStateToProps)(MainCallContextPane);
+
+export default ConnectedMainCallContextPane;

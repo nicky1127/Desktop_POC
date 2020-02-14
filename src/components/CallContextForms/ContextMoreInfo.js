@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
@@ -6,6 +7,13 @@ import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@materia
 import moment from 'moment';
 import constants from '../../constants';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+const mapStateToProps = state => {
+  if (state) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: [] };
+};
 
 const { timeFormat } = constants;
 
@@ -17,7 +25,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ContextAdditionalInfo(props) {
+function ContextAdditionalInfo(props) {
+  const {iVRProfile} = props;
   const classes = useStyles({ ...props });
 
   return (
@@ -38,7 +47,7 @@ export default function ContextAdditionalInfo(props) {
           <ListItemIcon className={classes.icon}>
             <DialpadIcon />
           </ListItemIcon>
-          <ListItemText primary={`VDN: ${props.iVRProfile.vdn}`} />
+          <ListItemText primary={`VDN: ${iVRProfile.vdn}`} />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
@@ -50,3 +59,7 @@ export default function ContextAdditionalInfo(props) {
     </div>
   );
 }
+
+const ConnectedContextAdditionalInfo = connect(mapStateToProps)(ContextAdditionalInfo);
+
+export default ConnectedContextAdditionalInfo;

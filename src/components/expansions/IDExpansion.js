@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -15,6 +16,13 @@ import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import AdditionalInfoPane from '../IDForms/AdditionalInfo';
 import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
+
+const mapStateToProps = state => {
+  if (state) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: [] };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -100,14 +108,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IDExpansion(props) {
+function IDExpansion(props) {
   const { customer, iVRProfile } = props;
   const [dropdownNo, setDropdownNo] = useState(0);
 
   const classes = useStyles({ ...props, dropdownNo });
 
   useEffect(() => {
-    console.log('props.closeAllDropdown', props.closeAllDropdown);
     setDropdownNo(0);
   }, [props.closeAllDropdown]);
 
@@ -207,22 +214,22 @@ export default function IDExpansion(props) {
         </Collapse>
         <Collapse in={dropdownNo > 2}>
           {/* <Paper elevation={4} className={classes.expansionDropdownContent}> */}
-            {/* <SwitchPartiesPane
+          {/* <SwitchPartiesPane
               bank={bank}
               handleChangeBank={handleChangeBank}
               account={account}
               handleChangeAccount={handleChangeAccount}
             /> */}
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              className={classes.identifyBtn}
-              // onClick={onClickBtn}
-              // endIcon={<Icon>send</Icon>}
-            >
-              Switch Parties
-            </Button>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            className={classes.identifyBtn}
+            // onClick={onClickBtn}
+            // endIcon={<Icon>send</Icon>}
+          >
+            Switch Parties
+          </Button>
           {/* </Paper> */}
         </Collapse>
         <IconButton
@@ -243,3 +250,7 @@ export default function IDExpansion(props) {
     </div>
   );
 }
+
+const ConnectedIDExpansion = connect(mapStateToProps)(IDExpansion);
+
+export default ConnectedIDExpansion;

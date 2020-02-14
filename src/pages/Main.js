@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import MainHeader from '../components/MainHeader';
 import WorkingContainer from '../components/WorkingContainer';
@@ -10,8 +11,16 @@ import apiIVRCalls from '../api/ApiIVR';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
+import { IVRList } from '../redux/actions/action-creator';
 
 import constants from '../constants';
+
+const mapStateToProps = state => {
+  if (state) {
+    return { iVRProfile: state.IVRList[state.IVRNo] };
+  }
+  return { iVRProfile: [] };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Main() {
+function Main(props) {
   const [ready, setReady] = useState(false);
   const [onCall, setOnCall] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -129,7 +138,7 @@ function Main() {
 
   const getIVRCall = async () => {
     const response = await apiIVRCalls.callIVR();
-    console.log('response',response);
+    props.IVRList();
     setIVRProfile(response);
     selectBrandScheme(response);
 
@@ -182,7 +191,7 @@ function Main() {
         style={{
           backgroudcolor: 'red',
           position: 'absolute',
-          'z-index':'4',
+          'z-index': '4',
           bottom: '0',
           width: '100%',
           height: '80vh'
@@ -203,7 +212,7 @@ function Main() {
         customer={customer}
         brandScheme={brandScheme}
         withCustomer={withCustomer}
-        iVRProfile={iVRProfile}
+        // iVRProfile={iVRProfile}
         statusColor={statusColor}
         levelColor={levelColor}
         customerIdentified={customerIdentified}
@@ -252,4 +261,6 @@ function Main() {
   return content;
 }
 
-export default Main;
+const ConnectedMain = connect(mapStateToProps, { IVRList })(Main);
+
+export default ConnectedMain;
