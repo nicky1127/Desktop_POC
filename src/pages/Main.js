@@ -114,7 +114,6 @@ function Main(props) {
     setOpenIdentified(false);
     setReady(false);
     clearIVR();
-    // setBrandScheme1(constants.brandSchemes[0]);
   };
 
   const handleAccept = async () => {

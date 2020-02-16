@@ -4,6 +4,7 @@ const initialState = {
   IVRNo: 3,
   IVR: {},
   brandScheme: {},
+  customer: {},
   recordCreateLoading: false,
   recordDeleteLoading: false
 };

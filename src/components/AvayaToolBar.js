@@ -16,7 +16,7 @@ import SmsIcon from '@material-ui/icons/Sms';
 import PhonePausedIcon from '@material-ui/icons/PhonePaused';
 import DirectionsIcon from '@material-ui/icons/Directions';
 
-import { IVRList } from '../redux/actions/action-creator';
+import { getIVRList } from '../redux/actions/action-creator';
 
 const mapStateToProps = state => {
   if (state) {
@@ -88,7 +88,7 @@ function AvayaToolBar(props) {
   const classes = useStyles();
 
   const onClickNotReady = () => {
-    props.IVRList();
+    props.getIVRList();
     setTimeout(() => {
       props.setWaiting();
     }, 500);
@@ -209,5 +209,5 @@ function AvayaToolBar(props) {
   return content;
 }
 
-const ConnectedAvayaToolBar = connect(mapStateToProps, { IVRList })(AvayaToolBar);
+const ConnectedAvayaToolBar = connect(mapStateToProps, { getIVRList })(AvayaToolBar);
 export default ConnectedAvayaToolBar;

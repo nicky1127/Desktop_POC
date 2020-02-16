@@ -16,9 +16,9 @@ import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import { List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
 
 const mapStateToProps = state => {
-  const { IVRList } = state;
-  if (IVRList && IVRList.length > 0) {
-    return { iVRProfile: state.IVRList[state.IVRNo] };
+  const { getIVRList } = state;
+  if (getIVRList && getIVRList.length > 0) {
+    return { iVRProfile: state.getIVRList[state.IVRNo] };
   }
   return { iVRProfile: {} };
 };
