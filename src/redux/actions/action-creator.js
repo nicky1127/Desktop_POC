@@ -17,7 +17,7 @@ const uriCustomer = '/customer/Info';
 
 export const getIVRList = (params = {}) => {
   return async dispatch => {
-    return await http.get(uriIVR, params).then(response => {
+    return await http.get(uriIVR, { params }).then(response => {
       dispatch({ type: GET_IVR_DATA, payload: response ? response.data : [] });
     });
   };
@@ -32,7 +32,7 @@ export const setBrandScheme = payload => {
 
 export const getCustomerByAccount = (params = {}) => {
   return async dispatch => {
-    return await http.get(`${uriCustomer}/Account&Sort`, params).then(response => {
+    return await http.get(`${uriCustomer}/Account&Sort`, { params }).then(response => {
       dispatch({ type: GET_CUSTOMER_BY_ACCOUNT, payload: response ? response.data : {} });
     });
   };

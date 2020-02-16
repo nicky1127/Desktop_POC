@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import PhoneForwardedIcon from '@material-ui/icons/PhoneForwarded';
 import PublicIcon from '@material-ui/icons/Public';
+
+const mapStateToProps = state => {
+  const { customer } = state;
+  return { customer };
+};
 
 const useStyles = makeStyles(theme => ({
   icon: { marginRight: theme.spacing(-1) },
@@ -16,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdditionalInfoPane(props) {
+function AdditionalInfo(props) {
   const classes = useStyles({ ...props });
   const { customer } = props;
 
@@ -48,3 +54,7 @@ export default function AdditionalInfoPane(props) {
     </div>
   );
 }
+
+const ConnectedAdditionalInfo = connect(mapStateToProps)(AdditionalInfo);
+
+export default ConnectedAdditionalInfo;

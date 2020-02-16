@@ -10,11 +10,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import constants from '../../constants';
 
 const mapStateToProps = state => {
-  if (state) {
-    const { IVR } = state;
-    return { iVRProfile: IVR };
-  }
-  return { iVRProfile: {} };
+  const { IVR, customer } = state;
+  return { IVR, customer };
 };
 
 const { timeFormat } = constants;
@@ -28,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ContextAdditionalInfo(props) {
-  const { iVRProfile } = props;
+  const { IVR, customer } = props;
   const classes = useStyles({ ...props });
 
   return (
@@ -42,20 +39,20 @@ function ContextAdditionalInfo(props) {
             <PhoneInTalkIcon />
           </ListItemIcon>
           <ListItemText
-            primary={`Call Time:  ${moment(props.customer.call_time).format(timeFormat.call_time)}`}
+            primary={`Call Time:  ${moment(customer.call_time).format(timeFormat.call_time)}`}
           />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <DialpadIcon />
           </ListItemIcon>
-          <ListItemText primary={`VDN: ${iVRProfile.vdn}`} />
+          <ListItemText primary={`VDN: ${IVR.vdn}`} />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary={`Transfer from:  ${iVRProfile.transfered_from}`} />
+          <ListItemText primary={`Transfer from:  ${IVR.transfered_from}`} />
         </ListItem>
       </List>
     </div>

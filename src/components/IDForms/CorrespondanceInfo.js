@@ -1,7 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import DraftsIcon from '@material-ui/icons/Drafts';
+
+const mapStateToProps = state => {
+  const { customer } = state;
+  return { customer };
+};
 
 const useStyles = makeStyles(theme => ({
   icon: { marginRight: theme.spacing(-1) },
@@ -14,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CorrespondancePane(props) {
+function Correspondance(props) {
   const { customer } = props;
   const classes = useStyles({ ...props });
 
@@ -46,3 +52,7 @@ export default function CorrespondancePane(props) {
     </div>
   );
 }
+
+const ConnectedCorrespondance = connect(mapStateToProps)(Correspondance);
+
+export default ConnectedCorrespondance;

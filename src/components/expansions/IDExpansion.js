@@ -18,11 +18,8 @@ import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
 
 const mapStateToProps = state => {
-  if (state) {
-    const { IVR, brandScheme } = state;
-    return { iVRProfile: IVR, brandScheme };
-  }
-  return { iVRProfile: {} };
+  const { IVR, brandScheme, customer } = state;
+  return { IVR, brandScheme, customer };
 };
 
 const useStyles = makeStyles(theme => ({
@@ -110,7 +107,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function IDExpansion(props) {
-  const { customer, iVRProfile } = props;
+  const { customer, IVR } = props;
   const [dropdownNo, setDropdownNo] = useState(0);
 
   const classes = useStyles({ ...props, dropdownNo });
@@ -197,7 +194,7 @@ function IDExpansion(props) {
                   <ListItemIcon className={`${classes.icon} ${classes.greenIcon}`}>
                     <FingerprintIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`ID by: ${IDParam(iVRProfile)}`} />
+                  <ListItemText primary={`ID by: ${IDParam(IVR)}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -205,12 +202,12 @@ function IDExpansion(props) {
         </Box>
         <Collapse in={dropdownNo > 0}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <AdditionalInfoPane {...props} />
+            <AdditionalInfoPane />
           </Paper>
         </Collapse>
         <Collapse in={dropdownNo > 1}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <CorrespondancePane {...props} />
+            <CorrespondancePane />
           </Paper>
         </Collapse>
         <Collapse in={dropdownNo > 2}>

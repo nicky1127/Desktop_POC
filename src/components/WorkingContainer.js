@@ -19,11 +19,9 @@ import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import BuildIcon from '@material-ui/icons/Build';
 
-import customers from '../mock/api/customers.json';
-
 const mapStateToProps = state => {
-  const { brandScheme } = state;
-  return { brandScheme };
+  const { brandScheme, customer } = state;
+  return { brandScheme, customer };
 };
 
 const drawerWidth = 240;
@@ -117,7 +115,7 @@ function WorkingContainer(props) {
   const mcaURL = `http://localhost:4000?firstname=${customer.first_name}&lastname=${customer.last_name}&title=${customer.title}&brand=${brandScheme.brand}`;
 
   useEffect(() => {
-    if (!Array.isArray(customer)) {
+    if (!(Object.entries(customer).length === 0 && customer.constructor === Object)) {
       setAppURL(mcaURL);
     }
   }, [props.customer]);

@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
 
-import { setBrandScheme, clearIVR } from '../redux/actions/action-creator';
+import { setBrandScheme, clearIVR, getCustomerByAccount } from '../redux/actions/action-creator';
 
 import constants from '../constants';
 
@@ -67,12 +67,12 @@ function Main(props) {
   const [iVRProfile, setIVRProfile1] = useState([]);
   const classes = useStyles();
   // const [statusColor, setStatusColor] = React.useState('red');
-  const [levelColor, setLevelColor] = React.useState('red');
+  // const [levelColor, setLevelColor] = React.useState('red');
   const [brandScheme, setBrandScheme1] = useState(constants.brandSchemes[0]);
   const [closeAllDropdown, setCloseAllDropdown] = useState(false);
   const [closeLayer, setCloseLayer] = useState(false);
 
-  const { IVR, clearIVR } = props;
+  const { IVR, clearIVR, getCustomerByAccount } = props;
 
   // const vConfirmationColor = () => {
   //   if (iVRProfile.verified === true) {
@@ -82,14 +82,14 @@ function Main(props) {
   //   }
   // };
 
-  const vLevelConfirmationColor = ctr => {
-    if (ctr.verification_level > 40) {
-      setLevelColor('blue');
-    } else if (ctr.verification_level > 20) {
-      setLevelColor('green');
-    } else {
-    }
-  };
+  // const vLevelConfirmationColor = ctr => {
+  //   if (ctr.verification_level > 40) {
+  //     setLevelColor('blue');
+  //   } else if (ctr.verification_level > 20) {
+  //     setLevelColor('green');
+  //   } else {
+  //   }
+  // };
 
   useEffect(() => {
     async function fetchUser() {
@@ -118,19 +118,19 @@ function Main(props) {
 
   const handleAccept = async () => {
     if (IVR.identified === true) {
-      const response = await apiCustomer.getCustomerByAccount(IVR.account_number, IVR.sort_code);
+      // const response = await apiCustomer.getCustomerByAccount(IVR.account_number, IVR.sort_code);
 
-      if (response) {
-        setCustomer(response);
-        setOpenIdentified(false);
-        setOnCall(true);
-        setReady(false);
-        setWithCustomer(true);
-        setCustomerIdentified(true);
-        // vConfirmationColor();
-        vLevelConfirmationColor(response);
-      } else {
-      }
+      // if (response) {
+      // setCustomer(response);
+      setOpenIdentified(false);
+      setOnCall(true);
+      setReady(false);
+      setWithCustomer(true);
+      setCustomerIdentified(true);
+      // vConfirmationColor();
+      //   vLevelConfirmationColor(response);
+      // } else {
+      // }
     } else {
       console.log('The no user path has been taken');
       setOpenIdentified(false);
@@ -213,16 +213,16 @@ function Main(props) {
         user={user}
         ready={ready}
         onCall={onCall}
-        customer={customer}
-        brandScheme={brandScheme}
+        // customer={customer}
+        // brandScheme={brandScheme}
         withCustomer={withCustomer}
         // iVRProfile={iVRProfile}
         // statusColor={statusColor}
-        levelColor={levelColor}
+        // levelColor={levelColor}
         customerIdentified={customerIdentified}
         setCustomerIdentified={setCustomerIdentified}
         // vConfirmationColor={vConfirmationColor}
-        vLevelConfirmationColor={vLevelConfirmationColor}
+        // vLevelConfirmationColor={vLevelConfirmationColor}
         setCustomer={setCustomer}
         closeAllDropdown={closeAllDropdown}
         openLayer={openLayer}
@@ -264,6 +264,8 @@ function Main(props) {
   return content;
 }
 
-const ConnectedMain = connect(mapStateToProps, { setBrandScheme, clearIVR })(Main);
+const ConnectedMain = connect(mapStateToProps, { setBrandScheme, clearIVR, getCustomerByAccount })(
+  Main
+);
 
 export default ConnectedMain;
