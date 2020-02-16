@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-return-await */
 import axios from 'axios';
-import { GET_IVR_DATA, SET_BRANDSCHEME } from '../constants/action-types';
+import { GET_IVR_DATA, CLEAR_IVR_DATA, SET_BRANDSCHEME } from '../constants/action-types';
 
 // APIs actions
 const config = { baseURL: '/api' };
@@ -16,6 +16,8 @@ export const IVRList = (params = {}) => {
     });
   };
 };
+
+export const clearIVR = () => ({ type: CLEAR_IVR_DATA });
 
 export const setBrandScheme = payload => {
   const obj = { type: SET_BRANDSCHEME, payload };

@@ -21,10 +21,8 @@ import { IVRList } from '../redux/actions/action-creator';
 const mapStateToProps = state => {
   if (state) {
     const { IVR } = state;
-    console.log('IVR in avaya', IVR);
     return { IVR };
   }
-  console.log('return empty IVR');
   return { IVR: {} };
 };
 

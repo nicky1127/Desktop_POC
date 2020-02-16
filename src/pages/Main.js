@@ -5,14 +5,13 @@ import MainHeader from '../components/MainHeader';
 import WorkingContainer from '../components/WorkingContainer';
 import AvayaToolBar from '../components/AvayaToolBar';
 import apiAuth from '../api/ApiAuth';
-import apiSettingsConfig from '../api/ApiSettings';
 import apiCustomer from '../api/ApiCustomer';
 import apiIVRCalls from '../api/ApiIVR';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import IncomingCallModal from '../components/Modals/IncomingCallModal';
 
-import { setBrandScheme, IVRList } from '../redux/actions/action-creator';
+import { setBrandScheme, clearIVR } from '../redux/actions/action-creator';
 
 import constants from '../constants';
 
@@ -73,7 +72,7 @@ function Main(props) {
   const [closeAllDropdown, setCloseAllDropdown] = useState(false);
   const [closeLayer, setCloseLayer] = useState(false);
 
-  const { IVR } = props;
+  const { IVR, clearIVR } = props;
 
   // const vConfirmationColor = () => {
   //   if (iVRProfile.verified === true) {
@@ -114,15 +113,13 @@ function Main(props) {
   const handleClose = () => {
     setOpenIdentified(false);
     setReady(false);
-    setBrandScheme1(constants.brandSchemes[0]);
+    clearIVR();
+    // setBrandScheme1(constants.brandSchemes[0]);
   };
 
   const handleAccept = async () => {
     if (IVR.identified === true) {
-      const response = await apiCustomer.getCustomerByAccount(
-        IVR.account_number,
-        IVR.sort_code
-      );
+      const response = await apiCustomer.getCustomerByAccount(IVR.account_number, IVR.sort_code);
 
       if (response) {
         setCustomer(response);
@@ -148,7 +145,6 @@ function Main(props) {
     if (brand) {
       const result = constants.brandSchemes.filter(scheme => scheme.brand === brand);
       if (result && result.length === 1) {
-        // setBrandScheme1(result[0]);
         props.setBrandScheme(result[0]);
       } else {
         props.setBrandScheme(constants.brandSchemes[0]);
@@ -159,12 +155,6 @@ function Main(props) {
   };
 
   const getIVRCall = () => {
-    // const response = await apiIVRCalls.callIVR();
-
-    // setIVRProfile(response);
-    // console.log('props in Main', props);
-    // selectBrandScheme(props.iVRProfile);
-
     handleOpen();
   };
 
@@ -275,6 +265,6 @@ function Main(props) {
   return content;
 }
 
-const ConnectedMain = connect(mapStateToProps, { setBrandScheme })(Main);
+const ConnectedMain = connect(mapStateToProps, { setBrandScheme, clearIVR })(Main);
 
 export default ConnectedMain;
