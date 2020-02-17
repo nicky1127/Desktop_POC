@@ -29,10 +29,11 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { List } from '@material-ui/core';
 
 import { transformCustomerRows } from '../../HelperFiles/CustomerHelpers';
+import { setCustomer } from '../../redux/actions/action-creator';
 
 const mapStateToProps = state => {
   const { customersBySearch } = state;
-  return { customerArray: transformCustomerRows(customersBySearch) };
+  return { customersBySearch };
 };
 
 function desc(a, b, orderBy) {
@@ -225,13 +226,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function CustomersTable(props) {
+  const { customersBySearch } = props;
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
-  const [selectedName, setSelectedName] = React.useState([]);
-  const [selectedAddress, setSelectedAddress] = React.useState([]);
-  const [selectedPostcode, setSelectedPostcode] = React.useState([]);
-  const [selectedDOB, setSelectedDOB] = React.useState([]);
+  // const [selectedName, setSelectedName] = React.useState([]);
+  // const [selectedAddress, setSelectedAddress] = React.useState([]);
+  // const [selectedPostcode, setSelectedPostcode] = React.useState([]);
+  // const [selectedDOB, setSelectedDOB] = React.useState([]);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -244,7 +247,7 @@ export function CustomersTable(props) {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-  const rows = props.customerArray;
+  const rows = transformCustomerRows(customersBySearch);
 
   const getAccounts = async party => {
     console.log(party);
@@ -330,12 +333,11 @@ export function CustomersTable(props) {
   };
 
   const onSubmit = () => {
-    console.log('selectedName', selectedName);
-    console.log('selectedDOB', selectedDOB);
-    console.log('selectedAddress', selectedAddress);
-    console.log('selectedPostcode', selectedPostcode);
-
-    props.onSubmitSelection(selectedName, selectedDOB, selectedAddress, selectedPostcode);
+    const customer = customersBySearch.find(ctr => ctr.first_name === selectedCustomer.name);
+    if (customer) {
+      props.setCustomer(customer);
+    }
+    props.onSubmitSelection();
   };
 
   // const isSelected = name => selected.indexOf(name) !== -1;
@@ -480,6 +482,6 @@ export function CustomersTable(props) {
   );
 }
 
-const ConnectedCustomersTable = connect(mapStateToProps)(CustomersTable);
+const ConnectedCustomersTable = connect(mapStateToProps, { setCustomer })(CustomersTable);
 
 export default ConnectedCustomersTable;

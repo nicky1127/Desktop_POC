@@ -1,13 +1,13 @@
 import {
   GET_IVR_DATA,
   CLEAR_IVR_DATA,
+  SET_BRANDSCHEME,
   SET_CUSTOMER,
-  GET_CUSTOMERS_BY_SEARCH,
-  SET_BRANDSCHEME
+  GET_CUSTOMERS_BY_SEARCH
 } from '../constants/action-types';
 
 const initialState = {
-  IVRNo: 3,
+  IVRNo: 1,
   IVR: {},
   brandScheme: {},
   customer: {},

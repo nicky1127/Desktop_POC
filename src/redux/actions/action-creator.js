@@ -31,10 +31,21 @@ export const setBrandScheme = payload => {
   return obj;
 };
 
+export const setCustomer = payload => {
+  const obj = { type: SET_CUSTOMER, payload };
+  return obj;
+};
+
 export const getCustomerByAccount = (params = {}) => {
   return async dispatch => {
     return await http.get(`${uriCustomer}/Account&Sort`, { params }).then(response => {
-      dispatch({ type: SET_CUSTOMER, payload: response ? response.data : {} });
+      let payload;
+      if (response) {
+        payload = response.data;
+      } else {
+        payload = {};
+      }
+      dispatch(setCustomer(payload));
     });
   };
 };

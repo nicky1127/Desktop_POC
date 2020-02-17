@@ -66,19 +66,20 @@ export default function UnknownUserExpansion(props) {
   //
   const classes = useStyles({ ...props });
 
-  const onSubmitSelection = async (name, dob, address, postcode) => {
-    const response = await apiCustomer.getIdentifiedCustomer(name, dob, address, postcode);
-    console.log('',)
-    console.log(response);
-    if (response) {
-      props.setCustomer(response);
-      props.vLevelConfirmationColor(response);
-      props.vConfirmationColor();
+  const onSubmitSelection = () =>
+    // async (name, dob, address, postcode)
+    {
+      // const response = await apiCustomer.getIdentifiedCustomer(name, dob, address, postcode);
+      // console.log(response);
+      // if (response) {
+      //   props.setCustomer(response);
+      //   props.vLevelConfirmationColor(response);
+      //   props.vConfirmationColor();
       setOpenCustomerSearch(false);
       props.setCustomerIdentified(true);
-    } else {
-    }
-  };
+      // } else {
+      // }
+    };
 
   const onSubmitSelection2 = async id => {
     const response = await apiCustomer.getCustomerByPartyId(id);

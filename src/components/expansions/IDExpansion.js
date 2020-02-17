@@ -179,7 +179,7 @@ function IDExpansion(props) {
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`${customer.title}  ${customer.name}`}
+                    primary={`${customer.title}  ${customer.full_name}`}
                   />
                 </ListItem>
                 <ListItem>
