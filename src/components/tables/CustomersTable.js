@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -240,6 +240,8 @@ export function CustomersTable(props) {
   const [open, setOpen] = React.useState(false);
   const [accountsActive, setAccountActive] = React.useState(false);
 
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
   const rows = props.customerArray;
 
   const getAccounts = async party => {
@@ -264,32 +266,47 @@ export function CustomersTable(props) {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name, dob, address, postcode, party_id) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelectedName = null;
-    let newSelectedAddress = null;
-    let newSelectedDOB = null;
-    let newSelectedPostcode = null;
-    let newSelectedPartyId = null;
-    let newSelected = [];
+  // const handleClick = (event, name, dob, address, postcode, party_id) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelectedName = null;
+  //   let newSelectedAddress = null;
+  //   let newSelectedDOB = null;
+  //   let newSelectedPostcode = null;
+  //   let newSelectedPartyId = null;
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelectedName = name;
-      newSelectedAddress = address;
-      newSelectedDOB = dob;
-      newSelectedPostcode = postcode;
-      newSelectedPartyId = party_id;
-      newSelected = newSelected.concat(selected, name);
+  //   if (selectedIndex === -1) {
+  //     newSelectedName = name;
+  //     newSelectedAddress = address;
+  //     newSelectedDOB = dob;
+  //     newSelectedPostcode = postcode;
+  //     newSelectedPartyId = party_id;
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else {
+  //   }
+
+  //   setSelectedName(newSelectedName);
+  //   setSelectedAddress(newSelectedAddress);
+  //   setSelectedDOB(newSelectedDOB);
+  //   setSelectedPostcode(newSelectedPostcode);
+  //   setSelected(newSelected);
+  //   setPartyId(newSelectedPartyId);
+  //   console.log(newSelectedName, newSelectedDOB);
+  // };
+
+  const onSelectCustomer = (evt, row) => {
+    if (selectedCustomer && selectedCustomer.name === row.name) {
+      setSelectedCustomer(null);
     } else {
+      setSelectedCustomer(row);
     }
+  };
 
-    setSelectedName(newSelectedName);
-    setSelectedAddress(newSelectedAddress);
-    setSelectedDOB(newSelectedDOB);
-    setSelectedPostcode(newSelectedPostcode);
-    setSelected(newSelected);
-    setPartyId(newSelectedPartyId);
-    console.log(newSelectedName, newSelectedDOB);
+  const isCustomerSelected = ctr => {
+    if (selectedCustomer && ctr) {
+      return ctr.name === selectedCustomer.name;
+    }
+    return false;
   };
 
   const handleChangePage = (event, newPage) => {
@@ -311,10 +328,15 @@ export function CustomersTable(props) {
   };
 
   const onSubmit = () => {
+    console.log('selectedName', selectedName);
+    console.log('selectedDOB', selectedDOB);
+    console.log('selectedAddress', selectedAddress);
+    console.log('selectedPostcode', selectedPostcode);
+
     props.onSubmitSelection(selectedName, selectedDOB, selectedAddress, selectedPostcode);
   };
 
-  const isSelected = name => selected.indexOf(name) !== -1;
+  // const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -343,26 +365,29 @@ export function CustomersTable(props) {
                 {stableSort(rows, getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                    // const isItemSelected = isSelected(row.name);
+                    const isItemSelected = isCustomerSelected(row);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
                         hover
-                        onClick={event =>
-                          handleClick(
-                            event,
-                            row.name,
-                            row.dob,
-                            row.address,
-                            row.postcode,
-                            row.party_id
-                          )
-                        }
+                        // onClick={event =>
+                        //   handleClick(
+                        //     event,
+                        //     row.name,
+                        //     row.dob,
+                        //     row.address,
+                        //     row.postcode,
+                        //     row.party_id
+                        //   )
+                        // }
+                        onClick={event => onSelectCustomer(event, row)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.name}
+                        // selected={isItemSelected}
                         selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
@@ -404,7 +429,7 @@ export function CustomersTable(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
+          {/* <TablePagination
             rowsPerPageOptions={[3, 6]}
             component="div"
             count={rows.length}
@@ -412,7 +437,7 @@ export function CustomersTable(props) {
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+          /> */}
           <Grid container item xs={12} spacing={3}>
             <Button
               variant="contained"
