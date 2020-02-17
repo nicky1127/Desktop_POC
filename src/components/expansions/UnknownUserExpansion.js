@@ -68,6 +68,7 @@ export default function UnknownUserExpansion(props) {
 
   const onSubmitSelection = async (name, dob, address, postcode) => {
     const response = await apiCustomer.getIdentifiedCustomer(name, dob, address, postcode);
+    console.log('',)
     console.log(response);
     if (response) {
       props.setCustomer(response);

@@ -231,7 +231,6 @@ function Main(props) {
       <WorkingContainer
         customerIdentified={customerIdentified}
         className={classes.workingContainer}
-        brandScheme={brandScheme}
         onClickWorkingContainer={onClickWorkingContainer}
         customer={customer}
       />

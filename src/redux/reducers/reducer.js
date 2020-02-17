@@ -1,13 +1,13 @@
 import {
   GET_IVR_DATA,
   CLEAR_IVR_DATA,
-  GET_CUSTOMER_BY_ACCOUNT,
+  SET_CUSTOMER,
   GET_CUSTOMERS_BY_SEARCH,
   SET_BRANDSCHEME
 } from '../constants/action-types';
 
 const initialState = {
-  IVRNo: 1,
+  IVRNo: 3,
   IVR: {},
   brandScheme: {},
   customer: {},
@@ -34,7 +34,7 @@ const reducer = (state = initialState, action) => {
     return { ...state, brandScheme: action.payload };
   }
 
-  if (action.type === GET_CUSTOMER_BY_ACCOUNT) {
+  if (action.type === SET_CUSTOMER) {
     return { ...state, customer: action.payload };
   }
 

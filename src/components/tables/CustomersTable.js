@@ -28,9 +28,11 @@ import AccountsTable from '../tables/AccountsTable';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { List } from '@material-ui/core';
 
+import { transformCustomerRows } from '../../HelperFiles/CustomerHelpers';
+
 const mapStateToProps = state => {
   const { customersBySearch } = state;
-  return { customerArray: customersBySearch };
+  return { customerArray: transformCustomerRows(customersBySearch) };
 };
 
 function desc(a, b, orderBy) {

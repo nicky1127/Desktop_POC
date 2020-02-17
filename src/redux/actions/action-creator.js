@@ -4,12 +4,10 @@ import axios from 'axios';
 import {
   GET_IVR_DATA,
   CLEAR_IVR_DATA,
-  GET_CUSTOMER_BY_ACCOUNT,
+  SET_CUSTOMER,
   GET_CUSTOMERS_BY_SEARCH,
   SET_BRANDSCHEME
 } from '../constants/action-types';
-
-import { transformCustomerRows } from '../../HelperFiles/CustomerHelpers';
 
 // APIs actions
 const config = { baseURL: '/api' };
@@ -36,7 +34,7 @@ export const setBrandScheme = payload => {
 export const getCustomerByAccount = (params = {}) => {
   return async dispatch => {
     return await http.get(`${uriCustomer}/Account&Sort`, { params }).then(response => {
-      dispatch({ type: GET_CUSTOMER_BY_ACCOUNT, payload: response ? response.data : {} });
+      dispatch({ type: SET_CUSTOMER, payload: response ? response.data : {} });
     });
   };
 };
@@ -44,13 +42,7 @@ export const getCustomerByAccount = (params = {}) => {
 export const getCustomersBySearch = (params = {}) => {
   return async dispatch => {
     return await http.get(`${uriCustomer}/find`, { params }).then(response => {
-      let customerRows;
-      if (Array.isArray(response.data) && response.data.length > 0) {
-        customerRows = transformCustomerRows(response.data);
-      } else {
-        customerRows = [];
-      }
-      dispatch({ type: GET_CUSTOMERS_BY_SEARCH, payload: customerRows });
+      dispatch({ type: GET_CUSTOMERS_BY_SEARCH, payload: response ? response.data : [] });
     });
   };
 };
