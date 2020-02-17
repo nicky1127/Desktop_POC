@@ -118,16 +118,15 @@ function WorkingContainer(props) {
     if (!(Object.entries(customer).length === 0 && customer.constructor === Object)) {
       setAppURL(mcaURL);
     }
-  }, [props.customer]);
+  }, [customer]);
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
   };
-  const onChangeAppURL = appURL => {
-    setAppURL(appURL);
+  const onChangeAppURL = url => {
+    setAppURL(url);
   };
 
-  let customerInfo = null;
 
   return (
     <div className={classes.root}>

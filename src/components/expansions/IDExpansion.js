@@ -14,7 +14,6 @@ import { List, ListItem, ListItemIcon, ListItemText, Typography, Button } from '
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
 import AdditionalInfoPane from '../IDForms/AdditionalInfo';
-import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
 
 const mapStateToProps = state => {
@@ -133,16 +132,16 @@ function IDExpansion(props) {
     }
   };
 
-  const [bank, setBank] = React.useState('');
-  const [account, setAccount] = React.useState('');
+  // const [bank, setBank] = React.useState('');
+  // const [account, setAccount] = React.useState('');
 
-  const handleChangeBank = event => {
-    setBank(event.target.value);
-  };
+  // const handleChangeBank = event => {
+  //   setBank(event.target.value);
+  // };
 
-  const handleChangeAccount = event => {
-    setAccount(event.target.value);
-  };
+  // const handleChangeAccount = event => {
+  //   setAccount(event.target.value);
+  // };
 
   const IDParam = (profile = {}) => {
     if (profile.account_number && profile.account_number) {
@@ -211,24 +210,9 @@ function IDExpansion(props) {
           </Paper>
         </Collapse>
         <Collapse in={dropdownNo > 2}>
-          {/* <Paper elevation={4} className={classes.expansionDropdownContent}> */}
-          {/* <SwitchPartiesPane
-              bank={bank}
-              handleChangeBank={handleChangeBank}
-              account={account}
-              handleChangeAccount={handleChangeAccount}
-            /> */}
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            className={classes.identifyBtn}
-            // onClick={onClickBtn}
-            // endIcon={<Icon>send</Icon>}
-          >
+          <Button size="small" variant="contained" color="primary" className={classes.identifyBtn}>
             Switch Parties
           </Button>
-          {/* </Paper> */}
         </Collapse>
         <IconButton
           disableRipple

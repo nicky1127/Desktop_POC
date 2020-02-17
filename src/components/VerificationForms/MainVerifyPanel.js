@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import WarningIcon from '@material-ui/icons/Warning';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import Box from '@material-ui/core/Box';
-import { customerRows } from '../../HelperFiles/CustomerHelpers';
 
 const mapStateToProps = state => {
   const { customer } = state;
