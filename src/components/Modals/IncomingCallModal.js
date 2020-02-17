@@ -125,7 +125,7 @@ function IncomingCallModal(props) {
                 <ListItemText primary={`ID Verification Status:  ${IVR.verified}`} />
               </ListItem>
               <Grid container className={classes.buttons} spacing={5}>
-                <Grid item xs={6} justify="space-between">
+                <Grid item xs={6}>
                   <ListItem>
                     <Fab
                       variant="extended"
@@ -137,7 +137,7 @@ function IncomingCallModal(props) {
                     </Fab>
                   </ListItem>
                 </Grid>
-                <Grid item xs={6} justify="space-between">
+                <Grid item xs={6}>
                   <ListItem>
                     <Fab variant="extended" className={classes.rejectButton} onClick={handleClose}>
                       <CallEndSharpIcon className={classes.extendedIcon} />

@@ -9,9 +9,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Login} />
         <ProtectedRoute exact path="/page/main" component={Main} />
         <Route path="/page/logout" component={Logout} />
+        <Route exact path="/" component={Login} />
       </Switch>
     </Router>
   );

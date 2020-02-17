@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ForumIcon from '@material-ui/icons/Forum';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import moment from 'moment';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 
@@ -55,16 +55,12 @@ function MainCallContextPane(props) {
           </ListItemIcon>
           <ListItemText primary={`Say Anything: ${iVRProfile.say_anything}`} />
         </ListItem>
-        <Grid container>
-          <Grid xs={9}>
-            <ListItem>
-              <ListItemIcon className={classes.icon}>
-                <DataUsageIcon />
-              </ListItemIcon>
-              <ListItemText primary={`IVR Intent: ${iVRProfile.ivr_intent}`} />
-            </ListItem>
-          </Grid>
-        </Grid>
+        <ListItem>
+          <ListItemIcon className={classes.icon}>
+            <DataUsageIcon />
+          </ListItemIcon>
+          <ListItemText primary={`IVR Intent: ${iVRProfile.ivr_intent}`} />
+        </ListItem>
       </List>
     </div>
   );

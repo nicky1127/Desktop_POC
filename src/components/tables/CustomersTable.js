@@ -250,7 +250,6 @@ export function CustomersTable(props) {
   const rows = transformCustomerRows(customersBySearch);
 
   const getAccounts = async party => {
-    console.log(party);
     // if (openCustomerAccounts === false) {
     if (open === false) {
       const response = await apiCustomer.getCustomerAccounts(party);
