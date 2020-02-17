@@ -433,7 +433,7 @@ export function CustomersTable(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          {/* <TablePagination
+          <TablePagination
             rowsPerPageOptions={[3, 6]}
             component="div"
             count={rows.length}
@@ -441,7 +441,7 @@ export function CustomersTable(props) {
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
-          /> */}
+          />
           <Grid container item xs={12} spacing={3}>
             <Button
               variant="contained"
