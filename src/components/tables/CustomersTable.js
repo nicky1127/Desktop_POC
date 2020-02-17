@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -25,7 +26,12 @@ import Collapse from '@material-ui/core/Collapse';
 import AccountsModal from '../Modals/Accountsmodal';
 import AccountsTable from '../tables/AccountsTable';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { List} from '@material-ui/core';
+import { List } from '@material-ui/core';
+
+const mapStateToProps = state => {
+  const { customersBySearch } = state;
+  return { customerArray: customersBySearch };
+};
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -216,7 +222,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CustomersTable(props) {
+export function CustomersTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
@@ -315,134 +321,138 @@ export default function CustomersTable(props) {
   return (
     <div className={classes.root}>
       <List className={classes.modalContent}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              onSelectAllClick={handleSelectAllClick}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                onSelectAllClick={handleSelectAllClick}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.name);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event =>
-                        handleClick(
-                          event,
-                          row.name,
-                          row.dob,
-                          row.address,
-                          row.postcode,
-                          row.party_id
-                        )
-                      }
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.surname}</TableCell>
-                      <TableCell align="right">{row.dob}</TableCell>
-                      <TableCell align="right">{row.address}</TableCell>
-                      <TableCell align="right">{row.postcode}</TableCell>
-                      <TableCell align="right" className={classes.hiddenCell}>
-                        {row.party_id}
-                      </TableCell>
-                      <TableCell align="right" id={labelId}>
-                        <IconButton id={index} onClick={() => getAccounts(row.party_id)}>
-                          <FilterListIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
+                    return (
+                      <TableRow
+                        hover
+                        onClick={event =>
+                          handleClick(
+                            event,
+                            row.name,
+                            row.dob,
+                            row.address,
+                            row.postcode,
+                            row.party_id
+                          )
+                        }
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.name}
+                        selected={isItemSelected}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </TableCell>
+                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.surname}</TableCell>
+                        <TableCell align="right">{row.dob}</TableCell>
+                        <TableCell align="right">{row.address}</TableCell>
+                        <TableCell align="right">{row.postcode}</TableCell>
+                        <TableCell align="right" className={classes.hiddenCell}>
+                          {row.party_id}
+                        </TableCell>
+                        <TableCell align="right" id={labelId}>
+                          <IconButton id={index} onClick={() => getAccounts(row.party_id)}>
+                            <FilterListIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+                <TableRow>
+                  <TableCell padding="none" colSpan={10}>
+                    <Collapse hidden={!open} in={open}>
+                      {<AccountsTable accountArray={accountArray} />}
+                    </Collapse>
+                  </TableCell>
                 </TableRow>
-              )}
-              <TableRow>
-                <TableCell padding="none" colSpan={10}>
-                  <Collapse hidden={!open} in={open}>
-                    {<AccountsTable accountArray={accountArray} />}
-                  </Collapse>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[3, 6]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[3, 6]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+          <Grid container item xs={12} spacing={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.correctButton}
+              onClick={onSubmit}
+            >
+              <CheckCircleOutlineIcon className={classes.icon} />
+              Submit
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.backButton}
+              onClick={props.handleBack}
+            >
+              <ExitToAppIcon className={classes.icon} />
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.invalidButton}
+              onClick={props.handleCloseSearch}
+            >
+              <HighlightOffIcon className={classes.icon} />
+              Cancel
+            </Button>
+          </Grid>
+        </Paper>
+        <AccountsModal
+          accountArray={accountArray}
+          openCustomerAccounts={openCustomerAccounts}
+          setOpenCustomerAccounts={setOpenCustomerAccounts}
         />
-        <Grid container item xs={12} spacing={3}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.correctButton}
-            onClick={onSubmit}
-          >
-            <CheckCircleOutlineIcon className={classes.icon} />
-            Submit
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.backButton}
-            onClick={props.handleBack}
-          >
-            <ExitToAppIcon className={classes.icon} />
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.invalidButton}
-            onClick={props.handleCloseSearch}
-          >
-            <HighlightOffIcon className={classes.icon} />
-            Cancel
-          </Button>
-        </Grid>
-      </Paper>
-      <AccountsModal
-        accountArray={accountArray}
-        openCustomerAccounts={openCustomerAccounts}
-        setOpenCustomerAccounts={setOpenCustomerAccounts}
-      />
       </List>
     </div>
   );
 }
+
+const ConnectedCustomersTable = connect(mapStateToProps)(CustomersTable);
+
+export default ConnectedCustomersTable;

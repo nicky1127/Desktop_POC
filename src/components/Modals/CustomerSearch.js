@@ -12,13 +12,13 @@ const useStyles = makeStyles(theme => ({
   modal: {
     margin: 'auto',
     maxHeight: 550,
-    maxWidth: 1200,
+    maxWidth: 1200
     // overflow: 'scroll'
   },
   modal2: {
     margin: 'auto',
     maxHeight: 550,
-    maxWidth: 900,
+    maxWidth: 900
     // overflow: 'scroll'
   },
   paper_modal: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CustomerSearchModal(props) {
-  const [customerArray, setCustomerArray] = React.useState(null);
+  // const [customerArray, setCustomerArray] = React.useState(null);
   const [searchLevel, setSearchLevel] = React.useState(1);
   const classes = useStyles();
 
@@ -53,9 +53,9 @@ export default function CustomerSearchModal(props) {
     if (searchLevel === 1) {
       format = classes.modal2;
     } else {
-      format =classes.modal
+      format = classes.modal;
     }
-    return format
+    return format;
   };
 
   let searchDom = null;
@@ -64,12 +64,18 @@ export default function CustomerSearchModal(props) {
     searchDom = (
       <IDSearchForm
         {...props}
-        setCustomerArray={setCustomerArray}
+        // setCustomerArray={setCustomerArray}
         setSearchLevel={setSearchLevel}
       />
     );
   } else {
-    searchDom = <CustomersTable {...props} customerArray={customerArray} handleBack={handleBack} />;
+    searchDom = (
+      <CustomersTable
+        {...props}
+        // customerArray={customerArray}
+        handleBack={handleBack}
+      />
+    );
   }
 
   return (
@@ -86,9 +92,9 @@ export default function CustomerSearchModal(props) {
           timeout: 500
         }}
       >
-        <Fade in={props.openCustomerSearch}>
-          <div className={classes.paper_modal}>{searchDom}</div>
-        </Fade>
+        {/* <Fade in={props.openCustomerSearch}> */}
+        <div className={classes.paper_modal}>{searchDom}</div>
+        {/* </Fade> */}
       </Modal>
     </div>
   );

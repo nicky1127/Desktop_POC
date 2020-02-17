@@ -2,14 +2,16 @@ import {
   GET_IVR_DATA,
   CLEAR_IVR_DATA,
   GET_CUSTOMER_BY_ACCOUNT,
+  GET_CUSTOMERS_BY_SEARCH,
   SET_BRANDSCHEME
 } from '../constants/action-types';
 
 const initialState = {
-  IVRNo: 3,
+  IVRNo: 1,
   IVR: {},
   brandScheme: {},
   customer: {},
+  customersBySearch: [],
   recordCreateLoading: false,
   recordDeleteLoading: false
 };
@@ -34,6 +36,10 @@ const reducer = (state = initialState, action) => {
 
   if (action.type === GET_CUSTOMER_BY_ACCOUNT) {
     return { ...state, customer: action.payload };
+  }
+
+  if (action.type === GET_CUSTOMERS_BY_SEARCH) {
+    return { ...state, customersBySearch: action.payload };
   }
 
   return state;
