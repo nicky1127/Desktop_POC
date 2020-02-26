@@ -7,7 +7,7 @@ import {
 } from '../constants/action-types';
 
 const initialState = {
-  IVRNo: 2,
+  IVRNo:3,
   IVR: {},
   brandScheme: {},
   customer: {},
