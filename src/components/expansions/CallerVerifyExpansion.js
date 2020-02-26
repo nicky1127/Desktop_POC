@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +14,11 @@ import MainVerifyPane from '../VerificationForms/MainVerifyPanel';
 import IndicatorsListPane from '../IndicatorsForms/IndicatorList';
 
 import VerificationModal from '../Modals/VerificationModal';
+
+const mapStateToProps = state => {
+  const { brandScheme } = state;
+  return { brandScheme };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -83,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CallerVerifyExpansion(props) {
+function CallerVerifyExpansion(props) {
   const [question, setQuestion] = React.useState(1);
   // const [activeStep, setActiveStep] = useState(0);
   const [levelPass, setLevelPass] = React.useState(0);
@@ -205,3 +211,7 @@ export default function CallerVerifyExpansion(props) {
     </div>
   );
 }
+
+const ConnectedCallerVerifyExpansion = connect(mapStateToProps)(CallerVerifyExpansion);
+
+export default ConnectedCallerVerifyExpansion;

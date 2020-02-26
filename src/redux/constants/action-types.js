@@ -1,0 +1,9 @@
+export const GET_IVR_DATA = 'GET_IVR_DATA';
+
+export const CLEAR_IVR_DATA = 'CLEAR_IVR_DATA';
+
+export const SET_BRANDSCHEME = 'SET_BRANDSCHEME';
+
+export const SET_CUSTOMER = 'SET_CUSTOMER';
+
+export const GET_CUSTOMERS_BY_SEARCH = 'GET_CUSTOMERS_BY_SEARCH';

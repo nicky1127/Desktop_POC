@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { List } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +13,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { getCustomersBySearch } from '../../redux/actions/action-creator';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -89,7 +92,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IDSearchForm(props) {
+export function UnknownUserSearch(props) {
   const [brand, setBrand] = React.useState('');
   const [methodSelected, setMethodSelected] = React.useState('');
   const [account, setAccount] = React.useState(null);
@@ -132,9 +135,17 @@ export default function IDSearchForm(props) {
   const classes = useStyles({ ...props, methodSelected });
 
   const onSubmit = async () => {
-    const response = await apiCustomer.getCustomerBySearch(account, sort_code, surname, postcode);
-    const rows = customerRows(response);
-    props.setCustomerArray(rows);
+    const params = {
+      Account_Number: account,
+      Sort_Code: sort_code,
+      Surname: surname,
+      Postcode: postcode
+    };
+    props.getCustomersBySearch(params);
+
+    // const response = await apiCustomer.getCustomerBySearch(account, sort_code, surname, postcode);
+    // const rows = customerRows(response);
+    // props.setCustomerArray(rows);
     props.setSearchLevel(2);
   };
   const IDSelection = methodSelected => {
@@ -266,3 +277,7 @@ export default function IDSearchForm(props) {
     </div>
   );
 }
+
+const ConnectedUnknownUserSearch = connect(null, { getCustomersBySearch })(UnknownUserSearch);
+
+export default ConnectedUnknownUserSearch;

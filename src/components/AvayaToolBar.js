@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,6 +15,16 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 import SmsIcon from '@material-ui/icons/Sms';
 import PhonePausedIcon from '@material-ui/icons/PhonePaused';
 import DirectionsIcon from '@material-ui/icons/Directions';
+
+import { getIVRList } from '../redux/actions/action-creator';
+
+const mapStateToProps = state => {
+  if (state) {
+    const { IVR } = state;
+    return { IVR };
+  }
+  return { IVR: {} };
+};
 
 const useStyles = makeStyles(theme => ({
   toolBar: {
@@ -73,8 +84,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AvayaToolBar(props) {
+function AvayaToolBar(props) {
   const classes = useStyles();
+
+  const onClickNotReady = () => {
+    props.getIVRList();
+    setTimeout(() => {
+      props.setWaiting();
+    }, 500);
+    // props.setWaiting();
+  };
 
   const renderNotReady = () => (
     <div className={classes.grow}>
@@ -97,7 +116,7 @@ export default function AvayaToolBar(props) {
               </ListItem>
             </List>
           </Paper>
-          <Button variant="contained" className={classes.notReadyBtn} onClick={props.setWaiting}>
+          <Button variant="contained" className={classes.notReadyBtn} onClick={onClickNotReady}>
             NOT READY
           </Button>
         </div>
@@ -189,3 +208,6 @@ export default function AvayaToolBar(props) {
 
   return content;
 }
+
+const ConnectedAvayaToolBar = connect(mapStateToProps, { getIVRList })(AvayaToolBar);
+export default ConnectedAvayaToolBar;

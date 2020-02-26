@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -13,8 +14,12 @@ import { List, ListItem, ListItemIcon, ListItemText, Typography, Button } from '
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
 import AdditionalInfoPane from '../IDForms/AdditionalInfo';
-import SwitchPartiesPane from '../IDForms/SwitchParties';
 import CorrespondancePane from '../IDForms/CorrespondanceInfo';
+
+const mapStateToProps = state => {
+  const { IVR, brandScheme, customer } = state;
+  return { IVR, brandScheme, customer };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -100,14 +105,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IDExpansion(props) {
-  const { customer, iVRProfile } = props;
+function IDExpansion(props) {
+  const { customer, IVR } = props;
   const [dropdownNo, setDropdownNo] = useState(0);
 
   const classes = useStyles({ ...props, dropdownNo });
 
   useEffect(() => {
-    console.log('props.closeAllDropdown', props.closeAllDropdown);
     setDropdownNo(0);
   }, [props.closeAllDropdown]);
 
@@ -128,16 +132,16 @@ export default function IDExpansion(props) {
     }
   };
 
-  const [bank, setBank] = React.useState('');
-  const [account, setAccount] = React.useState('');
+  // const [bank, setBank] = React.useState('');
+  // const [account, setAccount] = React.useState('');
 
-  const handleChangeBank = event => {
-    setBank(event.target.value);
-  };
+  // const handleChangeBank = event => {
+  //   setBank(event.target.value);
+  // };
 
-  const handleChangeAccount = event => {
-    setAccount(event.target.value);
-  };
+  // const handleChangeAccount = event => {
+  //   setAccount(event.target.value);
+  // };
 
   const IDParam = (profile = {}) => {
     if (profile.account_number && profile.account_number) {
@@ -174,7 +178,7 @@ export default function IDExpansion(props) {
                   </ListItemIcon>
                   <ListItemText
                     classes={{ root: classes.name }}
-                    primary={`${customer.title}  ${customer.name}`}
+                    primary={`${customer.title}  ${customer.full_name}`}
                   />
                 </ListItem>
                 <ListItem>
@@ -189,7 +193,7 @@ export default function IDExpansion(props) {
                   <ListItemIcon className={`${classes.icon} ${classes.greenIcon}`}>
                     <FingerprintIcon />
                   </ListItemIcon>
-                  <ListItemText primary={`ID by: ${IDParam(iVRProfile)}`} />
+                  <ListItemText primary={`ID by: ${IDParam(IVR)}`} />
                 </ListItem>
               </Grid>
             </Grid>
@@ -197,33 +201,18 @@ export default function IDExpansion(props) {
         </Box>
         <Collapse in={dropdownNo > 0}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <AdditionalInfoPane {...props} />
+            <AdditionalInfoPane />
           </Paper>
         </Collapse>
         <Collapse in={dropdownNo > 1}>
           <Paper elevation={4} className={classes.expansionDropdownContent}>
-            <CorrespondancePane {...props} />
+            <CorrespondancePane />
           </Paper>
         </Collapse>
         <Collapse in={dropdownNo > 2}>
-          {/* <Paper elevation={4} className={classes.expansionDropdownContent}> */}
-            {/* <SwitchPartiesPane
-              bank={bank}
-              handleChangeBank={handleChangeBank}
-              account={account}
-              handleChangeAccount={handleChangeAccount}
-            /> */}
-            <Button
-              size="small"
-              variant="contained"
-              color="primary"
-              className={classes.identifyBtn}
-              // onClick={onClickBtn}
-              // endIcon={<Icon>send</Icon>}
-            >
-              Switch Parties
-            </Button>
-          {/* </Paper> */}
+          <Button size="small" variant="contained" color="primary" className={classes.identifyBtn}>
+            Switch Parties
+          </Button>
         </Collapse>
         <IconButton
           disableRipple
@@ -243,3 +232,7 @@ export default function IDExpansion(props) {
     </div>
   );
 }
+
+const ConnectedIDExpansion = connect(mapStateToProps)(IDExpansion);
+
+export default ConnectedIDExpansion;

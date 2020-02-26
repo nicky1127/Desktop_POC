@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
+import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import moment from 'moment';
-import constants from '../../constants';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+import constants from '../../constants';
+
+const mapStateToProps = state => {
+  const { IVR, customer } = state;
+  return { IVR, customer };
+};
 
 const { timeFormat } = constants;
 
@@ -17,7 +24,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ContextAdditionalInfo(props) {
+function ContextAdditionalInfo(props) {
+  const { IVR, customer } = props;
   const classes = useStyles({ ...props });
 
   return (
@@ -31,22 +39,26 @@ export default function ContextAdditionalInfo(props) {
             <PhoneInTalkIcon />
           </ListItemIcon>
           <ListItemText
-            primary={`Call Time:  ${moment(props.customer.call_time).format(timeFormat.call_time)}`}
+            primary={`Call Time:  ${moment(customer.call_time).format(timeFormat.call_time)}`}
           />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <DialpadIcon />
           </ListItemIcon>
-          <ListItemText primary={`VDN: ${props.iVRProfile.vdn}`} />
+          <ListItemText primary={`VDN: ${IVR.vdn}`} />
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.icon}>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary={`Transfer from:  ${props.iVRProfile.transfered_from}`} />
+          <ListItemText primary={`Transfer from:  ${IVR.transfered_from}`} />
         </ListItem>
       </List>
     </div>
   );
 }
+
+const ConnectedContextAdditionalInfo = connect(mapStateToProps)(ContextAdditionalInfo);
+
+export default ConnectedContextAdditionalInfo;

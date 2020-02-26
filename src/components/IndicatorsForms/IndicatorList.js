@@ -25,76 +25,76 @@ export default function IndicatorsListPane(props) {
         </Typography>
         <List dense={true}>
           <Grid container spacing={2}>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A23</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A56</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A76</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A98</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A23</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A56</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A76</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A98</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A23</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A56</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A76</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Code: A98</ListItem>
             </Grid>
-            <Grid item xs={5} spacing={3}>
+            <Grid item xs={5}>
               <ListItem>Description: Stuff</ListItem>
             </Grid>
           </Grid>

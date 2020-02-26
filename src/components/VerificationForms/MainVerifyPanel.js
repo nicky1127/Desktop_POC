@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
 import SecurityIcon from '@material-ui/icons/Security';
@@ -7,6 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import WarningIcon from '@material-ui/icons/Warning';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import Box from '@material-ui/core/Box';
+
+const mapStateToProps = state => {
+  const { customer } = state;
+  return { customer };
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +51,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MainVerifyPane(props) {
-  const { onClickVerifyBtn } = props;
+function MainVerifyPanel(props) {
+  const { onClickVerifyBtn, customer } = props;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [vMethod, setVMethod] = React.useState(null);
 
@@ -64,11 +71,11 @@ export default function MainVerifyPane(props) {
     // }
   };
 
-  const otherIndicators = props => {
-    if (!props.customer.indicators.other) {
-      return 'None';
+  const otherIndicators = ctr => {
+    if (ctr.indicators && ctr.indicators.other) {
+      return 'Present';
     }
-    return 'Present';
+    return 'None';
   };
   const open = Boolean(anchorEl);
 
@@ -129,7 +136,7 @@ export default function MainVerifyPane(props) {
               classes={{ root: classes.name }}
               primary={
                 <Typography style={{ color: 'red' }}>
-                  {`Service Needs : ${otherIndicators(props)}`}
+                  {`Service Needs : ${otherIndicators(customer)}`}
                 </Typography>
               }
             />
@@ -171,3 +178,7 @@ export default function MainVerifyPane(props) {
     </div>
   );
 }
+
+const ConnectedMainVerifyPanel = connect(mapStateToProps)(MainVerifyPanel);
+
+export default ConnectedMainVerifyPanel;

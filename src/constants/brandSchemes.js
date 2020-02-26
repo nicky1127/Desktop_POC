@@ -1,12 +1,12 @@
 const data = [
   {
-    brand: 'LBG-GENERIC',
+    brand: 'LBG',
     primaryClr: '#006A4D',
     secondaryClr: '#26a69a',
     logo: '/images/lbg_icon.jpg'
   },
   {
-    brand: 'LBG',
+    brand: 'Lloyds',
     primaryClr: '#006A4D',
     secondaryClr: '#26a69a',
     logo: '/images/lloyds_logo.png'

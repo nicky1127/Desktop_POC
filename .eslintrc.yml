@@ -29,3 +29,5 @@ rules:
     - 2
     - object: true
       array: false
+  react-hooks/exhaustive-deps: 0
+  

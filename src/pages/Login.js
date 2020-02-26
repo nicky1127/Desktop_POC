@@ -107,7 +107,7 @@ function Login() {
       setStage('ready');
     }
   };
-  const renderRedirect = () => <Redirect to="/page/main"/>;
+  const renderRedirect = () => <Redirect to="/page/main" />;
 
   const renderForm = () => (
     <div className={classes.root}>

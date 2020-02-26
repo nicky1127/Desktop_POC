@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import CallEndSharpIcon from '@material-ui/icons/CallEndSharp';
 import Modal from '@material-ui/core/Modal';
@@ -13,6 +14,13 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import { List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
+
+import { getCustomerByAccount } from '../../redux/actions/action-creator';
+
+const mapStateToProps = state => {
+  const { IVR } = state;
+  return { IVR };
+};
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -47,9 +55,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function IncomingCallModal(props) {
+function IncomingCallModal(props) {
   const classes = useStyles();
-  const { iVRProfile, openIdentified, handleClose, handleAccept } = props;
+  const { IVR, openIdentified, handleClose, handleAccept } = props;
+
+  const onClickAccept = () => {
+    const params = { Account_Number: IVR.account_number, Sort_Code: IVR.sort_code };
+    props.getCustomerByAccount(params);
+    handleAccept();
+  };
 
   return (
     <div>
@@ -80,49 +94,50 @@ export default function IncomingCallModal(props) {
                 <ListItemIcon className={classes.icon}>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText
-                  classes={{ root: classes.name }}
-                  primary={`${iVRProfile.full_name}`}
-                />
+                <ListItemText classes={{ root: classes.name }} primary={`${IVR.full_name}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={`Sort Code: ${iVRProfile.sort_code}`} />
+                <ListItemText primary={`Sort Code: ${IVR.sort_code}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <AccountBoxIcon />
                 </ListItemIcon>
-                <ListItemText primary={`Account Number: ${iVRProfile.account_number}`} />
+                <ListItemText primary={`Account Number: ${IVR.account_number}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <FingerprintIcon
-                    className={iVRProfile.identified ? classes.greenIcon : classes.redIcon}
+                    className={IVR.identified ? classes.greenIcon : classes.redIcon}
                   />
                 </ListItemIcon>
-                <ListItemText primary={`Caller Identification Status:  ${iVRProfile.identified}`} />
+                <ListItemText primary={`Caller Identification Status:  ${IVR.identified}`} />
               </ListItem>
               <ListItem>
                 <ListItemIcon className={classes.icon}>
                   <VerifiedUserIcon
-                    className={iVRProfile.verified ? classes.greenIcon : classes.redIcon}
+                    className={IVR.verified ? classes.greenIcon : classes.redIcon}
                   />
                 </ListItemIcon>
-                <ListItemText primary={`ID Verification Status:  ${iVRProfile.verified}`} />
+                <ListItemText primary={`ID Verification Status:  ${IVR.verified}`} />
               </ListItem>
               <Grid container className={classes.buttons} spacing={5}>
-                <Grid item xs={6} justify="space-between">
+                <Grid item xs={6}>
                   <ListItem>
-                    <Fab variant="extended" className={classes.pickupButton} onClick={handleAccept}>
+                    <Fab
+                      variant="extended"
+                      className={classes.pickupButton}
+                      onClick={onClickAccept}
+                    >
                       <PhoneInTalkSharpIcon className={classes.extendedIcon} />
                       Accept
                     </Fab>
                   </ListItem>
                 </Grid>
-                <Grid item xs={6} justify="space-between">
+                <Grid item xs={6}>
                   <ListItem>
                     <Fab variant="extended" className={classes.rejectButton} onClick={handleClose}>
                       <CallEndSharpIcon className={classes.extendedIcon} />
@@ -138,3 +153,9 @@ export default function IncomingCallModal(props) {
     </div>
   );
 }
+
+const ConnectedIncomingCallModal = connect(mapStateToProps, { getCustomerByAccount })(
+  IncomingCallModal
+);
+
+export default ConnectedIncomingCallModal;
