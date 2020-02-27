@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,6 +18,7 @@ import ContactlessIcon from '@material-ui/icons/Contactless';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import BuildIcon from '@material-ui/icons/Build';
+import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
 
 const mapStateToProps = state => {
   const { brandScheme, customer } = state;
@@ -50,6 +51,10 @@ const useStyles = makeStyles(theme => ({
   },
   listIcon: {
     color: 'white'
+  },
+  refreshIcon: {
+    color: 'white',
+    fontSize: '20px'
   },
   drawerOpen: {
     width: drawerWidth,
@@ -90,7 +95,14 @@ const useStyles = makeStyles(theme => ({
   },
   iframeContainer: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    display: 'none'
+  },
+  visibleIframe: {
+    display: 'block'
+  },
+  greenBtn: {
+    color: '#b2ff59'
   },
   iframe: {
     width: '100%',
@@ -111,22 +123,52 @@ function WorkingContainer(props) {
   const classes = useStyles({ ...props });
   const { customer, brandScheme } = props;
   const [open, setOpen] = React.useState(false);
-  const [appURL, setAppURL] = React.useState('');
+  const [visibleIframeNo, setVisibleIframeNo] = useState(0);
+  const [appURL1, setAppURL1] = useState('');
+  const [appURL2, setAppURL2] = useState('');
+  const [appURL3, setAppURL3] = useState('');
   const mcaURL = `http://localhost:4000?firstname=${customer.first_name}&lastname=${customer.last_name}&title=${customer.title}&brand=${brandScheme.brand}`;
 
   useEffect(() => {
     if (!(Object.entries(customer).length === 0 && customer.constructor === Object)) {
-      setAppURL(mcaURL);
+      setAppURL1(mcaURL);
+      setAppURL2(mcaURL);
+      setAppURL3(mcaURL);
+      setVisibleIframeNo(1);
     }
   }, [customer]);
+
+  // useEffect(() => {
+  //   setVisibleIframeNo(1);
+  // }, []);
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
   };
-  const onChangeAppURL = url => {
-    setAppURL(url);
+  const onChangeAppURL1 = url => {
+    setAppURL1(url);
+    setVisibleIframeNo(1);
+  };
+  const onChangeAppURL2 = url => {
+    setAppURL2(url);
+    setVisibleIframeNo(2);
+  };
+  const onChangeAppURL3 = url => {
+    setAppURL3(url);
+    setVisibleIframeNo(3);
   };
 
+  const onClickRefreshBtn1 = () => {
+    document.getElementById('iframeid1').src += '';
+  };
+
+  const onClickRefreshBtn2 = () => {
+    document.getElementById('iframeid2').src += '';
+  };
+
+  const onClickRefreshBtn3 = () => {
+    document.getElementById('iframeid3').src += '';
+  };
 
   return (
     <div className={classes.root}>
@@ -157,37 +199,61 @@ function WorkingContainer(props) {
               button
               onClick={() =>
                 // onChangeAppURL('https://open.spotify.com/embed/playlist/5a2OuIJ1kEttA8X3PaewlI')
-                onChangeAppURL(mcaURL)
+                onChangeAppURL1(mcaURL)
               }
             >
-              <ListItemIcon className={classes.listIcon}>
+              <ListItemIcon
+                className={clsx(classes.listIcon, {
+                  [classes.greenBtn]: visibleIframeNo === 1
+                })}
+              >
                 <ContactlessIcon />
               </ListItemIcon>
+
               <ListItemText primary={'MCA'} />
+              {/* <ListItemIcon className={classes.refreshIcon} onClick={onClickRefreshBtn1}> */}
+              <ReplaySharpIcon className={classes.refreshIcon} onClick={onClickRefreshBtn1} />
+              {/* </ListItemIcon> */}
             </ListItem>
             <ListItem
               button
               onClick={() =>
-                onChangeAppURL('https://embed.music.apple.com/pl/album/nightride/1171507241')
+                // onChangeAppURL2('https://embed.music.apple.com/pl/album/nightride/1171507241')
+                onChangeAppURL2(mcaURL)
               }
             >
-              <ListItemIcon className={classes.listIcon}>
+              <ListItemIcon
+                className={clsx(classes.listIcon, {
+                  [classes.greenBtn]: visibleIframeNo === 2
+                })}
+              >
                 <LocalLibraryIcon />
               </ListItemIcon>
               <ListItemText primary={'CAAG'} />
+              {/* <ListItemIcon className={classes.refreshIcon} onClick={onClickRefreshBtn2}> */}
+              <ReplaySharpIcon className={classes.refreshIcon} onClick={onClickRefreshBtn2} />
+              {/* </ListItemIcon> */}
             </ListItem>
             <ListItem
               button
               onClick={() =>
-                onChangeAppURL(
-                  'https://w.soundcloud.com/player/?visual=true&amp;url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F310215586&amp;show_artwork=true'
-                )
+                //   onChangeAppURL3(
+                //     'https://w.soundcloud.com/player/?visual=true&amp;url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F310215586&amp;show_artwork=true'
+                //   )
+                onChangeAppURL3(mcaURL)
               }
             >
-              <ListItemIcon className={classes.listIcon}>
+              <ListItemIcon
+                className={clsx(classes.listIcon, {
+                  [classes.greenBtn]: visibleIframeNo === 3
+                })}
+              >
                 <InvertColorsIcon />
               </ListItemIcon>
               <ListItemText primary={'Resolve'} />
+              {/* <ListItemIcon className={classes.refreshIcon} onClick={onClickRefreshBtn3}> */}
+              <ReplaySharpIcon className={classes.refreshIcon} onClick={onClickRefreshBtn3} />
+              {/* </ListItemIcon> */}
             </ListItem>
           </List>
           <Divider />
@@ -203,10 +269,43 @@ function WorkingContainer(props) {
           </List>
         </Drawer>
         <main className={classes.content}>
-          <Box className={classes.iframeContainer}>
+          <Box
+            className={clsx(classes.iframeContainer, {
+              [classes.visibleIframe]: visibleIframeNo === 1
+            })}
+          >
             <iframe
+              id="iframeid1"
               className={classes.iframe}
-              src={`${appURL}`}
+              src={`${appURL1}`}
+              allowFullScreen
+              allow="encrypted-media"
+              onClick={props.onClickWorkingContainer}
+            ></iframe>
+          </Box>
+          <Box
+            className={clsx(classes.iframeContainer, {
+              [classes.visibleIframe]: visibleIframeNo === 2
+            })}
+          >
+            <iframe
+              id="iframeid2"
+              className={classes.iframe}
+              src={`${appURL2}`}
+              allowFullScreen
+              allow="encrypted-media"
+              onClick={props.onClickWorkingContainer}
+            ></iframe>
+          </Box>
+          <Box
+            className={clsx(classes.iframeContainer, {
+              [classes.visibleIframe]: visibleIframeNo === 3
+            })}
+          >
+            <iframe
+              id="iframeid3"
+              className={classes.iframe}
+              src={`${appURL3}`}
               allowFullScreen
               allow="encrypted-media"
               onClick={props.onClickWorkingContainer}
