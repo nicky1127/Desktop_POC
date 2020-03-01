@@ -3,7 +3,8 @@ import {
   CLEAR_IVR_DATA,
   SET_BRANDSCHEME,
   SET_CUSTOMER,
-  GET_CUSTOMERS_BY_SEARCH
+  GET_CUSTOMERS_BY_SEARCH,
+  LOAD_CUSTOMER_FAILURE
 } from '../constants/action-types';
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   customer: {},
   customersBySearch: [],
   recordCreateLoading: false,
-  recordDeleteLoading: false
+  recordDeleteLoading: false,
+  error: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +39,10 @@ const reducer = (state = initialState, action) => {
 
   if (action.type === SET_CUSTOMER) {
     return { ...state, customer: action.payload };
+  }
+
+  if (action.type === LOAD_CUSTOMER_FAILURE) {
+    return { ...state, error: action.payload };
   }
 
   if (action.type === GET_CUSTOMERS_BY_SEARCH) {

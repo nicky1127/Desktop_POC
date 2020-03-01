@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { toast } from 'react-toastify';
 import MainHeader from '../components/MainHeader';
 import WorkingContainer from '../components/WorkingContainer';
 import AvayaToolBar from '../components/AvayaToolBar';
@@ -17,8 +18,8 @@ import constants from '../constants';
 
 const mapStateToProps = state => {
   if (state) {
-    const { IVR } = state;
-    return { IVR };
+    const { IVR, error } = state;
+    return { IVR, error };
   }
   return { IVR: {} };
 };
@@ -101,6 +102,12 @@ function Main(props) {
     fetchUser();
     selectBrandScheme(props.IVR);
   }, []);
+
+  // useEffect(() => {
+  //   if (props.error) {
+  //     toast.error(props.error);
+  //   }
+  // }, [props.error]);
 
   useEffect(() => {
     selectBrandScheme(props.IVR);
