@@ -6,7 +6,8 @@ import {
   CLEAR_IVR_DATA,
   SET_CUSTOMER,
   GET_CUSTOMERS_BY_SEARCH,
-  SET_BRANDSCHEME
+  SET_BRANDSCHEME,
+  LOAD_CUSTOMER_FAILURE
 } from '../constants/action-types';
 
 // APIs actions
@@ -38,16 +39,24 @@ export const setCustomer = payload => {
 
 export const getCustomerByAccount = (params = {}) => {
   return async dispatch => {
-    return await http.get(`${uriCustomer}/Account&Sort`, { params }).then(response => {
-      let payload;
-      if (response) {
-        payload = response.data;
-      } else {
-        payload = {};
-      }
-      dispatch(setCustomer(payload));
-    });
+    return await http
+      .get(`${uriCustomer}/Account&Sort`, { params })
+      .then(response => {
+        let payload;
+        if (response) {
+          payload = response.data;
+        } else {
+          payload = {};
+        }
+        dispatch(setCustomer(payload));
+      })
+      .catch(err => dispatch(loadCustomerFailure(err)));
   };
+};
+
+export const loadCustomerFailure = err => {
+  const obj = { type: LOAD_CUSTOMER_FAILURE, payload: err.response.data.error };
+  return obj;
 };
 
 export const getCustomersBySearch = (params = {}) => {
